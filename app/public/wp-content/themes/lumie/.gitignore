@@ -11,3 +11,5 @@ vendor
 .screenshots-token
 
 .playwright-mcp
+
+.npmrc
