@@ -141,8 +141,29 @@ jobs:
                   ssh -4 -i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes \
                       "$SSH_USER@$SSH_HOST" "REMOTE_PATH='$REMOTE_PATH' PLUGINS='$PLUGINS' FA_KIT='$FA_KIT' bash -s" <<'REMOTE'
                   set -e
+
+                  # A secret can carry a trailing slash, stray whitespace, a CR from a
+                  # Windows paste, or a leading ~ that stays literal inside quotes.
+                  REMOTE_PATH="$(printf '%s' "$REMOTE_PATH" | tr -d '\r' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+                  case "$REMOTE_PATH" in
+                      "~/"*) REMOTE_PATH="$HOME/${REMOTE_PATH#\~/}" ;;
+                      "~") REMOTE_PATH="$HOME" ;;
+                  esac
+                  while [ "${REMOTE_PATH%/}" != "$REMOTE_PATH" ] && [ "$REMOTE_PATH" != "/" ]; do
+                      REMOTE_PATH="${REMOTE_PATH%/}"
+                  done
+
                   if [ ! -d "$REMOTE_PATH" ]; then
                       echo "REMOTE_PATH does not exist: $REMOTE_PATH"
+                      echo "--- Diagnostics ---"
+                      echo "length after cleaning: ${#REMOTE_PATH}"
+                      echo "first character: $(printf '%s' "$REMOTE_PATH" | cut -c1)"
+                      echo "absolute path: $(case "$REMOTE_PATH" in /*) echo yes ;; *) echo "NO - must start with /" ;; esac)"
+                      echo "HOME is: $HOME"
+                      echo "--- Candidates that do exist ---"
+                      for c in "$HOME/domains"/*/public_html; do
+                          [ -d "$c" ] && echo "EXISTS: $c$([ -f "$c/wp-config.php" ] && echo '  (WordPress)')"
+                      done
                       echo "--- Home directory ($HOME) ---"
                       ls -la "$HOME" 2>/dev/null | head -25
                       if [ -d "$HOME/domains" ]; then
