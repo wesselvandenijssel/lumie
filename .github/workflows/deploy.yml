@@ -111,6 +111,17 @@ jobs:
                   chmod 600 ~/.ssh/deploy_key
                   printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
                   chmod 644 ~/.ssh/known_hosts
+
+                  # Catch a malformed or truncated secret here rather than at rsync time,
+                  # where ssh falls back to password auth and reports a confusing error.
+                  if ! ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null 2>&1; then
+                      echo "::error::SSH_PRIVATE_KEY is not a valid unencrypted private key. Store the full contents of the private key file, including the BEGIN and END lines, and make sure it has no passphrase."
+                      exit 1
+                  fi
+                  if [ ! -s ~/.ssh/known_hosts ]; then
+                      echo "::error::SSH_KNOWN_HOSTS is empty. Set it to the output of: ssh-keyscan -p <port> <host>"
+                      exit 1
+                  fi
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                   SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
@@ -125,7 +136,7 @@ jobs:
               run: |
                   rsync -rlptzv --delete $DRY_RUN \
                       --exclude-from=.github/deploy-excludes.txt \
-                      -e "ssh -4 -i ~/.ssh/deploy_key -p $SSH_PORT -o ConnectTimeout=20" \
+                      -e "ssh -4 -i ~/.ssh/deploy_key -p $SSH_PORT -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes" \
                       "$THEME_SRC/" \
                       "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/themes/lumie/"
 
@@ -139,7 +150,7 @@ jobs:
                   DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '--dry-run' || '' }}
               run: |
                   rsync -rlptzv --delete $DRY_RUN \
-                      -e "ssh -4 -i ~/.ssh/deploy_key -p $SSH_PORT -o ConnectTimeout=20" \
+                      -e "ssh -4 -i ~/.ssh/deploy_key -p $SSH_PORT -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes" \
                       "$THEME_SRC/$FA_KIT/" \
                       "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/themes/lumie/$FA_KIT/"
 
@@ -155,7 +166,7 @@ jobs:
                       echo "--- Deploying $plugin ---"
                       rsync -rlptzv --delete $DRY_RUN \
                           --exclude-from=.github/deploy-excludes.txt \
-                          -e "ssh -4 -i ~/.ssh/deploy_key -p $SSH_PORT -o ConnectTimeout=20" \
+                          -e "ssh -4 -i ~/.ssh/deploy_key -p $SSH_PORT -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes" \
                           "$PLUGINS_SRC/$plugin/" \
                           "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/plugins/$plugin/"
                   done
