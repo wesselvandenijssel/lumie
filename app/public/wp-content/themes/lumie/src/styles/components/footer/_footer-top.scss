@@ -63,7 +63,7 @@
 				font-weight: 700;
 				letter-spacing: 0.2px;
 				text-transform: uppercase;
-				color: $hue-accent-1;
+				color: $zest;
 
 				&::after {
 					display: none;
@@ -105,7 +105,7 @@
 
 			&:hover,
 			&:focus {
-				color: $hue-accent-1;
+				color: $zest;
 			}
 		}
 
@@ -148,7 +148,7 @@
 
 		&:hover,
 		&:focus {
-			color: $hue-accent-1;
+			color: $zest;
 		}
 
 		&--phone {
@@ -171,15 +171,15 @@
 		&__item {
 			&::before {
 				width: 34px;
-				background-color: $hue-accent-1;
-				color: $hue-dark-2;
+				background-color: $zest;
+				color: $navy;
 			}
 
 			&:hover,
 			&:focus {
 				&::before {
 					background-color: #fff;
-					color: $hue-dark-2;
+					color: $navy;
 				}
 			}
 		}
