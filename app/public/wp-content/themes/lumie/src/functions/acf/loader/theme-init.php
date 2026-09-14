@@ -11,7 +11,7 @@ if (class_exists('ACF') && function_exists('acf_register_block')) {
 			[
 				[
 					'slug' => 'block-elements',
-					'title' => esc_html__('MB blokken', 'mbeffect'),
+					'title' => esc_html__('MB blokken', 'lumie'),
 				],
 			]
 		);
@@ -155,7 +155,7 @@ if (class_exists('ACF') && function_exists('acf_register_block')) {
 
 		$group = [
 			'key' => sprintf('field_group_%s', $block['name']),
-			'title' => sprintf('%s: %s', esc_html__('Block', 'mbeffect'), $block['title']),
+			'title' => sprintf('%s: %s', esc_html__('Block', 'lumie'), $block['title']),
 			'category' => 'block-elements',
 			'fields' => [
 				[
@@ -190,8 +190,8 @@ if (class_exists('ACF') && function_exists('acf_register_block')) {
 		if (isset($metadata['acf'])) {
 			$metadata['$schema'] = "https://schemas.wp.org/trunk/block.json";
 			$metadata['apiVersion'] = 3;
-			$metadata['category'] = 'mb-blocks';
-			$metadata['icon'] = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 25.385353 12.023844\"><g fill=\"#000\" transform=\"translate(-288.01821 -242.64453)\"><path d=\"m299.60695 246.66613c-1.19063 0-2.27542.60854-2.8575 1.40229-.3175-.79375-1.37584-1.37583-2.48709-1.37583-.0265 0-.0265 0-.0529 0-.0794 0-.15875-.0265-.23813-.0265-1.19062 0-2.40771.635-2.98979 1.42875-.0265-.0794-.0794-.13229-.13229-.15875-.23813-.39688-.47625-.55563-.47625-.55563-1.05833-.97895-2.35479-.84666-2.35479-.84666v1.98437c.635-.10583.97896.29104 1.16416.68792.1323.29104.21167.60854.21167.89958v.58209 3.81h1.87854.39688v-3.91584c0-1.03187.66146-1.95791 1.77271-1.95791.92604 0 1.42875.66145 1.42875 1.98437v3.88938h2.43416v-3.91584c0-1.03187.66146-1.95791 1.77271-1.95791.92604 0 1.42875.66145 1.42875 1.98437v3.88938h2.27542v-4.20688c0-2.2225-.92604-3.62479-3.175-3.62479z\"/><path d=\"m312.01591 247.61863c-.97896-.84667-2.27542-1.24354-3.54542-1.00542-.3175.0529-.55563.13229-.76729.21167v2.03729c1.16416-.47625 2.14312-.0529 2.14312-.0529.74084.3175 1.05834.82021 1.13771 1.29646.15875.635-.0794 1.32292-.52917 1.79917-.39687.42333-.87312.58208-1.29645.635-1.19063.13229-2.2225-.68792-2.38125-1.85208-.0529-.37042-.0265-.635-.0265-.635l-.0265.0265v-7.43479h-2.54l.0265 7.85813c-.0265 2.67229 2.51354 3.73062 2.51354 3.73062 1.905.97896 3.99521 0 3.99521 0 3.01625-1.34937 2.67229-3.86291 2.67229-3.86291-.0794-1.27-.71438-2.16959-1.37583-2.75167z\"/></g></svg>";
+			$metadata['category'] = 'lumie';
+			$metadata['icon'] = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 322 120"><g transform="translate(10,10)"><g fill="none" stroke="currentColor" stroke-width="17"><path d="M 8.5 0 V 100"/><path d="M 37.5 38 V 69 A 22.5 22.5 0 0 0 82.5 69 V 38"/><path d="M 111.5 100 V 66.25 A 19.75 19.75 0 0 1 151 66.25 V 100"/><path d="M 151 100 V 66.25 A 19.75 19.75 0 0 1 190.5 66.25 V 100"/><path d="M 219.5 38 V 100"/><path d="M 249.62 62 H 292.38 A 22.5 22.5 0 1 0 289.43 81.9"/></g><path fill="currentColor" d="M 219.5 2 Q 221.74 13.76 233.5 16 Q 221.74 18.24 219.5 30 Q 217.26 18.24 205.5 16 Q 217.26 13.76 219.5 2 Z"/></g></svg>';
 			$metadata['acf']['blockVersion'] = $block_version;
 			$metadata['acf']['renderCallback'] = "acf_block_render_callback";
 			$metadata['acf']['hideFieldsInSidebar'] = true;

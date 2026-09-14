@@ -6,7 +6,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
  *
  * Displays all of the <head> section and everything up till <main id="content">
  *
- * @package mbeffect
+ * @package lumie
  */
 ?>
 
@@ -20,6 +20,12 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?php wp_title('|', true, 'right'); ?></title>
 	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="icon" type="image/png" href="<?= assets('favicon-96x96.png'); ?>" sizes="96x96" />
+	<link rel="icon" type="image/svg+xml" href="<?= assets('favicon.svg'); ?>" />
+	<link rel="shortcut icon" href="<?= assets('favicon.ico'); ?>" />
+	<link rel="apple-touch-icon" sizes="180x180" href="<?= assets('apple-touch-icon.png'); ?>" />
+	<meta name="apple-mobile-web-app-title" content="Vissers Zwembaden" />
+	<link rel="manifest" href="<?= assets('site.webmanifest'); ?>" />
 	<?php include('json-ld.php'); ?>
 	<script type="application/ld+json">
 		<?= json_encode($payload); ?>
@@ -39,14 +45,14 @@ $contact_details = get_field('contact_details', 'options');
 
 		<?php notification(); ?>
 
-		<header class="header">
-			<div class="header__top">
-				<div class="header__top-wrapper">
-					<?php
-					$usps = get_field('header', 'options')['usps'] ?? [];
+		<header class="header<?= has_block('acf/hero') ? ' header--has-hero' : ''; ?>">
+			<?php
+			$usps = get_field('header', 'options')['usps'] ?? [];
 
-					if (!empty($usps)) :
-					?>
+			if (!empty($usps)) :
+			?>
+				<div class="header__top">
+					<div class="header__top-wrapper">
 						<div class="swiper">
 							<div class="header__usps swiper-wrapper">
 								<?php foreach ($usps as $usp) : ?>
@@ -64,32 +70,32 @@ $contact_details = get_field('contact_details', 'options');
 								<?php endforeach; ?>
 							</div>
 						</div>
-					<?php endif; ?>
 
-					<div class="header__top-right">
-						<?php wp_nav_menu([
-							'theme_location' => 'top',
-							'walker' => new Walker_Primary_Menu,
-							'fallback_cb' => false,
-							'container_class' => 'header__top-menu',
-							'depth' => 1,
-						]); ?>
+						<div class="header__top-right">
+							<?php wp_nav_menu([
+								'theme_location' => 'top',
+								'walker' => new Walker_Primary_Menu,
+								'fallback_cb' => false,
+								'container_class' => 'header__top-menu',
+								'depth' => 1,
+							]); ?>
 
-						<?php if (!empty($contact_details['phone_link']['url']) && !empty($contact_details['phone'])) : ?>
-							<a href="<?= esc_url($contact_details['phone_link']['url']); ?>" title="<?= esc_attr($contact_details['phone_link']['title'] ?? ''); ?>" class="header__icon header__icon--phone" aria-label="<?= esc_attr($contact_details['phone_link']['title'] ?? __('Bel ons', 'mbeffect')); ?>">
-								<span class="mobile-none"><?= esc_html($contact_details['phone']); ?></span>
-							</a>
-						<?php endif; ?>
+							<?php if (!empty($contact_details['phone_link']['url']) && !empty($contact_details['phone'])) : ?>
+								<a href="<?= esc_url($contact_details['phone_link']['url']); ?>" title="<?= esc_attr($contact_details['phone_link']['title'] ?? ''); ?>" class="header__icon header__icon--phone" aria-label="<?= esc_attr($contact_details['phone_link']['title'] ?? __('Bel ons', 'lumie')); ?>">
+									<span class="mobile-none"><?= esc_html($contact_details['phone']); ?></span>
+								</a>
+							<?php endif; ?>
+						</div>
 					</div>
 				</div>
-			</div>
+			<?php endif; ?>
 
 			<div class="header__main">
 				<div class="header__main-wrapper">
 					<?= get_logo(['class' => 'header__logo']); ?>
 
 					<nav id="site-navigation" class="main-navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
-						<div class="menu-toggle" role="button" tabindex="0" aria-label="<?= esc_attr__('Open menu', 'mbeffect'); ?>" aria-expanded="false">
+						<div class="menu-toggle" role="button" tabindex="0" aria-label="<?= esc_attr__('Open menu', 'lumie'); ?>" aria-expanded="false">
 							<div class="menu-toggle__lines">
 								<div class="menu-toggle__burger">
 									<span class="menu-toggle__burger-line menu-toggle__burger-line--first"></span>
@@ -101,9 +107,9 @@ $contact_details = get_field('contact_details', 'options');
 									<span class="menu-toggle__close-line menu-toggle__close-line--last"></span>
 								</div>
 							</div>
-							<span class="menu-toggle__text"><?= esc_html__('Menu', 'mbeffect'); ?></span>
+							<span class="menu-toggle__text"><?= esc_html__('Menu', 'lumie'); ?></span>
 						</div>
-						<a class="skip-link screen-reader-text" href="#content"><?= esc_html__('Skip to content', 'mbeffect'); ?></a>
+						<a class="skip-link screen-reader-text" href="#content"><?= esc_html__('Skip to content', 'lumie'); ?></a>
 
 						<div class="main-navigation__content">
 							<?php wp_nav_menu(
@@ -123,17 +129,15 @@ $contact_details = get_field('contact_details', 'options');
 								]
 							); ?>
 
-							<div class="header__buttons">
-								<?php
-								$header_options = get_field('header', 'options') ?: [];
-								if (!empty($header_options['buttons_group'])) :
-									$content = new FlexContent();
+							<?php if (!empty(get_field('header', 'options')['buttons'])) : ?>
+								<div class="header__buttons">
+									<?php $content = new FlexContent();
 
-									$content->setButtons($header_options['buttons_group']);
+									$content->setButtons(get_field('header', 'options')['buttons']);
 
-									echo $content->getContent();
-								endif; ?>
-							</div>
+									echo $content->getContent(); ?>
+								</div>
+							<?php endif; ?>
 						</div>
 					</nav>
 				</div>

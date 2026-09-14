@@ -114,6 +114,20 @@ export function getScreenshotsApiKey(): string {
 }
 
 /**
+ * Memoized getter for the screenshots API key to avoid re-reading the
+ * token file on every request.
+ */
+let cachedScreenshotsApiKey: string | null = null;
+
+export function getCachedScreenshotsApiKey(): string {
+	if (cachedScreenshotsApiKey === null) {
+		cachedScreenshotsApiKey = getScreenshotsApiKey();
+	}
+
+	return cachedScreenshotsApiKey;
+}
+
+/**
  * WordPress URL constant for backwards compatibility
  * @deprecated Use getCachedWordPressUrl() instead
  */

@@ -39,7 +39,7 @@
 		width: 100%;
 		height: 2px;
 		display: block;
-		background-color: #000;
+		background-color: $navy;
 		transition: width 0.4s ease 0s;
 
 		&--first {
@@ -72,7 +72,7 @@
 		width: 0;
 		height: 2px;
 		display: block;
-		background-color: #000;
+		background-color: $navy;
 		transition: width 0.4s ease 0s;
 
 		&--first {
@@ -87,7 +87,7 @@
 	}
 
 	&__text {
-		color: #000;
+		color: $navy;
 		line-height: 1;
 		font-size: pxtorem(11);
 	}
@@ -129,47 +129,20 @@
 
 	@include bp("mobile") {
 		position: relative;
-		font-size: pxtorem(24);
-		font-weight: 600;
+		font-size: pxtorem(20);
+		font-weight: 500;
 		width: 35px;
 		aspect-ratio: 1/1;
 		text-align: center;
 	}
 
 	@include bp("narrow") {
-		display: inline-block;
-	}
-
-	&::before,
-	&::after {
-		@include bp("mobile") {
-			content: "";
-			position: absolute;
-			inset: 0;
-			height: 2px;
-			width: 18px;
-			background-color: #000;
-			margin: auto;
-		}
+		display: none;
 	}
 
 	&::after {
-		@include bp("mobile") {
-			transform: rotate(90deg);
-		}
-
-		@include bp("narrow") {
-			content: $fa-angle-down;
-			font-family: $fa;
-			font-weight: 400;
-		}
-	}
-
-	&--active {
-		&::after {
-			@include bp("mobile") {
-				display: none;
-			}
-		}
+		content: $fa-angle-right;
+		font-family: $fa;
+		font-weight: 300;
 	}
 }

@@ -100,7 +100,7 @@ echo !is_admin() ? '[raw]' : '';
 
 				if (!empty($terms)) : ?>
 					<button type="submit" name="category" value="*" class="btn__filter<?= !isset($_GET['category']) || sanitize_text_field($_GET['category']) === '*' ? ' btn__filter--active' : ''; ?>">
-						<?= esc_html__('Toon alle artikelen', 'mbeffect'); ?>
+						<?= esc_html__('Toon alle artikelen', 'lumie'); ?>
 					</button>
 
 					<?php foreach ($terms as $term) : ?>
@@ -112,9 +112,9 @@ echo !is_admin() ? '[raw]' : '';
 			</form>
 
 			<form class="blog__filter--mobile" method="GET" action="<?= !empty($block['id']) ? '#' . esc_attr($block['id']) : get_the_permalink(); ?>">
-				<select class="blog__filter-select" name="category" aria-label="<?= esc_attr__('Filter', 'mbeffect'); ?>">
+				<select class="blog__filter-select" name="category" aria-label="<?= esc_attr__('Filter', 'lumie'); ?>">
 					<option value="*" <?= !isset($_GET['category']) ? 'selected' : ''; ?>>
-						<?= esc_html__('Alle type blogs', 'mbeffect'); ?>
+						<?= esc_html__('Alle type blogs', 'lumie'); ?>
 					</option>
 
 					<?php if (!empty($terms)) : ?>

@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
-function mbeffect_head_cleanup() {
+function lumie_head_cleanup() {
 	// EditURI link
 	remove_action('wp_head', 'rsd_link');
 	// windows live writer
@@ -39,26 +39,26 @@ function rw_title($title, $sep, $seplocation) {
 
 	// Add a page number if necessary:
 	if ($paged >= 2 || $page >= 2) {
-		$title .= " {$sep} " . sprintf(esc_html__('Page %s', 'mbeffect'), max($paged, $page));
+		$title .= " {$sep} " . sprintf(esc_html__('Page %s', 'lumie'), max($paged, $page));
 	}
 
 	return $title;
 }
 
 // remove WP version from RSS
-function mbeffect_rss_version() {
+function lumie_rss_version() {
 	return '';
 }
 
 // remove injected CSS for recent comments widget
-function mbeffect_remove_wp_widget_recent_comments_style() {
+function lumie_remove_wp_widget_recent_comments_style() {
 	if (has_filter('wp_head', 'wp_widget_recent_comments_style')) {
 		remove_filter('wp_head', 'wp_widget_recent_comments_style');
 	}
 }
 
 // remove injected CSS from recent comments widget
-function mbeffect_remove_recent_comments_style() {
+function lumie_remove_recent_comments_style() {
 	global $wp_widget_factory;
 	if (!empty($wp_widget_factory->widgets['WP_Widget_Recent_Comments'])) {
 		remove_action('wp_head', [$wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style']);

@@ -2,16 +2,8 @@
 FONTS
 *********************/
 $sans-serif: "Helvetica Neue", helvetica, arial, sans-serif;
-$serif:
-	"Georgia",
-	cambria,
-	times new roman,
-	times,
-	serif;
 
-$open-sans: "Open Sans", $sans-serif;
-
-// @include font-face('Overpass', 'Overpass-Light', '300', 'normal');
+$poppins: "Poppins", $sans-serif;
 
 $fa: "Font Awesome 6 Pro";
 $fab: "Font Awesome 6 Brands";
@@ -19,4 +11,4 @@ $fab: "Font Awesome 6 Brands";
 /*********************
 BASE
 *********************/
-$base-font-size: 18;
+$base-font-size: 17;

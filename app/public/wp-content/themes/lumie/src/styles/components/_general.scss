@@ -2,17 +2,22 @@
 
 html,
 body {
-	background: #f6f6f6;
+	background: $paper;
+
+	&.no-scroll {
+		overflow: hidden;
+	}
 }
 
 body {
-	font-family: $open-sans;
+	font-family: $poppins;
 	font-size: pxtorem($base-font-size);
-	line-height: 1.5;
+	line-height: 1.65;
 	color: $text-color;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	font-weight: 400;
+	font-weight: 300;
+	container-type: inline-size;
 
 	@include bp("mobile") {
 		font-size: $mobile-font-size;
@@ -63,7 +68,7 @@ img {
 }
 
 .site {
-	background: #fff;
+	background: $paper;
 
 	@include bp("narrow") {
 		max-width: $site-width;
@@ -72,6 +77,8 @@ img {
 }
 
 .entry-content {
+	display: grid;
+
 	p {
 		margin: 0 0 1.5em;
 	}
@@ -112,7 +119,7 @@ img {
 	blockquote {
 		margin: 0 0 1.5em 0.75em;
 		padding: 0 0 0 0.75em;
-		border-left: 3px solid #000;
+		border-left: 3px solid $navy;
 	}
 
 	img {
@@ -138,32 +145,4 @@ img {
 .screen-reader-text {
 	clip: rect(1px, 1px, 1px, 1px);
 	position: absolute;
-}
-
-.video-in-fancybox {
-	cursor: pointer;
-	position: relative;
-
-	&::before {
-		content: $fa-play;
-		font-family: $fa;
-		font-weight: 700;
-		font-size: pxtorem(30);
-		color: #fff;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		aspect-ratio: 1/1;
-		width: 80px;
-		border-radius: 100vw;
-		border: 1px solid #fff;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		@include bp("narrow") {
-			width: 105px;
-		}
-	}
 }

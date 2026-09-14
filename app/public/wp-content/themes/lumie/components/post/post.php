@@ -47,7 +47,7 @@ if (!empty($swiper)) {
 				$meta_items = [];
 
 				if (!empty($author)) {
-					$meta_items[] = '<span class="post__meta-item post__meta-item--author">' . esc_html__('Door:', 'mbeffect') . ' ' . esc_html($author) . '</span>';
+					$meta_items[] = '<span class="post__meta-item post__meta-item--author">' . esc_html__('Door:', 'lumie') . ' ' . esc_html($author) . '</span>';
 				}
 
 				if (!empty($date)) {
@@ -64,7 +64,7 @@ if (!empty($swiper)) {
 			</h3>
 
 
-			<span class="btn btn--read-more post__button"><?= esc_html__('Lees verder', 'mbeffect'); ?></span>
+			<span class="btn btn--read-more post__button"><?= esc_html__('Lees verder', 'lumie'); ?></span>
 		</div>
 		<?php if (empty($link['url'])) : ?>
 		</div>

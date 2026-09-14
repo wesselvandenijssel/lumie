@@ -5,11 +5,11 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
  * Hero Block Template.
  */
 
-$section = general_section($block, [
+$section = general_section($block ?? [], [
 	'class' => ['section', 'hero'],
 ]);
 
-if (empty($size)) return;
+if (empty($type) || empty($size)) return;
 
 $section['class'][] = 'hero--' . $size;
 
@@ -30,8 +30,9 @@ switch ($type) {
 }
 
 $thumbnail = match ($size) {
-	900 => 'Hero 900',
-	default => 'Hero 900',
+	'650' => 'Hero 650',
+	'850' => 'Hero 850',
+	default => 'Hero 450',
 };
 
 echo !is_admin() ? '[raw]' : '';

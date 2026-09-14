@@ -7,21 +7,21 @@ function add_custom_text_color_pallete() {
 	// The new colors we are going to add - the name of the colors are set by the naming of "Name that color": https://chir.ag/projects/name-that-color/#414141
 	$newColorPalette = [
 		[
-			'name' => esc_html__('White', 'mbeffect'),
+			'name' => esc_html__('White', 'lumie'),
 			'slug' => 'white',
 			'color' => '#ffffff',
 		],
 
 		[
-			'name' => esc_html__('Athens Gray', 'mbeffect'),
-			'slug' => 'athens-gray',
-			'color' => '#f8f9fa',
+			'name' => esc_html__('Spring Wood', 'lumie'),
+			'slug' => 'spring-wood',
+			'color' => '#F5F2EB',
 		],
 
 		[
-			'name' => esc_html__('Tundora', 'mbeffect'),
-			'slug' => 'tundora',
-			'color' => '#414141',
+			'name' => esc_html__('Pearl Bush', 'lumie'),
+			'slug' => 'pearl-bush',
+			'color' => '#EAE5D8',
 		],
 	];
 
@@ -35,7 +35,7 @@ function add_custom_gradient_color_pallete() {
 
 	$newColorPalette = [
 		[
-			'name' => esc_html__('Dark to Light', 'mbeffect'),
+			'name' => esc_html__('Dark to Light', 'lumie'),
 			'gradient' => 'linear-gradient(135deg, #2e333e 0%, #ebebeb 100%)',
 			'slug' => 'dark-to-light',
 		],

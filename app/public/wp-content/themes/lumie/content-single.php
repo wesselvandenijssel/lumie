@@ -25,11 +25,11 @@ $post_url = get_permalink();
 
 				<div class="content-layout">
 					<div class="single__meta">
-						<div class="single__date"><?= wp_kses_post(sprintf(__('Datum: <span>%s</span>', 'mbeffect'), get_the_date('d M Y'))); ?></div>
+						<div class="single__date"><?= wp_kses_post(sprintf(__('Datum: <span>%s</span>', 'lumie'), get_the_date('d M Y'))); ?></div>
 						<span class="single__separator"></span>
-						<a class="single__author" href="<?= esc_url(get_author_posts_url($author_id)); ?>"><?= wp_kses_post(sprintf(__('Door: <span>%s</span>', 'mbeffect'), esc_html($author_name))); ?></a>
+						<a class="single__author" href="<?= esc_url(get_author_posts_url($author_id)); ?>"><?= wp_kses_post(sprintf(__('Door: <span>%s</span>', 'lumie'), esc_html($author_name))); ?></a>
 						<span class="single__separator"></span>
-						<div class="single__reading-time"><?= wp_kses_post(sprintf(__('Leestijd: <span>%s</span>', 'mbeffect'), reading_time(get_the_ID()))); ?></div>
+						<div class="single__reading-time"><?= wp_kses_post(sprintf(__('Leestijd: <span>%s</span>', 'lumie'), reading_time(get_the_ID()))); ?></div>
 					</div>
 				</div>
 			</div>
@@ -50,23 +50,23 @@ $post_url = get_permalink();
 
 						<div class="single__return">
 							<button class="btn btn--read-more" onclick="window.history.go(-1); return false;">
-								<?= esc_html__('Terug naar de vorige pagina', 'mbeffect'); ?>
+								<?= esc_html__('Terug naar de vorige pagina', 'lumie'); ?>
 							</button>
 						</div>
 
 						<div class="single__share">
-							<p><?= esc_html__('Deel op', 'mbeffect'); ?></p>
+							<p><?= esc_html__('Deel op', 'lumie'); ?></p>
 
 							<a class="single__share-link single__share-link--linkedin" href="<?= esc_url('https://www.linkedin.com/shareArticle?mini=true&url=' . urlencode($post_url)); ?>" target="_blank"
 								rel="noopener noreferrer"
 								onclick="window.open(this.href, 'linkedin-share', 'width=600,height=400');return false;"
-								aria-label="<?= esc_attr(__('Deel op LinkedIn', 'mbeffect')); ?>"></a>
+								aria-label="<?= esc_attr(__('Deel op LinkedIn', 'lumie')); ?>"></a>
 
 							<a class="single__share-link single__share-link--facebook" href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($post_url); ?>"
 								target="_blank"
 								rel="noopener noreferrer"
 								onclick="window.open(this.href, 'facebook-share', 'width=600,height=400');return false;"
-								aria-label="<?= esc_attr(__('Deel op Facebook', 'mbeffect')); ?>"></a>
+								aria-label="<?= esc_attr(__('Deel op Facebook', 'lumie')); ?>"></a>
 						</div>
 					</div>
 				</div>
@@ -78,7 +78,7 @@ $post_url = get_permalink();
 		<section class="section single__author-info pad--top-small pad--bottom-medium">
 			<div class="columns-12 center">
 				<div class="single__author-info-wrapper">
-					<h4 class="single__author-info-title"><?= esc_html__('Over de auteur', 'mbeffect'); ?></h4>
+					<h4 class="single__author-info-title"><?= esc_html__('Over de auteur', 'lumie'); ?></h4>
 					<a class="single__author-info-wrapper-inner" href="<?= esc_url(get_author_posts_url($author_id)); ?>">
 						<?php
 						$author_image = get_field('image', 'user_' . $author_id);
@@ -96,7 +96,7 @@ $post_url = get_permalink();
 					<hr>
 
 					<div class="single__author-connect">
-						<a class="single__author-link" href="<?= esc_url(get_author_posts_url($author_id)); ?>"><?= esc_html__('Meer over', 'mbeffect') . ' ' . esc_html($author_name); ?></a>
+						<a class="single__author-link" href="<?= esc_url(get_author_posts_url($author_id)); ?>"><?= esc_html__('Meer over', 'lumie') . ' ' . esc_html($author_name); ?></a>
 
 						<div class="single__author-socials">
 							<?php
@@ -147,7 +147,7 @@ $post_url = get_permalink();
 		<section class="section blog pad--bottom-medium">
 			<div class="columns-12 center">
 				<div class="titles">
-					<h2 class="main-title default"><?= esc_html__('Gerelateerde artikelen', 'mbeffect'); ?></h2>
+					<h2 class="main-title default"><?= esc_html__('Gerelateerde artikelen', 'lumie'); ?></h2>
 				</div>
 				<div class="blog__grid blog__grid--related">
 					<?php while ($related_posts->have_posts()) : $related_posts->the_post();

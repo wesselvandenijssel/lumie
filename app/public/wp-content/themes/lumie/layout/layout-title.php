@@ -30,6 +30,12 @@ if (!empty($title['type'])) {
 	);
 }
 
+if (!empty($title['suptitle'])) {
+	$title['suptitle'] = sanitize_title_custom($title['suptitle']);
+
+	$block_title->setSuptitle($title['suptitle']);
+}
+
 if (!empty($title['subtitle'])) {
 	$title['subtitle'] = sanitize_title_custom($title['subtitle']);
 

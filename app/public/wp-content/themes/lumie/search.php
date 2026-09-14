@@ -4,7 +4,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 /**
  * The template for displaying Search Results pages.
  *
- * @package mbeffect
+ * @package lumie
  */
 
 get_header(); ?>
@@ -17,7 +17,7 @@ get_header(); ?>
 
 				<div class="titles">
 					<h1 class="main-title default">
-						<?= wp_kses_post(sprintf(__('Zoekresultaten voor: <span>%s</span>', 'mbeffect'), get_search_query())); ?>
+						<?= wp_kses_post(sprintf(__('Zoekresultaten voor: <span>%s</span>', 'lumie'), get_search_query())); ?>
 					</h1>
 				</div>
 

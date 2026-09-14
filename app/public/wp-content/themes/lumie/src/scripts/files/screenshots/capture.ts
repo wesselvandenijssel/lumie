@@ -35,6 +35,7 @@ async function getPageForBreakpoint(breakpoint: Breakpoint): Promise<Page> {
 	const context = await browser.newContext({
 		viewport: { width: breakpoint.width, height: breakpoint.height },
 		ignoreHTTPSErrors: true,
+		reducedMotion: "reduce",
 	});
 	const page = await context.newPage();
 
@@ -167,8 +168,8 @@ async function captureHeader(
 		const text = await page.evaluate(
 			(i) =>
 				document
-					.querySelectorAll("ul.menu > .menu-item-has-children")[i]
-					?.querySelector<HTMLElement>(":scope > a, :scope > span")
+					.querySelectorAll("ul.menu > .menu-item-has-children")
+					[i]?.querySelector<HTMLElement>(":scope > a, :scope > span")
 					?.textContent?.trim() || null,
 			i,
 		);
@@ -487,14 +488,12 @@ export async function captureScreenshot(
 
 		// Generate filepath
 		mkdirSync(SCREENSHOTS_DIR, { recursive: true });
-		// Normalise the block name so a crafted value cannot escape SCREENSHOTS_DIR.
-		const safeBlock = blockName.replace(/[^a-z0-9-]/gi, "-");
 		let filepath: string;
 		if (pageSlug) {
 			// Include page slug in filename when capturing specific page
-			filepath = `${SCREENSHOTS_DIR}/block-${safeBlock}-${pageSlug}-${breakpoint.name}.png`;
+			filepath = `${SCREENSHOTS_DIR}/block-${blockName}-${pageSlug}-${breakpoint.name}.png`;
 		} else {
-			filepath = `${SCREENSHOTS_DIR}/block-${safeBlock}-${breakpoint.name}.png`;
+			filepath = `${SCREENSHOTS_DIR}/block-${blockName}-${breakpoint.name}.png`;
 		}
 
 		// Capture based on block type

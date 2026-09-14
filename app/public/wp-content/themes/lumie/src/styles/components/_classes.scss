@@ -38,6 +38,14 @@
 	&--center {
 		text-align: center;
 
+		.main-title {
+			&::after {
+				margin-left: auto;
+				margin-right: auto;
+				width: 55px;
+			}
+		}
+
 		.buttons {
 			justify-content: center;
 		}

@@ -29,10 +29,10 @@ function notification() {
 	<div class="notification">
 		<div class="columns-12 center notification__grid">
 			<div class="notification__text">
-				<?= wp_kses_post($notification_cf['text']); ?>
+				<?= $notification_cf['text']; ?>
 			</div>
 			<div class="notification__close">
-				<?= esc_html__('sluiten', 'mbeffect'); ?>
+				<?= esc_html__('sluiten', 'lumie'); ?>
 				<div class="notification__close-icon"></div>
 			</div>
 		</div>

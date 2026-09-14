@@ -40,12 +40,12 @@ if (!empty($block['gradient'])) {
 
 <section <?php attr($section); ?>>
 	<?php if (is_admin()) : ?>
-		<h3> <?= esc_html__("Achtergrond blok", 'mbeffect'); ?> </h3>
+		<h3> <?= esc_html__("Achtergrond blok", 'lumie'); ?> </h3>
 	<?php endif; ?>
 
 	<InnerBlocks />
 
 	<?php if (is_admin()) : ?>
-		<h3> <?= esc_html__("Einde achtergrond block", 'mbeffect'); ?> </h3>
+		<h3> <?= esc_html__("Einde achtergrond block", 'lumie'); ?> </h3>
 	<?php endif; ?>
 </section>

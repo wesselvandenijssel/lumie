@@ -3,17 +3,17 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
 add_theme_support('woocommerce');
 
-// function mbeffect_wrapper_start() {
+// function lumie_wrapper_start() {
 // 	echo '<section class="pad--top-medium pad--bottom-medium"><div class="columns-12 center">';
 // }
 // remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10 );
-// add_action( 'woocommerce_before_main_content', 'mbeffect_wrapper_start', 10 );
+// add_action( 'woocommerce_before_main_content', 'lumie_wrapper_start', 10 );
 
-// function mbeffect_wrapper_end() {
+// function lumie_wrapper_end() {
 // 	echo '</div></div></section>';
 // }
 // remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
-// add_action( 'woocommerce_after_main_content', 'mbeffect_wrapper_end', 10 );
+// add_action( 'woocommerce_after_main_content', 'lumie_wrapper_end', 10 );
 
 function columns_start() {
 	echo '<div class="columns-12 center">';
@@ -115,12 +115,11 @@ add_filter('woocommerce_coupons_enabled', 'hide_coupon_field_on_cart');
 add_action('wp_enqueue_scripts', 'child_manage_woocommerce_styles', 99);
 
 function child_manage_woocommerce_styles() {
+	//remove generator meta tag
+	remove_action('wp_head', [$GLOBALS['woocommerce'], 'generator']);
+
 	//first check that woo exists to prevent fatal errors
 	if (function_exists('is_woocommerce')) {
-		if (!empty($GLOBALS['woocommerce'])) {
-			remove_action('wp_head', [$GLOBALS['woocommerce'], 'generator']);
-		}
-
 		//dequeue scripts and styles
 		if (!is_woocommerce() && !is_cart() && !is_checkout()) {
 			wp_dequeue_style('woocommerce_frontend_styles');

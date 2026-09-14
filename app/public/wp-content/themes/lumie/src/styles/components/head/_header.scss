@@ -2,14 +2,95 @@
 @use "placeholders" as *;
 
 .header {
-	box-shadow: 0 5px 5px rgb(#000, 0.1);
+	$header: &;
+
 	position: sticky;
 	top: 0;
 	transition: top 0.4s ease-in-out;
 	z-index: 100;
 
+	&::after {
+		content: "";
+		position: absolute;
+		inset: auto 0 0;
+		margin: 0 auto;
+		height: 1px;
+		background-color: $hue-light-3;
+		pointer-events: none;
+		transition: opacity $hover-transition;
+		transition-delay: 0.15s;
+
+		@extend %header-footer-wrapper;
+	}
+
 	&--up {
 		top: -200px;
+	}
+
+	&--has-hero {
+		margin-bottom: -55px;
+
+		@include bp("narrow") {
+			margin-bottom: -88px;
+		}
+
+		@include bp("normal") {
+			margin-bottom: -92px;
+		}
+
+		@include bp("large") {
+			margin-bottom: -95px;
+		}
+
+		&:not(#{$header}--scrolled) {
+			&::after {
+				opacity: 0;
+			}
+
+			#{$header}__logo {
+				.logo {
+					&--colored {
+						opacity: 0;
+					}
+
+					&--white {
+						opacity: 1;
+					}
+				}
+			}
+
+			#{$header}__main {
+				background-color: transparent;
+				color: #fff;
+			}
+
+			.menu-button {
+				> a,
+				> span {
+					background-color: #fff;
+					border-color: #fff;
+					color: $navy;
+
+					&:hover,
+					&:focus {
+						background-color: $navy;
+						border-color: $navy;
+						color: #fff;
+					}
+				}
+			}
+
+			.menu-toggle {
+				&__burger-line,
+				&__close-line {
+					background-color: #fff;
+				}
+
+				&__text {
+					color: #fff;
+				}
+			}
+		}
 	}
 
 	&__top {
@@ -44,6 +125,10 @@
 
 	&__main {
 		background-color: #fff;
+		transition:
+			background-color $hover-transition,
+			color $hover-transition;
+		transition-delay: 0.15s;
 	}
 
 	&__main-wrapper {
@@ -58,12 +143,8 @@
 		}
 
 		@include bp("narrow") {
-			padding: 20px 0;
-			column-gap: 25px;
-		}
-
-		@include bp("large") {
-			column-gap: 50px;
+			padding: 0;
+			column-gap: 10px;
 		}
 
 		@extend %header-footer-wrapper;
@@ -146,13 +227,23 @@
 	}
 
 	&__logo {
+		position: relative;
+
 		.logo {
 			display: block;
 			object-fit: contain;
+			transition: opacity $hover-transition;
+			transition-delay: 0.15s;
 
 			@include bp("mobile") {
 				max-height: 45px;
 				max-width: 150px;
+			}
+
+			&--white {
+				position: absolute;
+				inset: 0;
+				opacity: 0;
 			}
 		}
 	}
@@ -204,7 +295,6 @@
 	}
 
 	&__background {
-		display: none;
 		content: "";
 		position: fixed;
 		z-index: -1;
@@ -212,11 +302,68 @@
 		left: 0;
 		width: 100vw;
 		height: 100vh;
-		background-color: rgba(#000, 50%);
+		background-color: rgba($navy, 50%);
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity $hover-transition;
+		transition-delay: 0.15s;
 
 		&--active {
 			@include bp("narrow") {
-				display: block;
+				opacity: 1;
+			}
+		}
+	}
+
+	&:has(
+		.menu-item-has-children.menu-item--1:hover,
+		.menu-item-has-children.menu-item--1:focus
+	) {
+		&::after {
+			opacity: 1;
+			transition-delay: 0s;
+		}
+
+		#{$header}__logo {
+			.logo {
+				transition-delay: 0s;
+
+				&--colored {
+					opacity: 1;
+				}
+
+				&--white {
+					opacity: 0;
+				}
+			}
+		}
+
+		#{$header}__main {
+			background-color: #fff;
+			color: $text-color;
+			transition-delay: 0s;
+		}
+
+		#{$header}__background {
+			@include bp("narrow") {
+				opacity: 1;
+				transition-delay: 0s;
+			}
+		}
+
+		.menu-button {
+			> a,
+			> span {
+				background-color: $navy;
+				border-color: $navy;
+				color: #fff;
+
+				&:hover,
+				&:focus {
+					background-color: #fff;
+					border-color: #fff;
+					color: $navy;
+				}
 			}
 		}
 	}
@@ -224,4 +371,6 @@
 
 main {
 	background-color: #fff;
+	position: relative;
+	z-index: 1;
 }

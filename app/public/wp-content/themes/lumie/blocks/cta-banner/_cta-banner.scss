@@ -1,0 +1,88 @@
+@use "abstracts" as *;
+
+.cta-banner {
+	&__grid {
+		border-radius: 2px;
+		background-color: $hue-light-2;
+
+		@include bp-only("narrow", "normal") {
+			max-width: 670px;
+			margin: 0 auto;
+		}
+
+		@include bp("normal") {
+			display: grid;
+			justify-content: space-between;
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	&__content {
+		padding: 40px 20px;
+
+		@include bp("narrow") {
+			padding: 80px;
+		}
+
+		.titles {
+			&:not(:last-child) {
+				margin-bottom: pxtoem(24);
+			}
+		}
+
+		.titles {
+			max-width: 460px;
+		}
+
+		.content-layout {
+			max-width: 340px;
+		}
+	}
+
+	&__image-wrapper {
+		position: relative;
+
+		.contact-person {
+			color: #fff;
+			position: absolute;
+			inset: 40px 20px auto;
+
+			@include bp("narrow") {
+				inset: 80px 80px auto;
+			}
+
+			&__cd-item {
+				&::before {
+					color: #fff;
+				}
+			}
+		}
+	}
+
+	&__image {
+		display: block;
+		width: 100%;
+		object-fit: cover;
+		border-radius: 0 0 2px 2px;
+
+		@include bp("normal") {
+			position: absolute;
+			inset: 0;
+			height: 100% !important;
+			border-radius: 0 2px 2px 0;
+		}
+	}
+
+	&__brochure-image {
+		position: absolute;
+		z-index: 1;
+		top: 50%;
+		left: -15px;
+		transform: translateY(-50%);
+		max-width: 75% !important;
+
+		@include bp("normal") {
+			left: -50px;
+		}
+	}
+}

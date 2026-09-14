@@ -1,0 +1,8 @@
+@use "mixins" as *;
+
+/*********************
+FONT FACES
+*********************/
+@include font-face("Poppins", "Poppins-Light", "300", "normal");
+@include font-face("Poppins", "Poppins-Regular", "400", "normal");
+@include font-face("Poppins", "Poppins-Medium", "500", "normal");

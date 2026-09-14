@@ -1,0 +1,50 @@
+@use "abstracts" as *;
+
+.text-cards {
+	&__content {
+		display: grid;
+		gap: 1em 20px;
+		margin-bottom: pxtoem(30);
+
+		@include bp("narrow") {
+			margin-bottom: pxtoem(60);
+			grid-template-columns: minmax(auto, 425px) minmax(auto, 650px);
+			justify-content: space-between;
+		}
+
+		.titles {
+			margin: 0;
+
+			&:only-child {
+				grid-column: 1 / -1;
+				max-width: 650px;
+				margin-inline: auto;
+				text-align: center;
+
+				.main-title::after {
+					margin-inline: auto;
+				}
+			}
+		}
+
+		.content-layout {
+			max-width: 540px;
+			margin-top: 10px;
+			font-size: pxtorem(16);
+		}
+	}
+
+	&__grid {
+		display: grid;
+		gap: 25px 10px;
+
+		@include bp("narrow") {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 30px 20px;
+		}
+
+		@include bp("normal") {
+			gap: 30px;
+		}
+	}
+}

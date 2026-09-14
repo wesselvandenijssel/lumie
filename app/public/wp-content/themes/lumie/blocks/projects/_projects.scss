@@ -1,0 +1,72 @@
+@use "abstracts" as *;
+
+.projects {
+	&__content {
+		text-align: center;
+		max-width: 420px;
+		margin: 0 auto pxtoem(40);
+
+		@include bp("narrow") {
+			margin-bottom: pxtoem(100);
+		}
+
+		.titles {
+			&:not(:last-child) {
+				margin-bottom: pxtoem(24);
+			}
+
+			.main-title {
+				&::after {
+					margin-left: auto;
+					margin-right: auto;
+				}
+			}
+		}
+	}
+
+	&__grid {
+		max-width: 1385px;
+		width: calc(100% - 20px);
+		margin: 0 auto;
+		display: grid;
+		align-items: flex-end;
+		grid-template-columns: 570fr 340fr;
+		gap: pxtoem(40) 20px;
+
+		@include bp("narrow") {
+			grid-template-columns: 135fr 570fr 205fr 340fr 135fr;
+			row-gap: pxtoem(80);
+		}
+
+		.project {
+			&:nth-child(3n + 1) {
+				grid-column: 1 / -1;
+				margin: 0 auto;
+			}
+
+			&:nth-child(3n + 2) {
+				@include bp("narrow") {
+					grid-column: 2;
+				}
+			}
+
+			&:nth-child(3n + 3) {
+				margin-bottom: pxtoem(45);
+
+				@include bp("narrow") {
+					grid-column: 4;
+					margin-bottom: pxtoem(65);
+				}
+			}
+		}
+	}
+
+	.buttons {
+		justify-content: center;
+		margin-top: pxtoem(40);
+
+		@include bp("narrow") {
+			margin-top: pxtoem(50);
+		}
+	}
+}

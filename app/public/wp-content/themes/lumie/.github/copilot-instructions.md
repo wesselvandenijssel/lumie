@@ -290,14 +290,14 @@ $fields = [
 - Use associative arrays with square brackets
 - Follow consistent key naming: `{type}_{section}_{field}`
 - Always include `'key'`, `'name'`, `'label'`, `'type'`
-- Use `__('Label', 'mbeffect')` for internationalization
+- Use `__('Label', 'lumie')` for internationalization
 - Use true/false for boolean values, not strings or integers
 
 ```php
 [
     'key' => 'block_hero_title',
     'name' => 'title',
-    'label' => esc_html__('Title', 'mbeffect'),
+    'label' => esc_html__('Title', 'lumie'),
     'type' => 'text',
     'wrapper' => [
         'width' => '50',
@@ -397,9 +397,9 @@ $breakpoints: (
 
 **Render icons with CSS pseudo-elements, NOT `<i class="fa-...">` elements.** This is the established theme pattern (see `single__author-social-link` in `src/styles/components/blog/_single.scss` and `.review-stars` in `_review-stars.scss`).
 
--   Icon glyphs are centralized as unicode codepoints in `src/styles/partials/_variables.scss` (e.g. `$fa-arrow-right: "\f061";`). Add new icons there.
--   Font families live in `_config.scss`: `$fa` (`"Font Awesome 6 Pro"`) for solid/regular/light, `$fab` (`"Font Awesome 6 Brands"`) for brand icons.
--   Apply an icon on a `::before`/`::after` with `content: $fa-name;` plus `font-family: $fa;` (or `$fab`) and the correct `font-weight` — **weight selects the style**: `900` = solid, `400` = regular/brands, `300` = light.
+- Icon glyphs are centralized as unicode codepoints in `src/styles/partials/_variables.scss` (e.g. `$fa-arrow-right: "\f061";`). Add new icons there.
+- Font families live in `_config.scss`: `$fa` (`"Font Awesome 6 Pro"`) for solid/regular/light, `$fab` (`"Font Awesome 6 Brands"`) for brand icons.
+- Apply an icon on a `::before`/`::after` with `content: $fa-name;` plus `font-family: $fa;` (or `$fab`) and the correct `font-weight` — **weight selects the style**: `900` = solid, `400` = regular/brands, `300` = light.
 
 ```scss
 .block__icon::before {
@@ -413,8 +413,8 @@ $breakpoints: (
 
 **Accessibility:** pseudo-element glyphs are ignored by screen readers, so:
 
--   **Decorative** icons need nothing extra (no stray `<i aria-hidden>`).
--   **Meaningful/interactive** icons (icon-only link/button, ratings) MUST carry a text alternative on the element itself — `aria-label` on the link/button, or `role="img"` + `aria-label` on the wrapper (see `get_review_stars()` in `src/functions/randomness.php`). Never rely on the icon alone to convey meaning.
+- **Decorative** icons need nothing extra (no stray `<i aria-hidden>`).
+- **Meaningful/interactive** icons (icon-only link/button, ratings) MUST carry a text alternative on the element itself — `aria-label` on the link/button, or `role="img"` + `aria-label` on the wrapper (see `get_review_stars()` in `src/functions/randomness.php`). Never rely on the icon alone to convey meaning.
 
 ### TypeScript/JavaScript Standards
 
@@ -466,13 +466,13 @@ blocks/block-name/
 
 ```php
 return [
-    'title' => __('Block Title', 'mbeffect'),
+    'title' => __('Block Title', 'lumie'),
     'category' => 'block-elements',
     'mode' => 'edit',
     'fields' => [
         [
 			'name' => 'field_name',
-            'label' => __('Field Label', 'mbeffect'),
+            'label' => __('Field Label', 'lumie'),
             'type' => 'text',
             // field configuration...
         ],

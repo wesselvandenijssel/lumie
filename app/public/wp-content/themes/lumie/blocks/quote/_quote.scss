@@ -1,0 +1,86 @@
+@use "abstracts" as *;
+
+.quote {
+	position: relative;
+	overflow: hidden;
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 160px;
+		aspect-ratio: 160 / 346;
+		border: 1px solid rgba($hue-accent-1, 0.4);
+		border-radius: 50%;
+		transform: translate(-50%, -50%) rotate(75deg);
+		pointer-events: none;
+
+		@include bp("narrow") {
+			width: 240px;
+		}
+
+		@include bp("normal") {
+			width: 300px;
+		}
+
+		@include bp("large") {
+			width: 337px;
+		}
+	}
+
+	&__wrapper {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 32px;
+		max-width: 940px;
+		margin: 0 auto;
+	}
+
+	&__blockquote {
+		margin: 0 !important;
+		border: none !important;
+		padding: 0 !important;
+		text-align: center;
+		font-family: $poppins;
+
+		p {
+			font-size: pxtorem(28);
+			line-height: 1.1;
+			color: rgba($hue-dark-1, 0.6);
+			margin-bottom: 0 !important;
+
+			@include bp("narrow") {
+				font-size: pxtorem(38);
+			}
+
+			@include bp("normal") {
+				font-size: pxtorem(46);
+			}
+
+			@include bp("large") {
+				font-size: pxtorem(54);
+			}
+		}
+	}
+
+	&__author {
+		text-align: center;
+	}
+
+	&__author-name {
+		font-style: normal;
+		line-height: 1.8;
+		letter-spacing: -0.18px;
+		color: $hue-dark-1;
+	}
+
+	&__author-role {
+		display: block;
+		font-size: pxtorem(14);
+		line-height: 1.4;
+		color: rgba($hue-dark-1, 0.8);
+	}
+}

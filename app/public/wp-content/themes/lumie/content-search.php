@@ -2,7 +2,7 @@
 defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
 /**
- * @package mbeffect
+ * @package lumie
  */
 ?>
 
@@ -14,7 +14,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
 		<div class="buttons search-result__buttons">
 			<span class="btn btn--read-more">
-				<?= esc_html__('Lees meer', 'mbeffect'); ?>
+				<?= esc_html__('Lees meer', 'lumie'); ?>
 			</span>
 		</div>
 	</div>

@@ -25,7 +25,24 @@ class FlexContent {
 		$this->content = '<div class="fold-content">';
 		$this->content .= modify_video_attributes($html);
 		$this->content .= '</div>';
-		$this->content .= '<div class="fold-content-trigger">' . esc_html__('Lees meer', 'mbeffect') . '</div>';
+		$this->content .= '<div class="fold-content-trigger">' . esc_html__('Lees meer', 'lumie') . '</div>';
+	}
+
+	/**
+	 * @param string $quote The quote HTML
+	 * @param string $author (optional) The name of the person being quoted
+	 */
+	function setQuote($quote, $author = '') {
+		if (empty($quote)) return;
+
+		$this->content .= '<blockquote class="content-quote">';
+		$this->content .= '<div class="content-quote__text">' . wp_kses_post($quote) . '</div>';
+
+		if (!empty($author)) {
+			$this->content .= '<cite class="content-quote__author">&ndash; ' . esc_html($author) . '</cite>';
+		}
+
+		$this->content .= '</blockquote>';
 	}
 
 	/**
@@ -94,6 +111,36 @@ class FlexContent {
 	}
 
 	/**
+	 * Renders a label/value list (opening hours, specs) as a definition list.
+	 *
+	 * @param array		$specifications The rows, each with a label and a value
+	 * @param string	$title (optional) Small uppercase heading above the list
+	 */
+	function setSpecifications($specifications, $title = '') {
+		if (empty($specifications)) return;
+
+		$this->content .= '<div class="specifications">';
+
+		if (!empty($title)) {
+			$this->content .= '<p class="specifications__title">' . esc_html($title) . '</p>';
+		}
+
+		$this->content .= '<dl class="specifications__list">';
+
+		foreach ($specifications as $specification) {
+			if (empty($specification['label']) && empty($specification['value'])) continue;
+
+			$this->content .= '<div class="specifications__row">';
+			$this->content .= '<dt class="specifications__label">' . esc_html($specification['label'] ?? '') . '</dt>';
+			$this->content .= '<dd class="specifications__value">' . esc_html($specification['value'] ?? '') . '</dd>';
+			$this->content .= '</div>';
+		}
+
+		$this->content .= '</dl>';
+		$this->content .= '</div>';
+	}
+
+	/**
 	 * @param int	$form_id		The form ID
 	 */
 	function setForm($form_id) {
@@ -103,11 +150,22 @@ class FlexContent {
 	}
 
 	/**
-	 * @param array $buttons The button array
+	 * @param int	$person		The person ID
+	 */
+	function setPerson($person) {
+		ob_start();
+
+		component('contact-person', [
+			'team_member_ID' => $person,
+		]);
+
+		$this->content .= ob_get_clean();
+	}
+
+	/**
+	 * @param array $button	The button array
 	 */
 	function setButtons($buttons) {
-		if (empty($buttons) || !is_array($buttons)) return;
-
 		$buttons = new BlockButtons($buttons);
 		$this->content = $buttons->get_buttons();
 	}

@@ -1,0 +1,45 @@
+name: Approve Bot PR Workflow Runs
+
+on:
+    workflow_run:
+        workflows: ["Cleanup Screenshots After Merge"]
+        types: [completed]
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+jobs:
+    approve:
+        runs-on: ubuntu-latest
+        steps:
+            # GitHub now requires manual approval for workflow runs triggered by
+            # PRs opened by github-actions[bot] (even outside forks). The default
+            # GITHUB_TOKEN cannot approve its own runs, so this uses a PAT from a
+            # real user with write access, stored as the WORKFLOW_APPROVE_PAT secret.
+            - name: Approve pending workflow runs
+              env:
+                  GH_TOKEN: ${{ secrets.WORKFLOW_APPROVE_PAT }}
+              run: |
+                  repo="${{ github.repository }}"
+
+                  for attempt in 1 2; do
+                    run_ids=$(gh api "repos/$repo/actions/runs?status=action_required" --jq '.workflow_runs[].id')
+
+                    if [ -n "$run_ids" ]; then
+                      break
+                    fi
+
+                    echo "No workflow runs awaiting approval yet, retrying..."
+                    sleep 15
+                  done
+
+                  if [ -z "$run_ids" ]; then
+                    echo "No workflow runs awaiting approval"
+                    exit 0
+                  fi
+
+                  for run_id in $run_ids; do
+                    echo "Approving run $run_id"
+                    gh api -X POST "repos/$repo/actions/runs/$run_id/approve"
+                  done

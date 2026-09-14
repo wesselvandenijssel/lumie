@@ -4,7 +4,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 /**
  * The template used for displaying page content in page.php
  *
- * @package mbeffect
+ * @package lumie
  */
 ?>
 

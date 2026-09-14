@@ -1,7 +1,7 @@
 {
-	"name": "base-theme",
+	"name": "lumie",
 	"version": "2.0.0",
-	"description": "WordPress base theme from MB effect",
+	"description": "Lumie WordPress theme",
 	"main": "webpack.config.ts",
 	"scripts": {
 		"build": "cross-env NODE_ENV=production webpack --config webpack.config.ts",
@@ -19,6 +19,7 @@
 		"@fancyapps/ui": "^6.0.17",
 		"browser-sync-webpack-plugin": "^2.3.0",
 		"glob": "^10.3.10",
+		"motion": "^13.0.0",
 		"playwright": "^1.58.2",
 		"stylelint": "^16.2.1",
 		"stylelint-order": "^6.0.4",

@@ -71,7 +71,7 @@ function input_to_button($button, $form) {
 // Translate default form confirmation
 function gform_spam_notification_translation($translated_text, $text, $domain) {
 	$translated_text = match ($translated_text) {
-		'Thanks for contacting us! We will get in touch with you shortly.' => __('Er lijkt iets mis te gaan met de inzending... Probeer het nog eens of neem contact op per telefoon.', 'woocommerce'),
+		'Thanks for contacting us! We will get in touch with you shortly.!' => __('Er lijkt iets mis te gaan met de inzending... Probeer het nog eens of neem contact op per telefoon.', 'woocommerce'),
 		'Bedankt voor je bericht! We zullen binnenkort contact met je opnemen.' => __('Er lijkt iets mis te gaan met de inzending... Probeer het nog eens of neem contact op per telefoon.', 'woocommerce'),
 		default => $translated_text,
 	};
@@ -116,19 +116,20 @@ add_action('wp_footer', 'enqueue_datalayer_script_on_redirect');
 function enqueue_datalayer_script_on_redirect() {
 	$entry_id = get_validated_entry_id();
 
-	if (!$entry_id) return;
-
-	if (!class_exists('GFAPI')) return;
+	if (!$entry_id)
+		return;
 
 	$entry = GFAPI::get_entry($entry_id);
 
-	if (is_wp_error($entry)) return;
+	if (is_wp_error($entry))
+		return;
 
 	$form = GFAPI::get_form($entry['form_id']);
 	$email_fields = [];
 
 	foreach ($form['fields'] as $field) {
-		if ($field->type !== 'email') continue;
+		if ($field->type !== 'email')
+			continue;
 
 		$field_id = $field->id;
 		$label = $field->label;
@@ -141,7 +142,8 @@ function enqueue_datalayer_script_on_redirect() {
 		];
 	}
 
-	if (empty($email_fields)) return;
+	if (empty($email_fields))
+		return;
 
 	$datalayer = [
 		'event' => 'formSubmission',
@@ -172,17 +174,17 @@ function enqueue_datalayer_script_on_redirect() {
 add_filter('gform_custom_merge_tags', 'custom_merge_tags', 10, 4);
 function custom_merge_tags($merge_tags, $form_id, $fields, $element_id) {
 	$merge_tags[] = [
-		'label' => __('Formulier velden ({form_fields exclude="1,3,4"})', 'mbeffect'),
+		'label' => __('Formulier velden ({form_fields exclude="1,3,4"})', 'lumie'),
 		'tag' => '{form_fields}',
 	];
 
 	$merge_tags[] = [
-		'label' => __('Reply mail heading', 'mbeffect'),
+		'label' => __('Reply mail heading', 'lumie'),
 		'tag' => '{reply_heading}',
 	];
 
 	$merge_tags[] = [
-		'label' => __('Reply mail footer', 'mbeffect'),
+		'label' => __('Reply mail footer', 'lumie'),
 		'tag' => '{reply_footer}',
 	];
 
@@ -375,8 +377,6 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 							<td align="left" style="padding:10px 25px;word-break:break-word;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
 							';
 
-	$reply_footer_html = '';
-
 	if (!empty($contact_details_cf['phone']) && !empty($contact_details_cf['phone_link'])) {
 
 		$reply_footer_html = '
@@ -403,10 +403,10 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 	if (!empty($logo)) {
 
 		$logo_path = get_attached_file($logo);
-		$logo_base64 = '';
 
 		if (file_exists($logo_path)) {
 			$logo_mime = mime_content_type($logo_path);
+			$logo_base64 = '';
 
 			if ($logo_mime === 'image/svg+xml') {
 				$logo_data = file_get_contents($logo_path);
@@ -423,7 +423,7 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 								<tbody>
 									<tr>
 									<td style="width:100px;">
-										<img alt="Logo" height="auto" src="' . wp_kses_post($logo_base64) . '" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="100" />
+										<img alt="Logo" height="auto" src="' . $logo_base64 . '" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="100" />
 									</td>
 									</tr>';
 	}

@@ -88,8 +88,6 @@
 
 // Initialize reviews after WordPress and ACF are ready
 add_action('init', function () {
-	if (!function_exists('get_field')) return;
-
 	// Configuration
 	$reviews = get_field('review_settings', 'option');
 
@@ -277,8 +275,6 @@ add_action('init', function () {
 
 // Hook Function to the Scheduled Event
 function fetch_google_reviews_cron() {
-	if (!function_exists('get_field')) return;
-
 	$reviews = get_field('review_settings', 'option');
 
 	if (empty($reviews['enabled']) || empty($reviews['account_id']) || empty($reviews['location_id'])) return;
@@ -297,10 +293,7 @@ function fetch_google_reviews_cron() {
 
 	if ($access_token) {
 		$response = fetch_google_reviews($access_token, $api_base_url, $account_id, $location_id);
-
-		if (!empty($response)) {
-			save_reviews_to_xml($response, $xml_file);
-		}
+		save_reviews_to_xml($response, $xml_file);
 	}
 }
 add_action('fetch_google_reviews_event', 'fetch_google_reviews_cron');
