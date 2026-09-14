@@ -3,9 +3,12 @@
 html,
 body {
 	background: $paper;
+
+	&.no-scroll {
+		overflow: hidden;
+	}
 }
 
-// Broodtekst · light 300 · 17px · line-height 1,65 (brandbook 12.3).
 body {
 	font-family: $poppins;
 	font-size: pxtorem($base-font-size);
@@ -64,8 +67,6 @@ img {
 	max-width: 100%;
 }
 
-// Brandbook 12.1: paper is the page ground; white is reserved for cards,
-// forms and product surfaces that need to lift off it.
 .site {
 	background: $paper;
 

@@ -135,3 +135,145 @@
 .show-popup {
 	cursor: pointer;
 }
+
+// Legally required age gate: no close button, and it must cover the fixed header.
+.popup--age-gate {
+	z-index: 10001;
+	max-width: 460px;
+	border-radius: 10px;
+
+	.popup__content {
+		padding: pxtoem(32) pxtoem(32) pxtoem(28);
+
+		@include bp("mobile") {
+			padding: pxtoem(24) pxtoem(20);
+		}
+
+		&::before {
+			content: "";
+			display: block;
+			width: 28px;
+			height: 28px;
+			margin: 0 auto pxtoem(16);
+			background-color: $navy;
+			mask: assets("sparkle.svg") no-repeat center / contain;
+		}
+	}
+
+	.titles {
+		margin-bottom: pxtoem(10);
+
+		.main-title::after {
+			display: none;
+		}
+	}
+}
+
+.age-gate {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: pxtoem(24);
+
+	&__fields {
+		width: 100%;
+		margin: 0 0 pxtoem(4);
+		padding: 0;
+		border: 0;
+	}
+
+	&__legend {
+		display: block;
+		width: 100%;
+		margin-bottom: pxtoem(14);
+		padding: 0;
+		font-size: pxtorem(19);
+		font-weight: 400;
+		color: $navy;
+		text-align: center;
+	}
+
+	&__row {
+		display: flex;
+		justify-content: center;
+		gap: 10px;
+	}
+
+	&__field {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		width: 80px;
+
+		label {
+			font-size: pxtorem(14);
+			font-weight: 400;
+			color: $slate;
+		}
+
+		&--year {
+			width: 108px;
+		}
+	}
+
+	// Qualified with the element name on purpose: the theme's global field rule is
+	// input[type="text"] in _forms.scss, which scores (0,1,1) and would otherwise
+	// outrank a lone class and paint these white on white.
+	input.age-gate__input {
+		width: 100%;
+		height: 62px;
+		padding: 0 6px;
+		border: 1px solid $mist;
+		border-radius: 8px;
+		background-color: $paper;
+		font-family: inherit;
+		font-size: pxtorem(22);
+		font-weight: 500;
+		line-height: 1;
+		text-align: center;
+		color: $navy;
+		transition: border-color $hover-transition;
+
+		&::placeholder {
+			font-weight: 300;
+			color: $slate;
+			opacity: 1;
+		}
+
+		&:hover {
+			border-color: $slate;
+		}
+
+		&:focus-visible {
+			outline: none;
+			border-color: $navy;
+			box-shadow: 0 0 0 3px rgb(32 42 68 / 12%);
+		}
+	}
+
+	&__error {
+		margin: pxtoem(16) 0 0;
+		font-size: pxtorem(14);
+		font-weight: 400;
+		color: $form-error;
+	}
+
+	&__submit {
+		margin-top: pxtoem(24);
+	}
+
+	&__note {
+		margin: pxtoem(20) 0 0;
+		padding: 7px 18px;
+		border: 1px solid $navy;
+		border-radius: 100px;
+		font-size: pxtorem(14);
+		font-weight: 400;
+		color: $navy;
+	}
+}
+
+body:has(.popup--age-gate.popup--active) .popup-background {
+	z-index: 10000;
+	background: rgb(32 42 68 / 95%);
+}

@@ -3,8 +3,6 @@
 /*********************
 BRAND COLORS — brandbook 12.1
 *********************/
-// The three pastels are surfaces, never type. Navy carries all text, lines and
-// icons, which is what keeps every combination above the 4.5:1 contrast floor.
 $navy: #202a44;
 $zest: #ece68a;
 $peach: #f2a171;
@@ -16,15 +14,11 @@ $white: #fff;
 $slate: #5a6580;
 $mist: #e4e0d8;
 
-// Gradient — brandbook 12.2: top to bottom only, never rotated, never behind text.
 $gradient-brand: linear-gradient(180deg, $zest 0%, $peach 52%, $blush 100%);
 
 /*********************
 COLORS
 *********************/
-// The theme's generic names map onto the brand palette so existing rules pick
-// the new colours up. $hue-accent-1 is navy, not a pastel: it is used as a text
-// colour in 19 places, and a pastel there would drop to about 2:1 contrast.
 $text-color: $navy;
 
 $hue-accent-1: $navy;
@@ -44,8 +38,6 @@ $link-color: $navy;
 $light-gray: $paper;
 $gray: $mist;
 
-// The brandbook's rood-fruit stop (#d64a6e) only reaches 3.8:1 on paper, so it is
-// darkened here to clear 4.5:1 for error text on both paper and white.
 $form-error: #b43e5c;
 
 /*********************

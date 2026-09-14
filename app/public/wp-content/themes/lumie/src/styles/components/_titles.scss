@@ -1,7 +1,5 @@
 @use "abstracts" as *;
 
-// Type scale from brandbook 12.3. The px values there are the desktop sizes, so
-// they land on the "narrow" breakpoint and step down below it.
 h1,
 h2,
 h3,
@@ -17,7 +15,6 @@ h4,
 	margin: 0;
 	color: $navy;
 
-	// Brandbook 12.3: headings are never set in capitals and never italic.
 	text-transform: none;
 	font-style: normal;
 
@@ -26,7 +23,6 @@ h4,
 	}
 }
 
-// Display · medium 500 · 38px · line-height 1.2
 h1,
 .h1 {
 	font-size: pxtorem(30);
@@ -37,7 +33,6 @@ h1,
 	}
 }
 
-// Kop · medium 500 · 26px · line-height 1.3
 h2,
 .h2 {
 	font-size: pxtorem(22);
@@ -48,7 +43,6 @@ h2,
 	}
 }
 
-// Subkop · regular 400 · 19px
 h3,
 .h3 {
 	font-size: pxtorem(18);
@@ -60,8 +54,6 @@ h3,
 	}
 }
 
-// No fourth size in the brandbook — keep it at body size and let the weight
-// carry the hierarchy, so the scale stays within the five defined styles.
 h4,
 .h4 {
 	font-size: pxtorem(17);
@@ -78,8 +70,6 @@ h4,
 		}
 	}
 
-	// Klein · regular 400 · 14px. Slate is the brandbook's colour for labels and
-	// secondary copy; the capitals and letter-spacing are gone with the old scale.
 	.suptitle {
 		font-family: $poppins;
 		font-size: pxtorem(14);
@@ -95,9 +85,6 @@ h4,
 		}
 	}
 
-	// The brand's sparkle, the same mark as the favicon, instead of a plain rule.
-	// Drawn through a mask so the colour stays a token — brandbook 12.1 puts every
-	// line and pictogram in navy.
 	.main-title {
 		&::after {
 			content: "";
@@ -120,7 +107,6 @@ h4,
 		}
 	}
 
-	// Subkop · regular 400 · 19px
 	.subtitle {
 		font-size: pxtorem(17);
 		font-weight: 400;
