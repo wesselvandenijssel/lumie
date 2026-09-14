@@ -45,7 +45,7 @@ function layout(string $layout_name, array $args = []): void {
 
 function get_all_forms() {
 	$forms = [];
-	$forms[''] = esc_html__('Selecteer een formulier', 'mbeffect');
+	$forms[''] = esc_html__('Selecteer een formulier', 'lumie');
 
 	if (!class_exists('GFAPI')) {
 		return $forms;
@@ -76,19 +76,19 @@ function get_general_settings(bool $spacings = true, bool $background = true, $s
 	$general = [
 		'accordiongeneral' => [
 			'type' => 'accordion',
-			'label' => esc_html__('Algemene instellingen', 'mbeffect'),
+			'label' => esc_html__('Algemene instellingen', 'lumie'),
 			'multi_expand' => true,
 		],
 		'spacing_top' => [
-			'label' => esc_html__('Ruimte boven', 'mbeffect'),
+			'label' => esc_html__('Ruimte boven', 'lumie'),
 			'type' => 'select',
 			'ui' => true,
 			'choices' => [
-				'none' => esc_html__('Geen', 'mbeffect'),
-				'small' => esc_html__('Klein', 'mbeffect'),
-				'medium' => esc_html__('Standaard', 'mbeffect'),
-				'large' => esc_html__('Groot', 'mbeffect'),
-				'extra-large' => esc_html__('Extra groot', 'mbeffect'),
+				'none' => esc_html__('Geen', 'lumie'),
+				'small' => esc_html__('Klein', 'lumie'),
+				'medium' => esc_html__('Standaard', 'lumie'),
+				'large' => esc_html__('Groot', 'lumie'),
+				'extra-large' => esc_html__('Extra groot', 'lumie'),
 			],
 			'default_value' => 'medium',
 			'wrapper' => [
@@ -96,15 +96,15 @@ function get_general_settings(bool $spacings = true, bool $background = true, $s
 			]
 		],
 		'spacing_bottom' => [
-			'label' => esc_html__('Ruimte onder', 'mbeffect'),
+			'label' => esc_html__('Ruimte onder', 'lumie'),
 			'type' => 'select',
 			'ui' => true,
 			'choices' => [
-				'none' => esc_html__('Geen', 'mbeffect'),
-				'small' => esc_html__('Klein', 'mbeffect'),
-				'medium' => esc_html__('Standaard', 'mbeffect'),
-				'large' => esc_html__('Groot', 'mbeffect'),
-				'extra-large' => esc_html__('Extra groot', 'mbeffect'),
+				'none' => esc_html__('Geen', 'lumie'),
+				'small' => esc_html__('Klein', 'lumie'),
+				'medium' => esc_html__('Standaard', 'lumie'),
+				'large' => esc_html__('Groot', 'lumie'),
+				'extra-large' => esc_html__('Extra groot', 'lumie'),
 			],
 			'default_value' => 'medium',
 			'wrapper' => [
@@ -131,20 +131,20 @@ function get_general_settings(bool $spacings = true, bool $background = true, $s
 function get_flex_content(string $template_type, string $name = 'content', string $label = ''): array {
 	return [
 		'key' => $template_type . '_content',
-		'label' => $label ?: esc_html__('Content', 'mbeffect'),
+		'label' => $label ?: esc_html__('Content', 'lumie'),
 		'name' => $name,
 		'type' => 'flexible_content',
-		'button_label' => esc_html__('Nieuwe contentregel', 'mbeffect'),
+		'button_label' => esc_html__('Nieuwe contentregel', 'lumie'),
 		'layouts' => [
 			[
 				'key' => $template_type . '_content_layout_title',
 				'name' => 'title',
-				'label' => esc_html__('Titel', 'mbeffect'),
+				'label' => esc_html__('Titel', 'lumie'),
 				'display' => 'block',
 				'sub_fields' => [
 					[
 						'key' => $template_type . '_content_layout_title_title',
-						'label' => esc_html__('Titel', 'mbeffect'),
+						'label' => esc_html__('Titel', 'lumie'),
 						'name' => 'title',
 						'type' => 'clone',
 						'clone' => [
@@ -156,11 +156,11 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 			[
 				'key' => $template_type . '_content_layout_content',
 				'name' => 'content',
-				'label' => esc_html__('Contentvlak', 'mbeffect'),
+				'label' => esc_html__('Contentvlak', 'lumie'),
 				'sub_fields' => [
 					[
 						'key' => $template_type . '_content_layout_content_content',
-						'label' => esc_html__('Contentvlak', 'mbeffect'),
+						'label' => esc_html__('Contentvlak', 'lumie'),
 						'name' => 'content',
 						'type' => 'wysiwyg',
 						'delay' => true,
@@ -170,11 +170,11 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 			[
 				'key' => $template_type . '_content_layout_fold_content',
 				'name' => 'fold_content',
-				'label' => esc_html__('Uitklapbaar contentvlak', 'mbeffect'),
+				'label' => esc_html__('Uitklapbaar contentvlak', 'lumie'),
 				'sub_fields' => [
 					[
 						'key' => $template_type . '_content_layout_fold_content_content',
-						'label' => esc_html__('Uitklapbaar contentvlak', 'mbeffect'),
+						'label' => esc_html__('Uitklapbaar contentvlak', 'lumie'),
 						'name' => 'content',
 						'type' => 'wysiwyg',
 						'delay' => true,
@@ -184,11 +184,11 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 			[
 				'key' => $template_type . '_content_layout_quote',
 				'name' => 'quote',
-				'label' => esc_html__('Citaat', 'mbeffect'),
+				'label' => esc_html__('Citaat', 'lumie'),
 				'sub_fields' => [
 					[
 						'key' => $template_type . '_content_layout_quote_quote',
-						'label' => esc_html__('Citaat', 'mbeffect'),
+						'label' => esc_html__('Citaat', 'lumie'),
 						'name' => 'quote',
 						'type' => 'wysiwyg',
 						'delay' => true,
@@ -197,7 +197,7 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 					],
 					[
 						'key' => $template_type . '_content_layout_quote_author',
-						'label' => esc_html__('Naam', 'mbeffect'),
+						'label' => esc_html__('Naam', 'lumie'),
 						'name' => 'author',
 						'type' => 'text',
 					],
@@ -206,11 +206,11 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 			[
 				'key' => $template_type . '_content_layout_image',
 				'name' => 'image',
-				'label' => esc_html__('Afbeelding', 'mbeffect'),
+				'label' => esc_html__('Afbeelding', 'lumie'),
 				'sub_fields' => [
 					[
 						'key' => $template_type . '_content_layout_image_image',
-						'label' => esc_html__('Afbeelding', 'mbeffect'),
+						'label' => esc_html__('Afbeelding', 'lumie'),
 						'name' => 'image',
 						'type' => 'image',
 						'mime_types' => 'svg, png, jpg, jpeg, webp',
@@ -221,19 +221,19 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 			[
 				'key' => $template_type . '_content_layout_logos',
 				'name' => 'logos',
-				'label' => esc_html__('Logo\'s', 'mbeffect'),
+				'label' => esc_html__('Logo\'s', 'lumie'),
 				'sub_fields' => [
 					[
 						'key' => $template_type . '_content_layout_logos_logos',
-						'label' => esc_html__('Logo\'s', 'mbeffect'),
+						'label' => esc_html__('Logo\'s', 'lumie'),
 						'name' => 'logos',
 						'type' => 'repeater',
-						'button_label' => esc_html__('Nieuw logo', 'mbeffect'),
+						'button_label' => esc_html__('Nieuw logo', 'lumie'),
 						'sub_fields' => [
 							[
 
 								'key' => $template_type . '_content_layout_logos_logos_logo',
-								'label' => esc_html__('Logo', 'mbeffect'),
+								'label' => esc_html__('Logo', 'lumie'),
 								'name' => 'logo',
 								'type' => 'image',
 								'mime_types' => 'svg, png, jpg, jpeg, webp',
@@ -245,7 +245,7 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 							[
 
 								'key' => $template_type . '_content_layout_logos_logos_link',
-								'label' => esc_html__('Link', 'mbeffect'),
+								'label' => esc_html__('Link', 'lumie'),
 								'name' => 'link',
 								'type' => 'link',
 								'wrapper' => [
@@ -259,19 +259,19 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 			[
 				'key' => $template_type . '_content_layout_accordions',
 				'name' => 'accordions',
-				'label' => esc_html__('Accordions', 'mbeffect'),
+				'label' => esc_html__('Accordions', 'lumie'),
 				'sub_fields' => [
 					[
 						'key' => $template_type . '_content_layout_accordions_accordions',
-						'label' => esc_html__('Accordions', 'mbeffect'),
+						'label' => esc_html__('Accordions', 'lumie'),
 						'name' => 'accordions',
 						'type' => 'repeater',
-						'button_label' => esc_html__('Nieuwe accordion', 'mbeffect'),
+						'button_label' => esc_html__('Nieuwe accordion', 'lumie'),
 						'sub_fields' => [
 							[
 
 								'key' => $template_type . '_content_layout_accordions_accordions_question',
-								'label' => esc_html__('Vraag', 'mbeffect'),
+								'label' => esc_html__('Vraag', 'lumie'),
 								'name' => 'question',
 								'type' => 'text',
 								'wrapper' => [
@@ -281,7 +281,7 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 							[
 
 								'key' => $template_type . '_content_layout_accordions_accordions_answer',
-								'label' => esc_html__('Antwoord', 'mbeffect'),
+								'label' => esc_html__('Antwoord', 'lumie'),
 								'name' => 'answer',
 								'type' => 'wysiwyg',
 								'wrapper' => [
@@ -291,7 +291,7 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 							[
 
 								'key' => $template_type . '_content_layout_accordions_accordions_open_by_default',
-								'label' => esc_html__('Standaard geopend', 'mbeffect'),
+								'label' => esc_html__('Standaard geopend', 'lumie'),
 								'name' => 'open_by_default',
 								'type' => 'true_false',
 								'ui' => true,
@@ -304,25 +304,25 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 			[
 				'key' => $template_type . '_content_layout_specifications',
 				'name' => 'specifications',
-				'label' => esc_html__('Specificaties', 'mbeffect'),
+				'label' => esc_html__('Specificaties', 'lumie'),
 				'sub_fields' => [
 					[
 						'key' => $template_type . '_content_layout_specifications_title',
-						'label' => esc_html__('Boventitel', 'mbeffect'),
+						'label' => esc_html__('Boventitel', 'lumie'),
 						'name' => 'title',
 						'type' => 'text',
 					],
 					[
 						'key' => $template_type . '_content_layout_specifications_specifications',
-						'label' => esc_html__('Specificaties', 'mbeffect'),
+						'label' => esc_html__('Specificaties', 'lumie'),
 						'name' => 'specifications',
 						'type' => 'repeater',
 						'layout' => 'table',
-						'button_label' => esc_html__('Nieuwe regel', 'mbeffect'),
+						'button_label' => esc_html__('Nieuwe regel', 'lumie'),
 						'sub_fields' => [
 							[
 								'key' => $template_type . '_content_layout_specifications_specifications_label',
-								'label' => esc_html__('Label', 'mbeffect'),
+								'label' => esc_html__('Label', 'lumie'),
 								'name' => 'label',
 								'type' => 'text',
 								'wrapper' => [
@@ -331,7 +331,7 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 							],
 							[
 								'key' => $template_type . '_content_layout_specifications_specifications_value',
-								'label' => esc_html__('Waarde', 'mbeffect'),
+								'label' => esc_html__('Waarde', 'lumie'),
 								'name' => 'value',
 								'type' => 'text',
 								'wrapper' => [
@@ -345,11 +345,11 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 			[
 				'key' => $template_type . '_content_layout_form',
 				'name' => 'form',
-				'label' => esc_html__('Formulier', 'mbeffect'),
+				'label' => esc_html__('Formulier', 'lumie'),
 				'sub_fields' => [
 					[
 						'key' => $template_type . '_content_layout_form_form_id',
-						'label' => esc_html__('Formulier', 'mbeffect'),
+						'label' => esc_html__('Formulier', 'lumie'),
 						'name' => 'form_id',
 						'type' => 'select',
 						'allow_null' => 1,
@@ -360,11 +360,11 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 			[
 				'key' => $template_type . '_content_layout_person',
 				'name' => 'person',
-				'label' => esc_html__('Contactpersoon', 'mbeffect'),
+				'label' => esc_html__('Contactpersoon', 'lumie'),
 				'sub_fields' => [
 					[
 						'key' => $template_type . '_content_layout_person_person',
-						'label' => esc_html__('Contactpersoon', 'mbeffect'),
+						'label' => esc_html__('Contactpersoon', 'lumie'),
 						'name' => 'person',
 						'type' => 'post_object',
 						'post_type' => [
@@ -377,11 +377,11 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 			[
 				'key' => $template_type . '_content_layout_buttons',
 				'name' => 'buttons_clone',
-				'label' => esc_html__('Button(s)', 'mbeffect'),
+				'label' => esc_html__('Button(s)', 'lumie'),
 				'sub_fields' => [
 					[
 						'key' => $template_type . '_content_layout_buttons_buttons',
-						'label' => esc_html__('Button(s)', 'mbeffect'),
+						'label' => esc_html__('Button(s)', 'lumie'),
 						'name' => 'buttons',
 						'type' => 'clone',
 						'clone' => [

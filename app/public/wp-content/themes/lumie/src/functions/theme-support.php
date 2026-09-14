@@ -4,11 +4,11 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 // wp menus
 add_theme_support('menus');
 register_nav_menus([
-	'primary' => esc_html__('Hoofdmenu', 'mbeffect'),
-	'primary_mobile' => esc_html__('Hoofdmenu mobiel', 'mbeffect'),
-	'sitemap' => esc_html__('Sitemap menu', 'mbeffect'),
-	'subfooter' => esc_html__('Subfooter menu', 'mbeffect'),
-	'top' => esc_html__('Topbar menu', 'mbeffect'),
+	'primary' => esc_html__('Hoofdmenu', 'lumie'),
+	'primary_mobile' => esc_html__('Hoofdmenu mobiel', 'lumie'),
+	'sitemap' => esc_html__('Sitemap menu', 'lumie'),
+	'subfooter' => esc_html__('Subfooter menu', 'lumie'),
+	'top' => esc_html__('Topbar menu', 'lumie'),
 ]);
 
 // Populate header block with menus
@@ -18,7 +18,7 @@ add_filter('acf/load_field/key=field_623313af249bc', 'acf_load_menu_choices');
 add_theme_support(
 	'custom-background',
 	apply_filters(
-		'mbeffect_custom_background_args',
+		'lumie_custom_background_args',
 		[
 			'default-color' => 'ffffff',
 			'default-image' => '',

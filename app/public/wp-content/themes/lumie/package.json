@@ -1,7 +1,7 @@
 {
-	"name": "base-theme",
+	"name": "lumie",
 	"version": "2.0.0",
-	"description": "WordPress base theme from MB effect",
+	"description": "Lumie WordPress theme",
 	"main": "webpack.config.ts",
 	"scripts": {
 		"build": "cross-env NODE_ENV=production webpack --config webpack.config.ts",

@@ -32,7 +32,7 @@ function notification() {
 				<?= $notification_cf['text']; ?>
 			</div>
 			<div class="notification__close">
-				<?= esc_html__('sluiten', 'mbeffect'); ?>
+				<?= esc_html__('sluiten', 'lumie'); ?>
 				<div class="notification__close-icon"></div>
 			</div>
 		</div>

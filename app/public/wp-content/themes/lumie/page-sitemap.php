@@ -14,7 +14,7 @@ get_header();
 			get_template_part('content', 'page');
 		endwhile;
 		?>
-		<h1><?= esc_html__('Sitemap', 'mbeffect'); ?></h1>
+		<h1><?= esc_html__('Sitemap', 'lumie'); ?></h1>
 		<?php
 		wp_nav_menu([
 			'theme_location' => 'sitemap',

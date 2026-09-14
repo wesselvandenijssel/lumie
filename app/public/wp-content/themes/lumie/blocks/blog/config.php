@@ -5,12 +5,12 @@ return [
 	'fields' => [
 
 		'accordioncontent' => [
-			'label' => esc_html__('Inhoud instellingen', 'mbeffect'),
+			'label' => esc_html__('Inhoud instellingen', 'lumie'),
 			'type' => 'accordion',
 		],
 
 		'title' => [
-			'label' => esc_html__('Titel', 'mbeffect'),
+			'label' => esc_html__('Titel', 'lumie'),
 			'type' => 'clone',
 			'clone' => [
 				'clone_titles_block_title',
@@ -19,13 +19,13 @@ return [
 		],
 
 		'selection' => [
-			'label' => esc_html__('Selectie', 'mbeffect'),
+			'label' => esc_html__('Selectie', 'lumie'),
 			'type' => 'button_group',
 			'choices' => [
-				'newest' => esc_html__('Nieuwste', 'mbeffect'),
-				'random' => esc_html__('Willekeurig', 'mbeffect'),
-				'specific' => esc_html__('Specifiek', 'mbeffect'),
-				'category' => esc_html__('Categorie', 'mbeffect'),
+				'newest' => esc_html__('Nieuwste', 'lumie'),
+				'random' => esc_html__('Willekeurig', 'lumie'),
+				'specific' => esc_html__('Specifiek', 'lumie'),
+				'category' => esc_html__('Categorie', 'lumie'),
 			],
 			'wrapper' => [
 				'width' => '50',
@@ -33,7 +33,7 @@ return [
 		],
 
 		'posts' => [
-			'label' => esc_html__('Berichten', 'mbeffect'),
+			'label' => esc_html__('Berichten', 'lumie'),
 			'type' => 'post_object',
 			'post_type' => [
 				'post',
@@ -52,7 +52,7 @@ return [
 		],
 
 		'category' => [
-			'label' => esc_html__('Categorie', 'mbeffect'),
+			'label' => esc_html__('Categorie', 'lumie'),
 			'type' => 'taxonomy',
 			'taxonomy' => 'category',
 			'field_type' => 'select',
@@ -69,8 +69,8 @@ return [
 		],
 
 		'amount' => [
-			'label' => esc_html__('Aantal', 'mbeffect'),
-			'instructions' => wp_kses_post(__('-1 voor alle berichten', 'mbeffect')),
+			'label' => esc_html__('Aantal', 'lumie'),
+			'instructions' => wp_kses_post(__('-1 voor alle berichten', 'lumie')),
 			'type' => 'number',
 			'default_value' => 3,
 			'conditional_logic' => [

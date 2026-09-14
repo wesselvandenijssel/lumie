@@ -4,7 +4,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 /**
  * The template used for displaying page content in author.php
  *
- * @package mbeffect
+ * @package lumie
  */
 
 ?>
@@ -102,8 +102,8 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 				<div class="titles">
 					<h1 class="main-title default">
 						<?= !empty(get_the_author_meta('user_firstname'))
-							? sprintf(esc_html__('Blogs van %s', 'mbeffect'), esc_html(get_the_author_meta('user_firstname')))
-							: esc_html__('Blogs', 'mbeffect'); ?>
+							? sprintf(esc_html__('Blogs van %s', 'lumie'), esc_html(get_the_author_meta('user_firstname')))
+							: esc_html__('Blogs', 'lumie'); ?>
 					</h1>
 				</div>
 

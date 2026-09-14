@@ -5,24 +5,24 @@ return [
 	'fields' => [
 
 		'accordioncontent' => [
-			'label' => esc_html__('Inhoud instellingen', 'mbeffect'),
+			'label' => esc_html__('Inhoud instellingen', 'lumie'),
 			'type' => 'accordion',
 		],
 
 		'text' => [
-			'label' => esc_html__('Label', 'mbeffect'),
+			'label' => esc_html__('Label', 'lumie'),
 			'type' => 'text',
 		],
 
 		'logos' => [
-			'label' => esc_html__('Logo\'s', 'mbeffect'),
+			'label' => esc_html__('Logo\'s', 'lumie'),
 			'type' => 'repeater',
 			'layout' => 'block',
-			'button_label' => esc_html__('Nieuw logo', 'mbeffect'),
+			'button_label' => esc_html__('Nieuw logo', 'lumie'),
 			'sub_fields' => [
 				[
 					'key' => 'field_logo-banner_logos_logo',
-					'label' => esc_html__('Logo', 'mbeffect'),
+					'label' => esc_html__('Logo', 'lumie'),
 					'name' => 'logo',
 					'type' => 'image',
 					'mime_types' => 'svg, png, jpg, jpeg, webp',
@@ -33,7 +33,7 @@ return [
 				],
 				[
 					'key' => 'field_logo-banner_logos_link',
-					'label' => esc_html__('Link', 'mbeffect'),
+					'label' => esc_html__('Link', 'lumie'),
 					'name' => 'link',
 					'type' => 'link',
 					'wrapper' => [

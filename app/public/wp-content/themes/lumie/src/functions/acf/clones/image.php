@@ -21,7 +21,7 @@ function hook_image_methods(): void {
 
 	$fields = [
 		[
-			'label' => esc_html__('Afbeelding', 'mbeffect'),
+			'label' => esc_html__('Afbeelding', 'lumie'),
 			'type' => 'image',
 			'name' => 'image',
 			'return_format' => 'id',
@@ -32,7 +32,7 @@ function hook_image_methods(): void {
 
 	if (!empty(get_field('image_settings_group', 'options')['thumbnails'])) {
 		$fields[] = [
-			'label' => esc_html__('Afbeelding formaat', 'mbeffect'),
+			'label' => esc_html__('Afbeelding formaat', 'lumie'),
 			'type' => 'select',
 			'name' => 'image_size',
 			'key' => 'clone_image_image_group_image_size',
@@ -44,10 +44,10 @@ function hook_image_methods(): void {
 	if (function_exists('acf_add_local_field_group')) :
 		acf_add_local_field_group([
 			'key' => 'clone_image',
-			'title' => esc_html__('Kloon: Image', 'mbeffect'),
+			'title' => esc_html__('Kloon: Image', 'lumie'),
 			'fields' => [
 				[
-					'label' => esc_html__('Afbeelding', 'mbeffect'),
+					'label' => esc_html__('Afbeelding', 'lumie'),
 					'type' => 'group',
 					'name' => 'image_group',
 					'key' => 'clone_image_image_group',

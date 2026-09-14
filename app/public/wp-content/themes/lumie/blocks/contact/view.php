@@ -34,7 +34,7 @@ echo !is_admin() ? '[raw]' : '';
 
 			<div class="contact__form">
 				<?php if ($has_tabs) : ?>
-					<div class="contact__tab-buttons" role="tablist" aria-label="<?= esc_attr__('Formulieren', 'mbeffect'); ?>">
+					<div class="contact__tab-buttons" role="tablist" aria-label="<?= esc_attr__('Formulieren', 'lumie'); ?>">
 						<?php foreach ($forms as $index => $form_row) : ?>
 							<button class="contact__tab-button<?= $form_row['name'] === $active_tab ? ' contact__tab-button--active' : ''; ?>"
 								type="button"
@@ -114,7 +114,7 @@ echo !is_admin() ? '[raw]' : '';
 						} ?>
 
 						<div class="contact__cd">
-							<h3 class="contact__cd-title"><?= esc_html__('Bezoekadres', 'mbeffect'); ?></h3>
+							<h3 class="contact__cd-title"><?= esc_html__('Bezoekadres', 'lumie'); ?></h3>
 
 							<div class="contact__cd-grid">
 								<?php if (!empty($contact_details_cf['address_data']['link']['url'])) : ?>

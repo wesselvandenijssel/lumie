@@ -46,7 +46,7 @@ if (!empty($link['url'])) {
 			<?php endif; ?>
 
 			<?php if (!empty($link['url'])) : ?>
-				<span class="text-card__link"><?= esc_html__('Bekijk meer', 'mbeffect'); ?></span>
+				<span class="text-card__link"><?= esc_html__('Bekijk meer', 'lumie'); ?></span>
 			<?php endif; ?>
 		</div>
 

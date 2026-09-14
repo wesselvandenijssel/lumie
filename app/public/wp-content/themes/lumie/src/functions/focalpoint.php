@@ -72,7 +72,7 @@ function hook_focus_point_methods(): void {
  * Enqueue scripts for managing focus points.
  */
 function enqueue_scripts(): void {
-	wp_enqueue_script('mbeffect-focuspoint', get_stylesheet_directory_uri() . '/src/scripts/files/admin/focuspoint.js', ['jquery', 'media-editor'], '', true);
+	wp_enqueue_script('lumie-focuspoint', get_stylesheet_directory_uri() . '/src/scripts/files/admin/focuspoint.js', ['jquery', 'media-editor'], '', true);
 }
 
 /**

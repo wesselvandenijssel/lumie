@@ -6,7 +6,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
  *
  * Contains the closing of the #content div and all content after
  *
- * @package mbeffect
+ * @package lumie
  */
 ?>
 <div class="popups">

@@ -9,7 +9,7 @@ if (empty($popup_id)) return;
 ?>
 
 <div class="popup" data-popup="<?= esc_attr($popup_id); ?>" role="dialog" aria-modal="true" aria-labelledby="popup-title-<?= esc_attr($popup_id); ?>">
-	<div class="popup__close" role="button" tabindex="0" aria-label="<?= esc_attr__('Sluit popup', 'mbeffect'); ?>"></div>
+	<div class="popup__close" role="button" tabindex="0" aria-label="<?= esc_attr__('Sluit popup', 'lumie'); ?>"></div>
 	<div class="popup__content">
 		<div class="text-center">
 			<?php if (!empty($title)) : ?>

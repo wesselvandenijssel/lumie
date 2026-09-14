@@ -3,17 +3,17 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 
 add_theme_support('woocommerce');
 
-// function mbeffect_wrapper_start() {
+// function lumie_wrapper_start() {
 // 	echo '<section class="pad--top-medium pad--bottom-medium"><div class="columns-12 center">';
 // }
 // remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10 );
-// add_action( 'woocommerce_before_main_content', 'mbeffect_wrapper_start', 10 );
+// add_action( 'woocommerce_before_main_content', 'lumie_wrapper_start', 10 );
 
-// function mbeffect_wrapper_end() {
+// function lumie_wrapper_end() {
 // 	echo '</div></div></section>';
 // }
 // remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
-// add_action( 'woocommerce_after_main_content', 'mbeffect_wrapper_end', 10 );
+// add_action( 'woocommerce_after_main_content', 'lumie_wrapper_end', 10 );
 
 function columns_start() {
 	echo '<div class="columns-12 center">';

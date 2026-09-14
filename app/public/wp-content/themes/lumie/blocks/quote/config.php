@@ -5,12 +5,12 @@ return [
 	'fields' => [
 
 		'accordioncontent' => [
-			'label' => esc_html__('Inhoud instellingen', 'mbeffect'),
+			'label' => esc_html__('Inhoud instellingen', 'lumie'),
 			'type' => 'accordion',
 		],
 
 		'title' => [
-			'label' => esc_html__('Citaat', 'mbeffect'),
+			'label' => esc_html__('Citaat', 'lumie'),
 			'type' => 'wysiwyg',
 			'delay' => true,
 			'media_upload' => false,
@@ -19,7 +19,7 @@ return [
 		],
 
 		'author_name' => [
-			'label' => esc_html__('Naam', 'mbeffect'),
+			'label' => esc_html__('Naam', 'lumie'),
 			'type' => 'text',
 			'wrapper' => [
 				'width' => '50',
@@ -27,7 +27,7 @@ return [
 		],
 
 		'author_role' => [
-			'label' => esc_html__('Functie', 'mbeffect'),
+			'label' => esc_html__('Functie', 'lumie'),
 			'type' => 'text',
 			'wrapper' => [
 				'width' => '50',

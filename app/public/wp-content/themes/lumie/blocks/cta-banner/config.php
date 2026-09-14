@@ -5,12 +5,12 @@ return [
 	'fields' => [
 
 		'accordioncontent' => [
-			'label' => esc_html__('Inhoud instellingen', 'mbeffect'),
+			'label' => esc_html__('Inhoud instellingen', 'lumie'),
 			'type' => 'accordion',
 		],
 
 		'title' => [
-			'label' => esc_html__('Titel', 'mbeffect'),
+			'label' => esc_html__('Titel', 'lumie'),
 			'type' => 'clone',
 			'clone' => [
 				'clone_titles_block_title',
@@ -21,26 +21,26 @@ return [
 		get_flex_content('field_cta-banner_content'),
 
 		'image' => [
-			'label' => esc_html__('Afbeelding', 'mbeffect'),
+			'label' => esc_html__('Afbeelding', 'lumie'),
 			'type' => 'image',
 			'return_format' => 'id',
 			'mime_types' => 'png,jpeg,jpg,webp',
 		],
 
 		'type' => [
-			'label' => esc_html__('Type', 'mbeffect'),
+			'label' => esc_html__('Type', 'lumie'),
 			'type' => 'select',
 			'ui' => true,
 			'choices' => [
-				'none' => esc_html__('Geen', 'mbeffect'),
-				'brochure' => esc_html__('Brochure', 'mbeffect'),
-				'person' => esc_html__('Contactpersoon', 'mbeffect'),
+				'none' => esc_html__('Geen', 'lumie'),
+				'brochure' => esc_html__('Brochure', 'lumie'),
+				'person' => esc_html__('Contactpersoon', 'lumie'),
 			],
 			'default_value' => 'none',
 		],
 
 		'brochure_image' => [
-			'label' => esc_html__('Afbeelding brochure', 'mbeffect'),
+			'label' => esc_html__('Afbeelding brochure', 'lumie'),
 			'type' => 'image',
 			'return_format' => 'id',
 			'mime_types' => 'png,jpeg,jpg,webp',
@@ -57,7 +57,7 @@ return [
 		],
 
 		'person' => [
-			'label' => esc_html__('Contactpersoon', 'mbeffect'),
+			'label' => esc_html__('Contactpersoon', 'lumie'),
 			'type' => 'post_object',
 			'post_type' => [
 				'team_member',

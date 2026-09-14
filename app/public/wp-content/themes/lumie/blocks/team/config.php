@@ -5,12 +5,12 @@ return [
 	'fields' => [
 
 		'accordioncontent' => [
-			'label' => esc_html__('Inhoud instellingen', 'mbeffect'),
+			'label' => esc_html__('Inhoud instellingen', 'lumie'),
 			'type' => 'accordion',
 		],
 
 		'title' => [
-			'label' => esc_html__('Titel', 'mbeffect'),
+			'label' => esc_html__('Titel', 'lumie'),
 			'type' => 'clone',
 			'clone' => [
 				'clone_titles_block_title',
@@ -19,7 +19,7 @@ return [
 		],
 
 		'content' => [
-			'label' => esc_html__('Tekst', 'mbeffect'),
+			'label' => esc_html__('Tekst', 'lumie'),
 			'type' => 'wysiwyg',
 			'tabs' => 'visual',
 			'toolbar' => 'basic',
@@ -28,11 +28,11 @@ return [
 		],
 
 		'selection' => [
-			'label' => esc_html__('Selectie', 'mbeffect'),
+			'label' => esc_html__('Selectie', 'lumie'),
 			'type' => 'button_group',
 			'choices' => [
-				'all' => esc_html__('Alle teamleden', 'mbeffect'),
-				'specific' => esc_html__('Specifiek', 'mbeffect'),
+				'all' => esc_html__('Alle teamleden', 'lumie'),
+				'specific' => esc_html__('Specifiek', 'lumie'),
 			],
 			'default_value' => 'all',
 			'wrapper' => [
@@ -41,7 +41,7 @@ return [
 		],
 
 		'team_members' => [
-			'label' => esc_html__('Teamleden', 'mbeffect'),
+			'label' => esc_html__('Teamleden', 'lumie'),
 			'type' => 'post_object',
 			'post_type' => [
 				'team_member',

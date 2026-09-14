@@ -4,7 +4,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 /**
  * The Sidebar containing the main widget areas.
  *
- * @package mbeffect
+ * @package lumie
  */
 ?>
 <div id="secondary" class="widget-area columns-4 gutter">

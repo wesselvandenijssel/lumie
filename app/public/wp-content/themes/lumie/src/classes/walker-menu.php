@@ -44,7 +44,7 @@ class Walker_Primary_Menu extends Walker {
 		$class_names = implode(' ', apply_filters('nav_menu_submenu_css_class', $classes, $args, $depth));
 		$class_names = $class_names ? ' class="' . esc_attr($class_names) . '"' : '';
 
-		$output .= "{$n}{$indent}<div class='submenu-toggle'></div><ul$class_names>{$n}<li class='back-to-previous'><span>" . esc_html__('Terug', 'mbeffect') . "</span></li>";
+		$output .= "{$n}{$indent}<div class='submenu-toggle'></div><ul$class_names>{$n}<li class='back-to-previous'><span>" . esc_html__('Terug', 'lumie') . "</span></li>";
 	}
 
 	/**

@@ -10,7 +10,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
  * E.g., it puts together the home page when no home.php file exists.
  * Learn more: http://codex.wordpress.org/Template_Hierarchy
  *
- * @package mbeffect
+ * @package lumie
  */
 
 if (!function_exists('get_field')) {

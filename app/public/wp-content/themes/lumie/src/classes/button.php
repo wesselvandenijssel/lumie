@@ -82,7 +82,7 @@ class BlockButton {
 			'<div class="%s show-popup" data-popup="%s" role="button" tabindex="0" aria-haspopup="true" aria-label="%s">%s</div>',
 			esc_attr($this->type),
 			esc_attr($this->popup),
-			sprintf(esc_attr__('Open %s', 'mbeffect'), esc_attr($this->popup)),
+			sprintf(esc_attr__('Open %s', 'lumie'), esc_attr($this->popup)),
 			wp_kses_post($this->text)
 		);
 	}
@@ -204,7 +204,7 @@ class BlockButtons {
 					);
 
 					$this->content .= '<div class="phone">';
-					$this->content .= wp_kses_post(sprintf(__('of bel %s', 'mbeffect'), $phone_link));
+					$this->content .= wp_kses_post(sprintf(__('of bel %s', 'lumie'), $phone_link));
 					$this->content .= '</div>';
 					break;
 			}

@@ -6,7 +6,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
  *
  * Displays all of the <head> section and everything up till <main id="content">
  *
- * @package mbeffect
+ * @package lumie
  */
 ?>
 
@@ -81,7 +81,7 @@ $contact_details = get_field('contact_details', 'options');
 							]); ?>
 
 							<?php if (!empty($contact_details['phone_link']['url']) && !empty($contact_details['phone'])) : ?>
-								<a href="<?= esc_url($contact_details['phone_link']['url']); ?>" title="<?= esc_attr($contact_details['phone_link']['title'] ?? ''); ?>" class="header__icon header__icon--phone" aria-label="<?= esc_attr($contact_details['phone_link']['title'] ?? __('Bel ons', 'mbeffect')); ?>">
+								<a href="<?= esc_url($contact_details['phone_link']['url']); ?>" title="<?= esc_attr($contact_details['phone_link']['title'] ?? ''); ?>" class="header__icon header__icon--phone" aria-label="<?= esc_attr($contact_details['phone_link']['title'] ?? __('Bel ons', 'lumie')); ?>">
 									<span class="mobile-none"><?= esc_html($contact_details['phone']); ?></span>
 								</a>
 							<?php endif; ?>
@@ -95,7 +95,7 @@ $contact_details = get_field('contact_details', 'options');
 					<?= get_logo(['class' => 'header__logo']); ?>
 
 					<nav id="site-navigation" class="main-navigation" itemscope itemtype="http://schema.org/SiteNavigationElement">
-						<div class="menu-toggle" role="button" tabindex="0" aria-label="<?= esc_attr__('Open menu', 'mbeffect'); ?>" aria-expanded="false">
+						<div class="menu-toggle" role="button" tabindex="0" aria-label="<?= esc_attr__('Open menu', 'lumie'); ?>" aria-expanded="false">
 							<div class="menu-toggle__lines">
 								<div class="menu-toggle__burger">
 									<span class="menu-toggle__burger-line menu-toggle__burger-line--first"></span>
@@ -107,9 +107,9 @@ $contact_details = get_field('contact_details', 'options');
 									<span class="menu-toggle__close-line menu-toggle__close-line--last"></span>
 								</div>
 							</div>
-							<span class="menu-toggle__text"><?= esc_html__('Menu', 'mbeffect'); ?></span>
+							<span class="menu-toggle__text"><?= esc_html__('Menu', 'lumie'); ?></span>
 						</div>
-						<a class="skip-link screen-reader-text" href="#content"><?= esc_html__('Skip to content', 'mbeffect'); ?></a>
+						<a class="skip-link screen-reader-text" href="#content"><?= esc_html__('Skip to content', 'lumie'); ?></a>
 
 						<div class="main-navigation__content">
 							<?php wp_nav_menu(

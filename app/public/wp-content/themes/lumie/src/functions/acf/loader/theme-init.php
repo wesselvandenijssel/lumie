@@ -11,7 +11,7 @@ if (class_exists('ACF') && function_exists('acf_register_block')) {
 			[
 				[
 					'slug' => 'block-elements',
-					'title' => esc_html__('MB blokken', 'mbeffect'),
+					'title' => esc_html__('MB blokken', 'lumie'),
 				],
 			]
 		);
@@ -155,7 +155,7 @@ if (class_exists('ACF') && function_exists('acf_register_block')) {
 
 		$group = [
 			'key' => sprintf('field_group_%s', $block['name']),
-			'title' => sprintf('%s: %s', esc_html__('Block', 'mbeffect'), $block['title']),
+			'title' => sprintf('%s: %s', esc_html__('Block', 'lumie'), $block['title']),
 			'category' => 'block-elements',
 			'fields' => [
 				[

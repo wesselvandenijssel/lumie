@@ -25,7 +25,7 @@ class FlexContent {
 		$this->content = '<div class="fold-content">';
 		$this->content .= modify_video_attributes($html);
 		$this->content .= '</div>';
-		$this->content .= '<div class="fold-content-trigger">' . esc_html__('Lees meer', 'mbeffect') . '</div>';
+		$this->content .= '<div class="fold-content-trigger">' . esc_html__('Lees meer', 'lumie') . '</div>';
 	}
 
 	/**

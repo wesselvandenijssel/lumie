@@ -5,12 +5,12 @@ return [
 	'fields' => [
 
 		'accordioncontent' => [
-			'label' => esc_html__('Inhoud instellingen', 'mbeffect'),
+			'label' => esc_html__('Inhoud instellingen', 'lumie'),
 			'type' => 'accordion',
 		],
 
 		'title' => [
-			'label' => esc_html__('Titel', 'mbeffect'),
+			'label' => esc_html__('Titel', 'lumie'),
 			'type' => 'clone',
 			'clone' => [
 				'clone_titles_block_title',
@@ -19,21 +19,21 @@ return [
 		],
 
 		'forms' => [
-			'label' => esc_html__('Formulieren', 'mbeffect'),
+			'label' => esc_html__('Formulieren', 'lumie'),
 			'type' => 'repeater',
-			'button_label' => esc_html__('Nieuw formulier', 'mbeffect'),
+			'button_label' => esc_html__('Nieuw formulier', 'lumie'),
 			'sub_fields' => [
 				[
 					'key' => 'field_contact_forms_name',
 					'name' => 'name',
-					'label' => esc_html__('Naam', 'mbeffect'),
+					'label' => esc_html__('Naam', 'lumie'),
 					'type' => 'text',
 				],
 				[
 					'key' => 'field_contact_forms_form',
 					'name' => 'form',
-					'label' => esc_html__('Formulier', 'mbeffect'),
-					'instructions' => wp_kses_post(__('Selecteer hier het formulier', 'mbeffect')),
+					'label' => esc_html__('Formulier', 'lumie'),
+					'instructions' => wp_kses_post(__('Selecteer hier het formulier', 'lumie')),
 					'type' => 'select',
 					'choices' => get_all_forms(),
 				],
@@ -41,20 +41,20 @@ return [
 		],
 
 		'selection' => [
-			'label' => esc_html__('Selectie', 'mbeffect'),
+			'label' => esc_html__('Selectie', 'lumie'),
 			'type' => 'radio',
 			'choices' => [
-				'none' => esc_html__('Geen', 'mbeffect'),
-				'contact_details' => esc_html__('Contactgegevens', 'mbeffect'),
-				'content' => esc_html__('Content', 'mbeffect'),
+				'none' => esc_html__('Geen', 'lumie'),
+				'contact_details' => esc_html__('Contactgegevens', 'lumie'),
+				'content' => esc_html__('Content', 'lumie'),
 			],
 		],
 
 		'order' => [
-			'label' => esc_html__('Volgorde', 'mbeffect'),
+			'label' => esc_html__('Volgorde', 'lumie'),
 			'type' => 'true_false',
-			'ui_on_text' => esc_html__('Formulier links, content rechts', 'mbeffect'),
-			'ui_off_text' => esc_html__('Formulier rechts, content links', 'mbeffect'),
+			'ui_on_text' => esc_html__('Formulier links, content rechts', 'lumie'),
+			'ui_off_text' => esc_html__('Formulier rechts, content links', 'lumie'),
 			'ui' => true,
 			'conditional_logic' => [
 				[
@@ -68,7 +68,7 @@ return [
 		],
 
 		'content' => [
-			'label' => esc_html__('Content', 'mbeffect'),
+			'label' => esc_html__('Content', 'lumie'),
 			'type' => 'group',
 			'sub_fields' => [
 				get_flex_content('field_contact_content_content'),

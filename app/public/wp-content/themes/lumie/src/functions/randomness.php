@@ -12,7 +12,7 @@ add_filter('widget_text', 'do_shortcode');
  * @param string $content The content to filter
  * @return string Content with paragraph tags removed from images
  */
-function mbeffect_filter_ptags_on_images($content) {
+function lumie_filter_ptags_on_images($content) {
 	return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
 }
 
@@ -22,7 +22,7 @@ function mbeffect_filter_ptags_on_images($content) {
  * @param string $more The default more string
  * @return string Custom more string
  */
-function mbeffect_excerpt_more($more) {
+function lumie_excerpt_more($more) {
 	global $post;
 	return '...';
 }
@@ -186,7 +186,7 @@ function get_review_stars($score): string {
 
 	$rating = $half_units / 2;
 	$rating_label = str_replace('.', ',', (string) $rating);
-	$label = esc_html(sprintf(__('Beoordeling: %s van de 5 sterren', 'mbeffect'), $rating_label));
+	$label = esc_html(sprintf(__('Beoordeling: %s van de 5 sterren', 'lumie'), $rating_label));
 
 	return '<span class="review-stars" role="img" aria-label="' . esc_attr($label) . '">' . $stars . '</span>';
 }
@@ -297,8 +297,8 @@ function encrypt_decrypt($action, $string): string|false {
 function custom_mce_color_options($init) {
 	// Define custom colors with their corresponding HEX codes and names.
 	$custom_colors = '
-        "332B28", "' . __('Donkerbruin', 'mbeffect') . '",
-        "332B2899", "' . __('Donkerbruin 60%', 'mbeffect') . '",
+        "332B28", "' . __('Donkerbruin', 'lumie') . '",
+        "332B2899", "' . __('Donkerbruin 60%', 'lumie') . '",
     ';
 
 	// Build the color grid palette using custom colors
@@ -387,7 +387,7 @@ function reading_time($post_ID) {
 	$reading_time = max(1, ceil($word_count / 200));
 
 	return sprintf(
-		esc_html__('%s min', 'mbeffect'),
+		esc_html__('%s min', 'lumie'),
 		$reading_time
 	);
 }

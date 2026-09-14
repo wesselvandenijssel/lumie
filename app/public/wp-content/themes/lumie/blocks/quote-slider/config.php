@@ -5,20 +5,20 @@ return [
 	'fields' => [
 
 		'accordioncontent' => [
-			'label' => esc_html__('Inhoud instellingen', 'mbeffect'),
+			'label' => esc_html__('Inhoud instellingen', 'lumie'),
 			'type' => 'accordion',
 		],
 
 		'quotes' => [
-			'label' => esc_html__('Citaten', 'mbeffect'),
+			'label' => esc_html__('Citaten', 'lumie'),
 			'type' => 'repeater',
 			'layout' => 'block',
-			'button_label' => esc_html__('Nieuw citaat', 'mbeffect'),
+			'button_label' => esc_html__('Nieuw citaat', 'lumie'),
 			'min' => 1,
 			'sub_fields' => [
 				[
 					'key' => 'field_quote-slider_quotes_team_member',
-					'label' => esc_html__('Teamlid', 'mbeffect'),
+					'label' => esc_html__('Teamlid', 'lumie'),
 					'name' => 'team_member',
 					'type' => 'post_object',
 					'post_type' => [
@@ -32,7 +32,7 @@ return [
 				],
 				[
 					'key' => 'field_quote-slider_quotes_project',
-					'label' => esc_html__('Favoriete project', 'mbeffect'),
+					'label' => esc_html__('Favoriete project', 'lumie'),
 					'name' => 'project',
 					'type' => 'post_object',
 					'post_type' => [
@@ -46,7 +46,7 @@ return [
 				],
 				[
 					'key' => 'field_quote-slider_quotes_quote',
-					'label' => esc_html__('Citaat', 'mbeffect'),
+					'label' => esc_html__('Citaat', 'lumie'),
 					'name' => 'quote',
 					'type' => 'wysiwyg',
 					'delay' => true,

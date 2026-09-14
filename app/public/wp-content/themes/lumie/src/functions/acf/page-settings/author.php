@@ -4,13 +4,13 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 if (function_exists('acf_add_local_field_group')) :
 	acf_add_local_field_group([
 		'key' => 'settings_author',
-		'title' => esc_html__('Auteur instellingen', 'mbeffect'),
+		'title' => esc_html__('Auteur instellingen', 'lumie'),
 		'fields' => [
 			[
 				'key' => 'settings_author_image',
 				'name' => 'image',
 				'type' => 'image',
-				'label' => esc_html__('Portretfoto', 'mbeffect'),
+				'label' => esc_html__('Portretfoto', 'lumie'),
 				'return_format' => 'id',
 				'mime_types' => 'jpg,jpeg,png,webp,svg',
 				'wrapper' => [
@@ -21,7 +21,7 @@ if (function_exists('acf_add_local_field_group')) :
 				'key' => 'settings_author_excerpt',
 				'name' => 'excerpt',
 				'type' => 'textarea',
-				'label' => esc_html__('Korte bio', 'mbeffect'),
+				'label' => esc_html__('Korte bio', 'lumie'),
 				'wrapper' => [
 					'width' => '75',
 				],

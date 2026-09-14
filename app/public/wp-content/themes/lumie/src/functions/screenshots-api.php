@@ -7,7 +7,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
  * Provides endpoints for the screenshot generation system to discover
  * which blocks are used on which pages without requiring browser crawling.
  *
- * @package mbeffect
+ * @package lumie
  */
 
 /**
@@ -45,7 +45,7 @@ function screenshots_permission_callback(WP_REST_Request $request): bool|WP_Erro
 	if (!hash_equals($expected, (string) $provided)) {
 		return new WP_Error(
 			'rest_forbidden',
-			esc_html__('Invalid or missing screenshots API key.', 'mbeffect'),
+			esc_html__('Invalid or missing screenshots API key.', 'lumie'),
 			['status' => 401]
 		);
 	}

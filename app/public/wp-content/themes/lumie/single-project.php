@@ -4,7 +4,7 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 /**
  * The Template for displaying all single projects.
  *
- * @package mbeffect
+ * @package lumie
  */
 
 if (!function_exists('get_field')) {

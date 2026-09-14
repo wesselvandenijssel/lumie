@@ -58,11 +58,11 @@ echo !is_admin() ? '[raw]' : '';
 
 							<?php if (!empty($project_image)) : ?>
 								<div class="quote-slider__favorite">
-									<a class="quote-slider__favorite-label" href="<?= esc_url(get_permalink($project_id)); ?>" aria-label="<?= esc_attr__('Bekijk dit project', 'mbeffect'); ?>" title="<?= esc_attr(get_the_title($project_id)); ?>">
-										<?= esc_html__('Favoriete project', 'mbeffect'); ?>
+									<a class="quote-slider__favorite-label" href="<?= esc_url(get_permalink($project_id)); ?>" aria-label="<?= esc_attr__('Bekijk dit project', 'lumie'); ?>" title="<?= esc_attr(get_the_title($project_id)); ?>">
+										<?= esc_html__('Favoriete project', 'lumie'); ?>
 									</a>
 
-									<a href="<?= esc_url(get_permalink($project_id)); ?>" class="quote-slider__favorite-link" title="<?= esc_attr(get_the_title($project_id)); ?>" aria-label="<?= esc_attr__('Bekijk dit project', 'mbeffect'); ?>">
+									<a href="<?= esc_url(get_permalink($project_id)); ?>" class="quote-slider__favorite-link" title="<?= esc_attr(get_the_title($project_id)); ?>" aria-label="<?= esc_attr__('Bekijk dit project', 'lumie'); ?>">
 										<span class="quote-slider__favorite-title"><?= esc_html(get_the_title($project_id)); ?></span>
 										<?= wp_get_attachment_image($project_image, 'Project Portrait', false, ['class' => 'quote-slider__favorite-image', 'loading' => 'lazy']); ?>
 									</a>

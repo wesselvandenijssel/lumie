@@ -349,14 +349,14 @@ $fields = [
 - Use associative arrays with square brackets
 - Follow consistent key naming: `{type}_{section}_{field}`
 - Always include `'key'`, `'name'`, `'label'`, `'type'`
-- Use `__('Label', 'mbeffect')` for internationalization
+- Use `__('Label', 'lumie')` for internationalization
 - Use true/false for boolean values, not strings or integers
 
 ```php
 [
     'key' => 'block_hero_title',
     'name' => 'title',
-    'label' => esc_html__('Title', 'mbeffect'),
+    'label' => esc_html__('Title', 'lumie'),
     'type' => 'text',
     'wrapper' => [
         'width' => '50',
@@ -525,13 +525,13 @@ blocks/block-name/
 
 ```php
 return [
-    'title' => __('Block Title', 'mbeffect'),
+    'title' => __('Block Title', 'lumie'),
     'category' => 'block-elements',
     'mode' => 'edit',
     'fields' => [
         [
             'name' => 'field_name',
-            'label' => __('Field Label', 'mbeffect'),
+            'label' => __('Field Label', 'lumie'),
             'type' => 'text',
             // field configuration...
         ],
