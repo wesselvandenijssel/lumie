@@ -53,6 +53,30 @@ jobs:
                       exit 1
                   fi
 
+            # Also before the build, so a bad key or known_hosts fails in seconds
+            # rather than after several minutes of compiling.
+            - name: Configure SSH
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+              run: |
+                  mkdir -p ~/.ssh
+                  printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+                  chmod 600 ~/.ssh/deploy_key
+                  printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+                  chmod 644 ~/.ssh/known_hosts
+
+                  # Catch a malformed or truncated secret here rather than at rsync time,
+                  # where ssh falls back to password auth and reports a confusing error.
+                  if ! ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null 2>&1; then
+                      echo "::error::SSH_PRIVATE_KEY is not a valid unencrypted private key. Store the full contents of the private key file, including the BEGIN and END lines, and make sure it has no passphrase."
+                      exit 1
+                  fi
+                  if [ ! -s ~/.ssh/known_hosts ]; then
+                      echo "::error::SSH_KNOWN_HOSTS is empty. Set it to the output of: ssh-keyscan -p <port> <host>"
+                      exit 1
+                  fi
+
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
@@ -103,28 +127,6 @@ jobs:
                       fi
                   done
                   echo "All expected build artefacts present."
-
-            - name: Configure SSH
-              run: |
-                  mkdir -p ~/.ssh
-                  printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
-                  chmod 600 ~/.ssh/deploy_key
-                  printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-                  chmod 644 ~/.ssh/known_hosts
-
-                  # Catch a malformed or truncated secret here rather than at rsync time,
-                  # where ssh falls back to password auth and reports a confusing error.
-                  if ! ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null 2>&1; then
-                      echo "::error::SSH_PRIVATE_KEY is not a valid unencrypted private key. Store the full contents of the private key file, including the BEGIN and END lines, and make sure it has no passphrase."
-                      exit 1
-                  fi
-                  if [ ! -s ~/.ssh/known_hosts ]; then
-                      echo "::error::SSH_KNOWN_HOSTS is empty. Set it to the output of: ssh-keyscan -p <port> <host>"
-                      exit 1
-                  fi
-              env:
-                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-                  SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
 
             - name: Deploy theme
               env:
