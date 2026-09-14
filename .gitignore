@@ -4,7 +4,6 @@
 
 # Automatically created folders
 node_modules
-package-lock.json
 yarn-error.log
 
 /conf
