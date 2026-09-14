@@ -37,6 +37,26 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
+            # A secret pasted with a trailing newline splits the remote rsync command
+            # across two lines, which the remote shell then fails to execute. Clean the
+            # value once here and let every later step inherit it.
+            - name: Normalize deployment target
+              env:
+                  RAW_REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
+              run: |
+                  clean="$(printf '%s' "$RAW_REMOTE_PATH" | tr -d '\r\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+                  clean="${clean%/}"
+                  if [ -z "$clean" ]; then
+                      echo "::error::REMOTE_PATH secret is empty."
+                      exit 1
+                  fi
+                  case "$clean" in
+                      /*|"~"*) ;;
+                      *) echo "::error::REMOTE_PATH must be an absolute path (or start with ~)." ; exit 1 ;;
+                  esac
+                  echo "REMOTE_PATH=$clean" >> "$GITHUB_ENV"
+                  echo "Deployment target normalized (${#clean} characters)."
+
             # Fail fast: the build takes minutes, so verify the server is reachable first.
             # GitHub runners have no IPv6, hence the forced IPv4 check.
             - name: Check server reachability
@@ -136,10 +156,10 @@ jobs:
                   SSH_HOST: ${{ secrets.SSH_HOST }}
                   SSH_USER: ${{ secrets.SSH_USER }}
                   SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
-                  REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
+                  DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '1' || '' }}
               run: |
                   ssh -4 -i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes \
-                      "$SSH_USER@$SSH_HOST" "REMOTE_PATH='$REMOTE_PATH' PLUGINS='$PLUGINS' FA_KIT='$FA_KIT' bash -s" <<'REMOTE'
+                      "$SSH_USER@$SSH_HOST" "REMOTE_PATH='$REMOTE_PATH' PLUGINS='$PLUGINS' FA_KIT='$FA_KIT' DRY_RUN='$DRY_RUN' bash -s" <<'REMOTE'
                   set -e
 
                   # A secret can carry a trailing slash, stray whitespace, a CR from a
@@ -180,6 +200,15 @@ jobs:
                   if [ ! -f "$REMOTE_PATH/wp-config.php" ] && [ ! -d "$REMOTE_PATH/wp-includes" ]; then
                       echo "::warning::No WordPress installation found at REMOTE_PATH (no wp-config.php, no wp-includes). The theme will be uploaded but nothing will use it until WordPress is installed there."
                   fi
+                  # A dry run must not touch the server, so only report what would be made.
+                  if [ -n "$DRY_RUN" ]; then
+                      echo "--- Dry run: directories that would be created ---"
+                      for d in "$REMOTE_PATH/wp-content/themes/lumie/$FA_KIT" $(for p in $PLUGINS; do echo "$REMOTE_PATH/wp-content/plugins/$p"; done); do
+                          [ -d "$d" ] && echo "exists:  $d" || echo "created: $d"
+                      done
+                      exit 0
+                  fi
+
                   # node_modules is excluded from the theme sync, so the kit's parent
                   # directories are never created by it.
                   mkdir -p "$REMOTE_PATH/wp-content/themes/lumie/$FA_KIT"
@@ -194,7 +223,6 @@ jobs:
                   SSH_HOST: ${{ secrets.SSH_HOST }}
                   SSH_USER: ${{ secrets.SSH_USER }}
                   SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
-                  REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
                   DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '--dry-run' || '' }}
               run: |
                   rsync -rlptzv --delete $DRY_RUN \
@@ -209,7 +237,6 @@ jobs:
                   SSH_HOST: ${{ secrets.SSH_HOST }}
                   SSH_USER: ${{ secrets.SSH_USER }}
                   SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
-                  REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
                   DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '--dry-run' || '' }}
               run: |
                   rsync -rlptzv --delete $DRY_RUN \
@@ -222,7 +249,6 @@ jobs:
                   SSH_HOST: ${{ secrets.SSH_HOST }}
                   SSH_USER: ${{ secrets.SSH_USER }}
                   SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
-                  REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
                   DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '--dry-run' || '' }}
               run: |
                   for plugin in $PLUGINS; do
@@ -242,7 +268,6 @@ jobs:
                   SSH_HOST: ${{ secrets.SSH_HOST }}
                   SSH_USER: ${{ secrets.SSH_USER }}
                   SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
-                  REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
               run: |
                   ssh -4 -i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=20 "$SSH_USER@$SSH_HOST" \
                       "cd '$REMOTE_PATH' && wp cache flush --skip-plugins --skip-themes && wp rocket clean --confirm" \
