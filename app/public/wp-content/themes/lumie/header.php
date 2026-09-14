@@ -129,15 +129,15 @@ $contact_details = get_field('contact_details', 'options');
 								]
 							); ?>
 
-							<?php if (!empty(get_field('header', 'options')['buttons'])) : ?>
-								<div class="header__buttons">
-									<?php $content = new FlexContent();
+							<?php
+							$header_options = get_field('header', 'options') ?: [];
+							if (!empty($header_options['buttons_group'])) :
+								$content = new FlexContent();
 
-									$content->setButtons(get_field('header', 'options')['buttons']);
+								$content->setButtons($header_options['buttons_group']);
 
-									echo $content->getContent(); ?>
-								</div>
-							<?php endif; ?>
+								echo $content->getContent();
+							endif; ?>
 						</div>
 					</nav>
 				</div>

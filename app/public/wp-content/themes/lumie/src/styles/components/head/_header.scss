@@ -234,10 +234,10 @@
 			object-fit: contain;
 			transition: opacity $hover-transition;
 			transition-delay: 0.15s;
+			max-width: 150px;
 
 			@include bp("mobile") {
 				max-height: 45px;
-				max-width: 150px;
 			}
 
 			&--white {
