@@ -142,7 +142,16 @@ jobs:
                       "$SSH_USER@$SSH_HOST" "REMOTE_PATH='$REMOTE_PATH' PLUGINS='$PLUGINS' FA_KIT='$FA_KIT' bash -s" <<'REMOTE'
                   set -e
                   if [ ! -d "$REMOTE_PATH" ]; then
-                      echo "::error::REMOTE_PATH does not exist on the server: $REMOTE_PATH"
+                      echo "REMOTE_PATH does not exist: $REMOTE_PATH"
+                      echo "--- Home directory ($HOME) ---"
+                      ls -la "$HOME" 2>/dev/null | head -25
+                      if [ -d "$HOME/domains" ]; then
+                          echo "--- $HOME/domains ---"
+                          ls -la "$HOME/domains" 2>/dev/null
+                      fi
+                      echo "--- WordPress installations found under $HOME ---"
+                      find "$HOME" -maxdepth 5 -name wp-config.php 2>/dev/null | head -10 || true
+                      echo "::error::REMOTE_PATH does not exist on the server. Set the secret to the WordPress root — one of the paths listed above, typically /home/<user>/domains/<domain>/public_html"
                       exit 1
                   fi
                   echo "--- Contents of $REMOTE_PATH ---"
