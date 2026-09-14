@@ -7,7 +7,7 @@ on:
     workflow_dispatch:
         inputs:
             dry_run:
-                description: "Dry run — show what rsync would transfer without writing anything"
+                description: "Dry run — report what would change without writing anything"
                 type: boolean
                 default: false
 
@@ -26,56 +26,42 @@ jobs:
         env:
             THEME_SRC: app/public/wp-content/themes/lumie
             PLUGINS_SRC: app/public/wp-content/plugins
-            # Custom plugins tracked in this repo (space separated).
             PLUGINS: "lumie-customer-journey lumie-widgets"
-            # Only the Font Awesome kit is deployed from node_modules — enqueueing.php
-            # loads its CSS (and filemtime's it) straight out of node_modules.
+            # enqueueing.php loads this kit's CSS straight from node_modules and filemtime()s
+            # it, so this one package ships even though node_modules as a whole does not.
             FA_KIT: node_modules/@awesome.me/kit-47e6dc046c
             FONTAWESOME_TOKEN: ${{ secrets.FONTAWESOME_TOKEN }}
+            SSH_HOST: ${{ secrets.SSH_HOST }}
+            SSH_USER: ${{ secrets.SSH_USER }}
+            SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+            # -4: runners have no IPv6, so a host with an AAAA record otherwise fails with
+            # "Network is unreachable". BatchMode: without it ssh falls back to a password
+            # prompt, which reports key problems as auth failures.
+            SSH_OPTS: -4 -i ~/.ssh/deploy_key -p ${{ secrets.SSH_PORT || '22' }} -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes
+            DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '--dry-run' || '' }}
 
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            # A secret pasted with a trailing newline splits the remote rsync command
-            # across two lines, which the remote shell then fails to execute. Clean the
-            # value once here and let every later step inherit it.
+            # A secret pasted with a trailing newline splits the remote rsync command across
+            # two lines, which the remote shell cannot execute. Clean the value once here
+            # and let every later step inherit it.
             - name: Normalize deployment target
               env:
                   RAW_REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
               run: |
                   clean="$(printf '%s' "$RAW_REMOTE_PATH" | tr -d '\r\n' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
                   clean="${clean%/}"
-                  if [ -z "$clean" ]; then
-                      echo "::error::REMOTE_PATH secret is empty."
-                      exit 1
-                  fi
                   case "$clean" in
-                      /*|"~"*) ;;
-                      *) echo "::error::REMOTE_PATH must be an absolute path (or start with ~)." ; exit 1 ;;
+                      "") echo "::error::REMOTE_PATH secret is empty." ; exit 1 ;;
+                      /* | "~"*) ;;
+                      *) echo "::error::REMOTE_PATH must be an absolute path, e.g. /home/<user>/domains/<domain>/public_html" ; exit 1 ;;
                   esac
                   echo "REMOTE_PATH=$clean" >> "$GITHUB_ENV"
-                  echo "Deployment target normalized (${#clean} characters)."
 
-            # Fail fast: the build takes minutes, so verify the server is reachable first.
-            # GitHub runners have no IPv6, hence the forced IPv4 check.
-            - name: Check server reachability
-              env:
-                  SSH_HOST: ${{ secrets.SSH_HOST }}
-                  SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
-              run: |
-                  echo "Resolving $SSH_HOST ..."
-                  getent ahostsv4 "$SSH_HOST" || echo "::warning::No IPv4 address resolved."
-                  if nc -z -4 -w 20 "$SSH_HOST" "$SSH_PORT"; then
-                      echo "Reachable over IPv4 on port $SSH_PORT."
-                  else
-                      echo "::error::Cannot reach $SSH_HOST on port $SSH_PORT over IPv4 from this runner. The host is likely firewalled to specific IPs — ask the hosting provider to allow GitHub Actions, or deploy from a self-hosted runner."
-                      exit 1
-                  fi
-
-            # Also before the build, so a bad key or known_hosts fails in seconds
-            # rather than after several minutes of compiling.
-            - name: Configure SSH
+            # The build takes minutes, so reject a bad key or an unreachable server first.
+            - name: Verify credentials and server
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                   SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
@@ -86,14 +72,16 @@ jobs:
                   printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
                   chmod 644 ~/.ssh/known_hosts
 
-                  # Catch a malformed or truncated secret here rather than at rsync time,
-                  # where ssh falls back to password auth and reports a confusing error.
                   if ! ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null 2>&1; then
-                      echo "::error::SSH_PRIVATE_KEY is not a valid unencrypted private key. Store the full contents of the private key file, including the BEGIN and END lines, and make sure it has no passphrase."
+                      echo "::error::SSH_PRIVATE_KEY is not a valid unencrypted private key. Store the full private key file, BEGIN and END lines included, with no passphrase."
                       exit 1
                   fi
                   if [ ! -s ~/.ssh/known_hosts ]; then
                       echo "::error::SSH_KNOWN_HOSTS is empty. Set it to the output of: ssh-keyscan -p <port> <host>"
+                      exit 1
+                  fi
+                  if ! nc -z -4 -w 20 "$SSH_HOST" "$SSH_PORT"; then
+                      echo "::error::Cannot reach $SSH_HOST on port $SSH_PORT over IPv4 from this runner."
                       exit 1
                   fi
 
@@ -111,9 +99,7 @@ jobs:
                   tools: composer:v2
                   coverage: none
 
-            # The committed .npmrc has a hard-coded Font Awesome token. Overwrite it in CI
-            # so the private kit is fetched with the rotated secret instead. npm expands
-            # ${FONTAWESOME_TOKEN} at read time, so the token never lands on disk.
+            # npm expands ${FONTAWESOME_TOKEN} at read time, so the token never lands on disk.
             - name: Configure private npm registry
               working-directory: ${{ env.THEME_SRC }}
               run: |
@@ -146,69 +132,28 @@ jobs:
                           exit 1
                       fi
                   done
-                  echo "All expected build artefacts present."
 
-            # rsync does not create missing parent directories, so a fresh server
-            # fails with "mkdir ... No such file or directory". Create the targets
-            # up front and report what is actually at REMOTE_PATH.
+            # rsync runs with --delete, so a misdirected REMOTE_PATH would erase whatever is
+            # there. Confirm the target is a WordPress root before anything is written, and
+            # create the directories rsync itself will not create.
             - name: Prepare remote directories
-              env:
-                  SSH_HOST: ${{ secrets.SSH_HOST }}
-                  SSH_USER: ${{ secrets.SSH_USER }}
-                  SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
-                  DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '1' || '' }}
               run: |
-                  ssh -4 -i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes \
-                      "$SSH_USER@$SSH_HOST" "REMOTE_PATH='$REMOTE_PATH' PLUGINS='$PLUGINS' FA_KIT='$FA_KIT' DRY_RUN='$DRY_RUN' bash -s" <<'REMOTE'
+                  ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" \
+                      "REMOTE_PATH='$REMOTE_PATH' PLUGINS='$PLUGINS' FA_KIT='$FA_KIT' DRY_RUN='$DRY_RUN' bash -s" <<'REMOTE'
                   set -e
-
-                  # A secret can carry a trailing slash, stray whitespace, a CR from a
-                  # Windows paste, or a leading ~ that stays literal inside quotes.
-                  REMOTE_PATH="$(printf '%s' "$REMOTE_PATH" | tr -d '\r' | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
-                  case "$REMOTE_PATH" in
-                      "~/"*) REMOTE_PATH="$HOME/${REMOTE_PATH#\~/}" ;;
-                      "~") REMOTE_PATH="$HOME" ;;
-                  esac
-                  while [ "${REMOTE_PATH%/}" != "$REMOTE_PATH" ] && [ "$REMOTE_PATH" != "/" ]; do
-                      REMOTE_PATH="${REMOTE_PATH%/}"
-                  done
+                  case "$REMOTE_PATH" in "~/"*) REMOTE_PATH="$HOME/${REMOTE_PATH#\~/}" ;; esac
 
                   if [ ! -d "$REMOTE_PATH" ]; then
-                      echo "REMOTE_PATH does not exist: $REMOTE_PATH"
-                      echo "--- Diagnostics ---"
-                      echo "length after cleaning: ${#REMOTE_PATH}"
-                      echo "first character: $(printf '%s' "$REMOTE_PATH" | cut -c1)"
-                      echo "absolute path: $(case "$REMOTE_PATH" in /*) echo yes ;; *) echo "NO - must start with /" ;; esac)"
-                      echo "HOME is: $HOME"
-                      echo "--- Candidates that do exist ---"
-                      for c in "$HOME/domains"/*/public_html; do
-                          [ -d "$c" ] && echo "EXISTS: $c$([ -f "$c/wp-config.php" ] && echo '  (WordPress)')"
-                      done
-                      echo "--- Home directory ($HOME) ---"
-                      ls -la "$HOME" 2>/dev/null | head -25
-                      if [ -d "$HOME/domains" ]; then
-                          echo "--- $HOME/domains ---"
-                          ls -la "$HOME/domains" 2>/dev/null
-                      fi
-                      echo "--- WordPress installations found under $HOME ---"
-                      find "$HOME" -maxdepth 5 -name wp-config.php 2>/dev/null | head -10 || true
-                      echo "::error::REMOTE_PATH does not exist on the server. Set the secret to the WordPress root — one of the paths listed above, typically /home/<user>/domains/<domain>/public_html"
+                      echo "::error::REMOTE_PATH does not exist on the server: $REMOTE_PATH"
                       exit 1
                   fi
-                  echo "--- Contents of $REMOTE_PATH ---"
-                  ls -la "$REMOTE_PATH" | head -25
-                  # Hard stop, not a warning. rsync runs with --delete, so pointing at
-                  # anything other than a real WordPress root destroys whatever is there.
                   if [ ! -f "$REMOTE_PATH/wp-config.php" ] || [ ! -d "$REMOTE_PATH/wp-includes" ]; then
-                      echo "::error::REMOTE_PATH is not a WordPress root (wp-config.php and/or wp-includes missing): $REMOTE_PATH. Refusing to deploy, because rsync --delete would erase its contents."
+                      echo "::error::REMOTE_PATH is not a WordPress root (wp-config.php and/or wp-includes missing). Refusing to deploy, because rsync --delete would erase its contents."
                       exit 1
                   fi
-                  # A dry run must not touch the server, so only report what would be made.
+
                   if [ -n "$DRY_RUN" ]; then
-                      echo "--- Dry run: directories that would be created ---"
-                      for d in "$REMOTE_PATH/wp-content/themes/lumie/$FA_KIT" $(for p in $PLUGINS; do echo "$REMOTE_PATH/wp-content/plugins/$p"; done); do
-                          [ -d "$d" ] && echo "exists:  $d" || echo "created: $d"
-                      done
+                      echo "Dry run: leaving the server untouched."
                       exit 0
                   fi
 
@@ -218,64 +163,43 @@ jobs:
                   for plugin in $PLUGINS; do
                       mkdir -p "$REMOTE_PATH/wp-content/plugins/$plugin"
                   done
-                  echo "--- Remote directories ready ---"
                   REMOTE
 
             - name: Deploy theme
-              env:
-                  SSH_HOST: ${{ secrets.SSH_HOST }}
-                  SSH_USER: ${{ secrets.SSH_USER }}
-                  SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
-                  DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '--dry-run' || '' }}
               run: |
                   rsync -rlptzv --delete $DRY_RUN \
                       --exclude-from=.github/deploy-excludes.txt \
-                      -e "ssh -4 -i ~/.ssh/deploy_key -p $SSH_PORT -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes" \
+                      -e "ssh $SSH_OPTS" \
                       "$THEME_SRC/" \
                       "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/themes/lumie/"
 
-            # Deployed separately because node_modules is excluded from the theme sync.
             - name: Deploy Font Awesome kit
-              env:
-                  SSH_HOST: ${{ secrets.SSH_HOST }}
-                  SSH_USER: ${{ secrets.SSH_USER }}
-                  SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
-                  DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '--dry-run' || '' }}
               run: |
                   rsync -rlptzv --delete $DRY_RUN \
-                      -e "ssh -4 -i ~/.ssh/deploy_key -p $SSH_PORT -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes" \
+                      -e "ssh $SSH_OPTS" \
                       "$THEME_SRC/$FA_KIT/" \
                       "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/themes/lumie/$FA_KIT/"
 
             - name: Deploy custom plugins
-              env:
-                  SSH_HOST: ${{ secrets.SSH_HOST }}
-                  SSH_USER: ${{ secrets.SSH_USER }}
-                  SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
-                  DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '--dry-run' || '' }}
               run: |
                   for plugin in $PLUGINS; do
-                      echo "--- Deploying $plugin ---"
+                      echo "--- $plugin ---"
                       rsync -rlptzv --delete $DRY_RUN \
                           --exclude-from=.github/deploy-excludes.txt \
-                          -e "ssh -4 -i ~/.ssh/deploy_key -p $SSH_PORT -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes" \
+                          -e "ssh $SSH_OPTS" \
                           "$PLUGINS_SRC/$plugin/" \
                           "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/plugins/$plugin/"
                   done
 
-            # Excluded files are protected from rsync --delete, so anything uploaded to the
-            # server by other means (a manual FTP push, an older deploy) stays there forever
-            # and is publicly fetchable. Remove the known development and secret files.
+            # Excluded paths are protected from rsync --delete, so anything put on the server
+            # by other means (a manual FTP push, an older deploy) would stay there forever and
+            # remain publicly fetchable — including secrets.
             - name: Remove development files from the server
               if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
-              env:
-                  SSH_HOST: ${{ secrets.SSH_HOST }}
-                  SSH_USER: ${{ secrets.SSH_USER }}
-                  SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
               run: |
-                  ssh -4 -i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes \
-                      "$SSH_USER@$SSH_HOST" "REMOTE_PATH='$REMOTE_PATH' bash -s" <<'REMOTE'
+                  ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" "REMOTE_PATH='$REMOTE_PATH' bash -s" <<'REMOTE'
                   set -e
+                  case "$REMOTE_PATH" in "~/"*) REMOTE_PATH="$HOME/${REMOTE_PATH#\~/}" ;; esac
                   THEME="$REMOTE_PATH/wp-content/themes/lumie"
                   for f in .npmrc .env .screenshots-token CLAUDE.md package.json package-lock.json \
                            webpack.config.ts tsconfig.json eslint.config.mjs .stylelintrc.js \
@@ -285,19 +209,14 @@ jobs:
                           echo "removed: $f"
                       fi
                   done
-                  echo "--- Server cleanup done ---"
                   REMOTE
 
-            # filemtime() cache-busting changes on deploy, but WP Rocket serves cached HTML
-            # that still references the old asset URLs until its cache is cleared.
+            # filemtime() cache-busting changes on deploy, but WP Rocket keeps serving cached
+            # HTML that references the old asset URLs until its cache is cleared.
             - name: Flush caches
               if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
-              env:
-                  SSH_HOST: ${{ secrets.SSH_HOST }}
-                  SSH_USER: ${{ secrets.SSH_USER }}
-                  SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
               run: |
-                  ssh -4 -i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=20 "$SSH_USER@$SSH_HOST" \
+                  ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" \
                       "cd '$REMOTE_PATH' && wp cache flush --skip-plugins --skip-themes && wp rocket clean --confirm" \
                       || echo "::warning::Cache flush failed or WP-CLI is unavailable — clear caches manually."
 
