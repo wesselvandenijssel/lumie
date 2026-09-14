@@ -128,6 +128,37 @@ jobs:
                   done
                   echo "All expected build artefacts present."
 
+            # rsync does not create missing parent directories, so a fresh server
+            # fails with "mkdir ... No such file or directory". Create the targets
+            # up front and report what is actually at REMOTE_PATH.
+            - name: Prepare remote directories
+              env:
+                  SSH_HOST: ${{ secrets.SSH_HOST }}
+                  SSH_USER: ${{ secrets.SSH_USER }}
+                  SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+                  REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
+              run: |
+                  ssh -4 -i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes \
+                      "$SSH_USER@$SSH_HOST" "REMOTE_PATH='$REMOTE_PATH' PLUGINS='$PLUGINS' FA_KIT='$FA_KIT' bash -s" <<'REMOTE'
+                  set -e
+                  if [ ! -d "$REMOTE_PATH" ]; then
+                      echo "::error::REMOTE_PATH does not exist on the server: $REMOTE_PATH"
+                      exit 1
+                  fi
+                  echo "--- Contents of $REMOTE_PATH ---"
+                  ls -la "$REMOTE_PATH" | head -25
+                  if [ ! -f "$REMOTE_PATH/wp-config.php" ] && [ ! -d "$REMOTE_PATH/wp-includes" ]; then
+                      echo "::warning::No WordPress installation found at REMOTE_PATH (no wp-config.php, no wp-includes). The theme will be uploaded but nothing will use it until WordPress is installed there."
+                  fi
+                  # node_modules is excluded from the theme sync, so the kit's parent
+                  # directories are never created by it.
+                  mkdir -p "$REMOTE_PATH/wp-content/themes/lumie/$FA_KIT"
+                  for plugin in $PLUGINS; do
+                      mkdir -p "$REMOTE_PATH/wp-content/plugins/$plugin"
+                  done
+                  echo "--- Remote directories ready ---"
+                  REMOTE
+
             - name: Deploy theme
               env:
                   SSH_HOST: ${{ secrets.SSH_HOST }}
