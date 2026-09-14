@@ -197,8 +197,11 @@ jobs:
                   fi
                   echo "--- Contents of $REMOTE_PATH ---"
                   ls -la "$REMOTE_PATH" | head -25
-                  if [ ! -f "$REMOTE_PATH/wp-config.php" ] && [ ! -d "$REMOTE_PATH/wp-includes" ]; then
-                      echo "::warning::No WordPress installation found at REMOTE_PATH (no wp-config.php, no wp-includes). The theme will be uploaded but nothing will use it until WordPress is installed there."
+                  # Hard stop, not a warning. rsync runs with --delete, so pointing at
+                  # anything other than a real WordPress root destroys whatever is there.
+                  if [ ! -f "$REMOTE_PATH/wp-config.php" ] || [ ! -d "$REMOTE_PATH/wp-includes" ]; then
+                      echo "::error::REMOTE_PATH is not a WordPress root (wp-config.php and/or wp-includes missing): $REMOTE_PATH. Refusing to deploy, because rsync --delete would erase its contents."
+                      exit 1
                   fi
                   # A dry run must not touch the server, so only report what would be made.
                   if [ -n "$DRY_RUN" ]; then
