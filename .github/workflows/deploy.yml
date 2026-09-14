@@ -37,6 +37,22 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
+            # Fail fast: the build takes minutes, so verify the server is reachable first.
+            # GitHub runners have no IPv6, hence the forced IPv4 check.
+            - name: Check server reachability
+              env:
+                  SSH_HOST: ${{ secrets.SSH_HOST }}
+                  SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+              run: |
+                  echo "Resolving $SSH_HOST ..."
+                  getent ahostsv4 "$SSH_HOST" || echo "::warning::No IPv4 address resolved."
+                  if nc -z -4 -w 20 "$SSH_HOST" "$SSH_PORT"; then
+                      echo "Reachable over IPv4 on port $SSH_PORT."
+                  else
+                      echo "::error::Cannot reach $SSH_HOST on port $SSH_PORT over IPv4 from this runner. The host is likely firewalled to specific IPs — ask the hosting provider to allow GitHub Actions, or deploy from a self-hosted runner."
+                      exit 1
+                  fi
+
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
@@ -109,7 +125,7 @@ jobs:
               run: |
                   rsync -rlptzv --delete $DRY_RUN \
                       --exclude-from=.github/deploy-excludes.txt \
-                      -e "ssh -i ~/.ssh/deploy_key -p $SSH_PORT" \
+                      -e "ssh -4 -i ~/.ssh/deploy_key -p $SSH_PORT -o ConnectTimeout=20" \
                       "$THEME_SRC/" \
                       "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/themes/lumie/"
 
@@ -123,7 +139,7 @@ jobs:
                   DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '--dry-run' || '' }}
               run: |
                   rsync -rlptzv --delete $DRY_RUN \
-                      -e "ssh -i ~/.ssh/deploy_key -p $SSH_PORT" \
+                      -e "ssh -4 -i ~/.ssh/deploy_key -p $SSH_PORT -o ConnectTimeout=20" \
                       "$THEME_SRC/$FA_KIT/" \
                       "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/themes/lumie/$FA_KIT/"
 
@@ -139,7 +155,7 @@ jobs:
                       echo "--- Deploying $plugin ---"
                       rsync -rlptzv --delete $DRY_RUN \
                           --exclude-from=.github/deploy-excludes.txt \
-                          -e "ssh -i ~/.ssh/deploy_key -p $SSH_PORT" \
+                          -e "ssh -4 -i ~/.ssh/deploy_key -p $SSH_PORT -o ConnectTimeout=20" \
                           "$PLUGINS_SRC/$plugin/" \
                           "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/plugins/$plugin/"
                   done
@@ -154,7 +170,7 @@ jobs:
                   SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
                   REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
               run: |
-                  ssh -i ~/.ssh/deploy_key -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" \
+                  ssh -4 -i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=20 "$SSH_USER@$SSH_HOST" \
                       "cd '$REMOTE_PATH' && wp cache flush --skip-plugins --skip-themes && wp rocket clean --confirm" \
                       || echo "::warning::Cache flush failed or WP-CLI is unavailable — clear caches manually."
 
