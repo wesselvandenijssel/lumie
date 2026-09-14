@@ -1,0 +1,175 @@
+@use "abstracts" as *;
+
+.menu-toggle {
+	$menu-toggle: &;
+
+	position: absolute;
+	right: 0;
+	bottom: calc(100% + 4px);
+	width: 48px;
+	height: 48px;
+	display: flex;
+	gap: 2px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+
+	@include bp("narrow") {
+		display: none;
+	}
+
+	&__lines {
+		position: relative;
+		aspect-ratio: 1/1;
+		width: 26px;
+	}
+
+	&__burger {
+		position: absolute;
+		width: 100%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		display: grid;
+		gap: 6px;
+	}
+
+	&__burger-line {
+		width: 100%;
+		height: 2px;
+		display: block;
+		background-color: #000;
+		transition: width 0.4s ease 0s;
+
+		&--first {
+			transition-delay: 0.3s;
+		}
+
+		&--second {
+			transition-delay: 0.4s;
+		}
+
+		&--last {
+			transition-delay: 0.5s;
+		}
+	}
+
+	&__close {
+		position: absolute;
+		width: 100%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%) rotate(45deg);
+	}
+
+	&__close-line {
+		position: absolute;
+		transform: translate(-50%, -50%);
+		transform-origin: left;
+		top: 50%;
+		left: 50%;
+		width: 0;
+		height: 2px;
+		display: block;
+		background-color: #000;
+		transition: width 0.4s ease 0s;
+
+		&--first {
+			transform: translate(-50%, -50%);
+			transition-delay: 0.1s;
+		}
+
+		&--last {
+			transform: rotate(90deg) translate(-50%, 0);
+			transition-delay: 0.2s;
+		}
+	}
+
+	&__text {
+		color: #000;
+		line-height: 1;
+		font-size: pxtorem(11);
+	}
+
+	&--active {
+		#{$menu-toggle}__burger-line {
+			width: 0;
+
+			&--first {
+				transition-delay: 0.1s;
+			}
+
+			&--second {
+				transition-delay: 0.2s;
+			}
+
+			&--last {
+				transition-delay: 0.3s;
+			}
+		}
+
+		#{$menu-toggle}__close-line {
+			width: 100%;
+
+			&--first {
+				transition-delay: 0.4s;
+			}
+
+			&--last {
+				transition-delay: 0.5s;
+			}
+		}
+	}
+}
+
+.submenu-toggle {
+	cursor: pointer;
+	display: block;
+
+	@include bp("mobile") {
+		position: relative;
+		font-size: pxtorem(24);
+		font-weight: 600;
+		width: 35px;
+		aspect-ratio: 1/1;
+		text-align: center;
+	}
+
+	@include bp("narrow") {
+		display: inline-block;
+	}
+
+	&::before,
+	&::after {
+		@include bp("mobile") {
+			content: "";
+			position: absolute;
+			inset: 0;
+			height: 2px;
+			width: 18px;
+			background-color: #000;
+			margin: auto;
+		}
+	}
+
+	&::after {
+		@include bp("mobile") {
+			transform: rotate(90deg);
+		}
+
+		@include bp("narrow") {
+			content: $fa-angle-down;
+			font-family: $fa;
+			font-weight: 400;
+		}
+	}
+
+	&--active {
+		&::after {
+			@include bp("mobile") {
+				display: none;
+			}
+		}
+	}
+}

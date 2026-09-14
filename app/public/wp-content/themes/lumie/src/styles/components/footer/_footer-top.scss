@@ -1,0 +1,84 @@
+@use "abstracts" as *;
+@use "placeholders" as *;
+
+.footer {
+	&__main-wrapper {
+		background-color: $hue-dark-1;
+		color: #fff;
+	}
+
+	&__main {
+		margin: 0 auto;
+		display: grid;
+		padding: 40px 10px;
+		gap: 1.5em;
+
+		@include bp("narrow") {
+			padding: 50px 0;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		@extend %header-footer-wrapper;
+
+		ul {
+			margin: 0 0 1.5em;
+			list-style: none;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	&__menu {
+		.folded {
+			display: none;
+		}
+	}
+
+	&__menu-fold-button {
+		font-weight: 700;
+		margin-top: 0.3em;
+		cursor: pointer;
+
+		&::after {
+			content: $fa-caret-down;
+			font-family: $fa;
+			font-weight: 700;
+			padding-left: 4px;
+		}
+	}
+
+	&__cd {
+		&:not(:last-child) {
+			margin-bottom: pxtoem(20);
+		}
+	}
+
+	&__cd-item {
+		display: inline-block;
+		position: relative;
+		padding-left: 30px;
+
+		&::before {
+			font-family: $fa;
+			font-weight: 700;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		&--phone::before {
+			content: $fa-phone;
+		}
+
+		&--email::before {
+			content: $fa-email;
+		}
+
+		&--address::before {
+			content: $fa-address;
+		}
+	}
+}

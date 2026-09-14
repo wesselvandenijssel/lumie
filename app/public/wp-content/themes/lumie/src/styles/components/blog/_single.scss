@@ -1,0 +1,272 @@
+@use "abstracts" as *;
+
+.single {
+	$image-max-width: 800px;
+
+	&__meta {
+		color: rgba($hue-dark-1, 0.5);
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		margin-top: pxtoem(25);
+		column-gap: pxtoem(22);
+
+		span {
+			font-weight: 700;
+		}
+	}
+
+	&__separator {
+		width: 1px;
+		height: 14px;
+		background-color: rgba($hue-dark-1, 0.5);
+	}
+
+	&__content {
+		margin-top: pxtoem(30);
+
+		@include bp("narrow") {
+			margin-top: pxtoem(50);
+		}
+
+		> :first-child {
+			padding-top: 0;
+		}
+
+		> *:not(section) {
+			@include centered-content;
+
+			@include bp("mobile") {
+				padding: 0 10px;
+			}
+		}
+
+		> figure {
+			max-width: $image-max-width;
+		}
+	}
+
+	.centered-content {
+		&__wrapper {
+			.content-layout {
+				.image {
+					max-width: $image-max-width;
+				}
+			}
+		}
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 15px pxtoem(10);
+		border-top: 1px solid rgba($hue-dark-1, 0.5);
+		padding-top: 20px;
+		flex-wrap: wrap;
+
+		@include bp("narrow") {
+			padding-top: 50px;
+		}
+
+		.buttons {
+			margin-bottom: 0;
+		}
+	}
+
+	&__return {
+		.btn {
+			&::before {
+				content: $fa-arrow-up-left;
+				font-family: $fa;
+				font-weight: 700;
+			}
+
+			&::after {
+				display: none;
+			}
+		}
+	}
+
+	&__share {
+		display: flex;
+		gap: 20px;
+		align-items: center;
+
+		p {
+			font-weight: 600;
+			margin-bottom: 0;
+		}
+	}
+
+	&__share-link {
+		min-width: 44px;
+		aspect-ratio: 1/1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: $hue-dark-1;
+		transition: 0.4s ease color;
+
+		&:hover,
+		&:focus {
+			color: $hue-accent-1;
+			text-decoration: none;
+		}
+
+		&::after {
+			font-family: $fab;
+			font-size: pxtorem(24);
+			line-height: 1;
+		}
+
+		&--linkedin::after {
+			content: $fa-linkedin-in;
+		}
+
+		&--facebook::after {
+			content: $fa-facebook;
+		}
+	}
+
+	&__author-info {
+		&:last-child {
+			margin-bottom: pxtoem(40);
+
+			@include bp("narrow") {
+				margin-bottom: pxtoem(80);
+			}
+		}
+	}
+
+	&__author-info-wrapper {
+		max-width: 770px;
+		margin: 0 auto;
+		border: 1px solid rgba($hue-dark-1, 0.2);
+		border-radius: 15px;
+		padding: 20px;
+
+		@include bp("narrow") {
+			padding: 40px 30px 50px;
+		}
+
+		@include bp("large") {
+			padding: 50px 50px 60px;
+		}
+	}
+
+	&__author-info-title {
+		margin-bottom: pxtoem(15);
+		color: $hue-dark-1;
+
+		@include bp("narrow") {
+			margin-bottom: pxtoem(30);
+		}
+	}
+
+	&__author-info-wrapper-inner {
+		display: flex;
+		gap: pxtoem(15);
+		align-items: center;
+		margin-bottom: pxtoem(40);
+
+		@include bp("narrow") {
+			gap: pxtoem(30);
+		}
+	}
+
+	&__author-info-image {
+		border-radius: 100vw;
+		width: 58px;
+		height: 58px;
+		object-fit: cover;
+		aspect-ratio: 1/1;
+	}
+
+	&__author-info-content {
+		display: flex;
+		flex-direction: column;
+
+		> * {
+			margin-bottom: 0 !important;
+		}
+	}
+
+	&__author-info-name {
+		color: $hue-dark-1;
+	}
+
+	&__author-connect {
+		display: flex;
+		gap: pxtoem(20);
+		justify-content: space-between;
+		margin-top: pxtoem(30);
+		flex-wrap: wrap;
+	}
+
+	&__author-link {
+		color: $hue-accent-1;
+		text-decoration: underline;
+		font-weight: 600;
+	}
+
+	&__author-socials {
+		display: flex;
+		gap: pxtoem(15);
+	}
+
+	&__author-social-link {
+		color: $hue-dark-1;
+		font-size: pxtorem(20);
+		transition: 0.4s ease color;
+		display: flex;
+		align-items: center;
+
+		&:hover {
+			color: $hue-accent-1;
+			text-decoration: none;
+		}
+
+		&::after {
+			font-family: $fa;
+			font-weight: 700;
+			font-size: pxtorem(16);
+			line-height: 1;
+		}
+
+		&--linkedin::after,
+		&--facebook::after,
+		&--twitter::after,
+		&--instagram::after {
+			font-family: $fab;
+		}
+
+		&--linkedin::after {
+			content: $fa-linkedin-in;
+		}
+
+		&--facebook::after {
+			content: $fa-facebook-f;
+		}
+
+		&--twitter::after {
+			content: $fa-twitter;
+		}
+
+		&--instagram::after {
+			content: $fa-instagram;
+		}
+
+		&--mail::after {
+			content: $fa-email;
+		}
+
+		&--phone::after {
+			content: $fa-phone;
+		}
+	}
+
+	&__author-bio {
+		margin-top: pxtoem(40);
+	}
+}

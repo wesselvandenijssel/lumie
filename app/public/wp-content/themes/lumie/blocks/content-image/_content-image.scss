@@ -1,0 +1,44 @@
+@use "abstracts" as *;
+
+.content-image {
+	$content-image: &;
+
+	&__grid {
+		display: grid;
+
+		@include bp("mobile") {
+			row-gap: $pad-mobile;
+		}
+
+		@include bp-only("narrow", "normal") {
+			row-gap: $pad-mobile;
+			max-width: 620px;
+			margin: 0 auto;
+		}
+
+		@include bp("normal") {
+			justify-content: space-between;
+			column-gap: 20px;
+
+			&--unflip {
+				grid-template-columns: minmax(auto, 620px) minmax(auto, 550px);
+			}
+
+			&--flip {
+				grid-template-columns: minmax(auto, 550px) minmax(auto, 620px);
+
+				#{$content-image}__image-wrapper {
+					order: -1;
+				}
+			}
+		}
+	}
+
+	&__image-wrapper {
+		position: relative;
+
+		&--video {
+			cursor: pointer;
+		}
+	}
+}

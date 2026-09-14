@@ -1,0 +1,37 @@
+@use "abstracts" as *;
+
+.fold-content {
+	@include bp("mobile") {
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1;
+		max-height: 1.5em;
+		display: inline-block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		&--active {
+			display: block;
+			overflow: auto;
+			max-height: unset;
+		}
+	}
+
+	&:not(:last-child) {
+		margin-bottom: 1.5em;
+	}
+}
+
+.fold-content-trigger {
+	font-weight: 700;
+	text-decoration: underline;
+	cursor: pointer;
+	margin-top: -1em;
+
+	@include bp("narrow") {
+		display: none;
+	}
+
+	&:not(:last-child) {
+		margin-bottom: 1.5em;
+	}
+}

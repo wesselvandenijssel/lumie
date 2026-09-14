@@ -1,0 +1,15 @@
+{
+	"name": "acf/background",
+	"title": "Achtergrond",
+	"acf": {
+		"mode": "preview"
+	},
+	"supports": {
+		"jsx": true,
+		"anchor": false,
+		"color": {
+			"background": true,
+			"text": true
+		}
+	}
+}

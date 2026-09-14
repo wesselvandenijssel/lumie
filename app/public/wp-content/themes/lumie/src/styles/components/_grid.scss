@@ -1,0 +1,122 @@
+@use "abstracts" as *;
+@use "placeholders" as *;
+
+.gutter {
+	margin-left: 10px;
+	margin-right: 10px;
+
+	@include bp("narrow") {
+		float: left;
+	}
+}
+
+.columns-6 {
+	@include bp("narrow") {
+		width: 340px;
+	}
+
+	@include bp("normal") {
+		width: 460px;
+	}
+
+	@include bp("large") {
+		width: 580px;
+	}
+}
+
+.columns-7 {
+	@include bp("narrow") {
+		width: 400px;
+	}
+
+	@include bp("normal") {
+		width: 540px;
+	}
+
+	@include bp("large") {
+		width: 680px;
+	}
+}
+
+.columns-8 {
+	@include bp("narrow") {
+		width: 460px;
+	}
+
+	@include bp("normal") {
+		width: 620px;
+	}
+
+	@include bp("large") {
+		width: 780px;
+	}
+}
+
+.columns-9 {
+	@include bp("narrow") {
+		width: 520px;
+	}
+
+	@include bp("normal") {
+		width: 700px;
+	}
+
+	@include bp("large") {
+		width: 880px;
+	}
+}
+
+.columns-10 {
+	@include bp("narrow") {
+		width: 580px;
+	}
+
+	@include bp("normal") {
+		width: 780px;
+	}
+
+	@include bp("large") {
+		width: 980px;
+	}
+}
+
+.columns-11 {
+	@include bp("narrow") {
+		width: 640px;
+	}
+
+	@include bp("normal") {
+		width: 860px;
+	}
+
+	@include bp("large") {
+		width: 1080px;
+	}
+}
+
+.columns-12 {
+	@include bp("mobile") {
+		width: calc(100vw - 20px);
+		padding: 0;
+	}
+
+	@include bp("narrow") {
+		width: 700px;
+	}
+
+	@include bp("normal") {
+		width: 940px;
+	}
+
+	@include bp("large") {
+		width: 1180px;
+	}
+
+	@include bp("xl") {
+		width: 1280px;
+	}
+}
+
+.header-footer-wrapper {
+	@extend %header-footer-wrapper;
+}

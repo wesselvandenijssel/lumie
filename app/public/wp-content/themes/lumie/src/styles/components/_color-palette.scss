@@ -1,0 +1,24 @@
+@use "abstracts" as *;
+
+/**
+* write in kebab case, ref: https://developer.wordpress.org/block-editor/how-to-guides/themes/theme-support/#block-color-palettes
+*/
+.has-athens-gray-background-color {
+	background-color: $light-gray;
+}
+
+.has-athens-gray-color {
+	color: $light-gray;
+}
+
+.has-tundora-background-color {
+	background-color: $text-color;
+}
+
+.has-tundora-color {
+	color: $text-color;
+}
+
+.has-dark-to-light-gradient {
+	background: linear-gradient(135deg, #2e333e 0%, #ebebeb 100%);
+}

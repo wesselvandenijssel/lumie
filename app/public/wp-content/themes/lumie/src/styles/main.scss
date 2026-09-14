@@ -1,0 +1,12 @@
+@use "partials/normalize";
+@use "components/main" as *;
+@use "../../blocks/**/*.scss" as *;
+@use "../../components/**/*.scss" as *;
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+	.object-fit {
+		img {
+			opacity: 0;
+		}
+	}
+}

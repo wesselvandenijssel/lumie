@@ -1,0 +1,407 @@
+@use "abstracts" as *;
+@use "placeholders" as *;
+
+/* stylelint-disable selector-class-pattern */
+
+input[type="password"] {
+	letter-spacing: 0.3em;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+select,
+textarea,
+.field {
+	display: block;
+	line-height: 1.3;
+	padding: 15px 20px;
+	font-size: pxtorem(16);
+	color: $text-color;
+	border-radius: 0;
+	box-shadow: none;
+	border: 1px solid #fff;
+	width: 100%;
+	background-color: #fff;
+	transition: color 0.4s ease-in-out, background-color 0.4s ease-in-out,
+		border-color 0.4s ease-in-out;
+
+	@include bp("narrow") {
+		font-size: pxtorem(18);
+	}
+
+	&:focus,
+	&:active {
+		border-color: $hue-accent-1;
+	}
+
+	&::placeholder {
+		color: rgba($hue-dark-1, 0.5);
+	}
+}
+
+textarea {
+	max-width: 100%;
+	max-height: 150px;
+	line-height: 1.5;
+}
+
+select {
+	appearance: none;
+	background-repeat: no-repeat;
+	background-position: 97.5% center;
+}
+
+fieldset {
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+/* Gravity forms */
+.gform_wrapper {
+	.gf_page_steps {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: pxtoem(20);
+		gap: pxtoem(20);
+		flex-wrap: wrap;
+
+		@include bp("narrow") {
+			gap: pxtoem(30);
+		}
+
+		.gf_step {
+			width: 40px;
+			height: 40px;
+			font-weight: 500;
+			border-radius: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: $hue-accent-1;
+			color: #fff;
+			border: 1px solid;
+
+			@include bp("narrow") {
+				width: 60px;
+				height: 60px;
+				font-size: pxtorem(26);
+			}
+
+			&.gf_step_active,
+			&.gf_step_complete {
+				background-color: #fff;
+				color: $hue-accent-1;
+			}
+
+			.gf_step_label {
+				display: none;
+			}
+		}
+	}
+
+	.gform_fields {
+		display: grid;
+		gap: 10px;
+		text-align: left;
+
+		@include bp("narrow") {
+			grid-template-columns: repeat(12, 1fr);
+		}
+
+		.gfield {
+			position: relative;
+
+			@include bp("narrow") {
+				grid-column: span 12;
+			}
+
+			@include bp("narrow") {
+				&.gfield--width-quarter {
+					grid-column: span 3;
+				}
+
+				&.gfield--width-third {
+					grid-column: span 4;
+				}
+
+				&.gfield--width-five-twelfths {
+					grid-column: span 5;
+				}
+
+				&.gfield--width-half {
+					grid-column: span 6;
+				}
+
+				&.gfield--width-seven-twelfths {
+					grid-column: span 7;
+				}
+
+				&.gfield--width-two-thirds {
+					grid-column: span 8;
+				}
+
+				&.gfield--width-three-quarter {
+					grid-column: span 9;
+				}
+			}
+
+			&.spacer,
+			&.gform_hidden {
+				display: none;
+			}
+
+			&.show-label {
+				.gfield_label {
+					display: block;
+				}
+			}
+
+			.gfield_label {
+				display: none;
+				margin-bottom: pxtoem(10);
+			}
+
+			.ginput_container {
+				margin: 0;
+
+				&::before {
+					font-family: $fa;
+					color: $btn-primary;
+					font-weight: 700;
+					position: absolute;
+					top: 10px;
+					z-index: 10;
+					font-size: pxtorem(18);
+					pointer-events: none;
+					left: 10px;
+				}
+			}
+
+			&--type-radio,
+			&--type-checkbox {
+				.gfield_label {
+					display: block;
+					margin-bottom: pxtoem(5);
+					font-weight: 700;
+				}
+			}
+
+			&--type-address {
+				padding: 0;
+				border: none;
+				margin: 0;
+
+				.gform-field-label {
+					display: none;
+				}
+
+				.ginput_container {
+					display: grid;
+					grid-template-columns: repeat(12, 1fr);
+					gap: 5px;
+
+					@include bp("narrow") {
+						.address_city {
+							grid-column: span 7;
+						}
+
+						.address_zip {
+							grid-column: span 5;
+						}
+					}
+
+					> * {
+						grid-column: span 12;
+					}
+
+					.address_country {
+						@include select-styling;
+					}
+				}
+			}
+
+			&--type-select {
+				&:not(:first-child) {
+					margin-top: 15px;
+				}
+
+				.gfield_label {
+					display: block;
+					font-weight: 700;
+					margin-bottom: pxtoem(5);
+				}
+
+				.ginput_container_select {
+					@include select-styling;
+				}
+			}
+
+			&--type-fileupload {
+				background-color: #fff;
+				display: block;
+				color: $text-color;
+
+				.gfield_label {
+					position: relative;
+					padding: 6px 108px 6px 15px;
+					cursor: pointer;
+					font-size: pxtorem(14);
+					line-height: 1.3;
+					min-height: 50px;
+					display: flex;
+					align-items: center;
+					margin: 0;
+
+					@include bp("narrow") {
+						font-size: pxtorem(16);
+						padding: 10px 108px 10px 20px;
+					}
+				}
+
+				.validation_message {
+					&--hidden-on-empty {
+						display: none;
+					}
+				}
+
+				.gform_drop_area {
+					display: none;
+				}
+
+				span.upload {
+					background-color: $btn-primary;
+					color: #fff;
+					position: absolute;
+					top: 0;
+					right: 0;
+					font-size: pxtorem(16);
+					line-height: 1.1;
+					pointer-events: none;
+
+					@include bp("mobile") {
+						padding: 13.35px 15px;
+					}
+
+					@include bp("narrow") {
+						padding: 14.65px 15px;
+					}
+
+					&::after {
+						content: $fa-caret-down;
+						font-family: $fa;
+						font-weight: 700;
+						font-size: pxtorem(16);
+						padding-left: 5px;
+					}
+				}
+
+				.ginput_preview_list {
+					padding-left: 20px;
+
+					.ginput_preview {
+						font-size: pxtorem(12);
+						margin-bottom: pxtoem(10);
+
+						@include bp("narrow") {
+							font-size: pxtorem(14);
+						}
+
+						.gfield_fileupload_progress {
+							display: none;
+						}
+
+						.gfield_fileupload_filesize {
+							display: none;
+						}
+
+						.gform_delete_file {
+							background-color: transparent;
+							border: 0;
+
+							&::after {
+								content: $fa-x;
+								color: $form-error;
+							}
+
+							.dashicons-trash {
+								display: none;
+							}
+						}
+					}
+				}
+
+				.gfield_description {
+					position: absolute;
+					right: 43px;
+					top: 12px;
+					font-size: pxtorem(16);
+					pointer-events: none;
+				}
+
+				.gform_fileupload_rules {
+					display: none;
+				}
+
+				&::after {
+					content: $fa-angle-down;
+					font-family: $fa;
+					right: 20px;
+					position: absolute;
+					top: 12px;
+					pointer-events: none;
+				}
+			}
+		}
+	}
+
+	// Honeypot
+	.gform_validation_container,
+	.partial_entry_warning,
+	.gform_required_legend,
+	.gform_validation_errors {
+		display: none;
+	}
+
+	.gfield_error {
+		.gfield_label {
+			color: $form-error;
+		}
+
+		input,
+		textarea {
+			border-color: $form-error;
+		}
+	}
+
+	.gform_footer,
+	.gform_page_footer {
+		margin-top: pxtoem(30);
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: pxtoem(10);
+	}
+
+	.gform_button,
+	.gform_next_button {
+		@extend %btn--primary;
+	}
+
+	.gform_previous_button {
+		@extend .btn--secondary !optional;
+	}
+}

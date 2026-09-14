@@ -1,0 +1,87 @@
+@use "abstracts" as *;
+
+.blog {
+	overflow: hidden;
+
+	.titles {
+		text-align: center;
+
+		@include bp("normal") {
+			margin-bottom: pxtoem(40);
+		}
+	}
+
+	&__grid {
+		&:not(.swiper) {
+			display: grid;
+			gap: 10px;
+
+			@include bp("narrow") {
+				grid-template-columns: repeat(3, 1fr);
+				gap: 20px;
+			}
+
+			@include bp("normal") {
+				gap: 40px;
+			}
+		}
+
+		&--swiper {
+			overflow: visible;
+
+			@include bp("narrow") {
+				clip-path: polygon(0 0, 0 100%, 100vw 100%, 100vw 0);
+			}
+
+			.post {
+				@include bp("mobile") {
+					max-width: calc(100vw - 60px);
+				}
+			}
+		}
+	}
+
+	&__filter {
+		display: none;
+		justify-content: center;
+		align-items: center;
+		gap: 15px;
+
+		@include bp("normal") {
+			display: flex;
+			margin-bottom: pxtoem(60);
+		}
+
+		&--mobile {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: pxtoem(15);
+			position: relative;
+
+			@include bp("narrow") {
+				margin-bottom: pxtoem(25);
+			}
+
+			@include bp("normal") {
+				display: none;
+			}
+
+			&::after {
+				content: $fa-angle-down;
+				font-weight: 400;
+				font-family: $fa;
+				position: absolute;
+				right: 20px;
+				pointer-events: none;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+
+			select {
+				border: 1px solid $hue-dark-1;
+				border-radius: 10px;
+			}
+		}
+	}
+}

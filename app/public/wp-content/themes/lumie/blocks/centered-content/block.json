@@ -1,0 +1,13 @@
+{
+	"name": "acf/centered-content",
+	"title": "Gecentreerde content",
+	"acf": {
+		"mode": "edit"
+	},
+	"supports": {
+		"anchor": true,
+		"align": false,
+		"alignText": true,
+		"mode": false
+	}
+}

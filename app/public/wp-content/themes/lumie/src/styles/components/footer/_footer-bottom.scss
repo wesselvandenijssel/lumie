@@ -1,0 +1,28 @@
+@use "abstracts" as *;
+@use "placeholders" as *;
+
+.footer {
+	&__bottom {
+		text-align: center;
+		padding: 10px 0;
+		display: flex;
+		justify-content: center;
+		margin: 0 auto;
+		font-size: pxtorem(12);
+		line-height: 1;
+
+		@extend %header-footer-wrapper;
+
+		p {
+			margin: 0 0 1.5em;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			a {
+				text-decoration: none;
+			}
+		}
+	}
+}

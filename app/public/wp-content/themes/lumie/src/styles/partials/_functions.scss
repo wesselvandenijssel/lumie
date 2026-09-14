@@ -1,0 +1,47 @@
+/******************************************************************
+Site Name:
+Author:
+
+Stylesheet: Sass Functions
+
+You can do a lot of really cool things in Sass. Functions help you
+make repeated actions a lot easier. They are really similar to mixins,
+but can be used for so much more.
+
+Anyway, keep them all in here so it's easier to find when you're
+looking for one.
+
+For more info on functions, go here:
+http://sass-lang.com/documentation/Sass/Script/Functions.html
+
+******************************************************************/
+
+@use "sass:math";
+@use "config";
+
+/*********************
+CONVERT PX TO REM
+Source: https://dev.to/nikolab/convert-px-to-rem-using-sass-3-methods-4ep2
+*********************/
+@function pxtorem($value) {
+	$rem-value: math.div($value, 16);
+	$rem-value: $rem-value * 1rem;
+
+	@return $rem-value;
+}
+
+/*********************
+Short function to get image path
+*********************/
+@function assets($fileName) {
+	@return url("../assets/#{$fileName}");
+}
+
+/*********************
+Get the EM value
+*********************/
+@function pxtoem($size, $base-font-size: config.$base-font-size) {
+	$em-value: math.div($size, $base-font-size);
+
+	@return math.div(math.round($em-value * 100), 100) + em;
+}

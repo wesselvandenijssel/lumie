@@ -1,0 +1,195 @@
+@use "abstracts" as *;
+
+.contact {
+	$contact: &;
+
+	&__grid {
+		display: grid;
+		justify-content: center;
+		gap: 1.5em 20px;
+
+		@include bp("narrow") {
+			gap: 2.5em 20px;
+		}
+
+		&--contact_details {
+			@include bp("normal") {
+				justify-content: space-between;
+			}
+
+			&#{$contact}__grid--flip {
+				@include bp("normal") {
+					grid-template-columns: minmax(auto, 550px) minmax(
+							auto,
+							580px
+						);
+				}
+
+				#{$contact}__form {
+					@include bp("normal") {
+						order: 1;
+					}
+				}
+			}
+
+			&#{$contact}__grid--unflip {
+				@include bp("normal") {
+					grid-template-columns: minmax(auto, 580px) minmax(
+							auto,
+							550px
+						);
+				}
+			}
+		}
+
+		&--content {
+			@include bp("normal") {
+				justify-content: space-between;
+			}
+
+			@include bp("large") {
+				align-items: center;
+			}
+
+			.titles {
+				@include bp("narrow") {
+					margin-bottom: pxtoem(20);
+				}
+			}
+
+			#{$contact}__form {
+				@include bp("mobile") {
+					order: 1;
+				}
+
+				@include bp-only("narrow", "normal") {
+					order: 1;
+				}
+			}
+
+			&#{$contact}__grid--flip {
+				@include bp("normal") {
+					grid-template-columns: minmax(auto, 550px) minmax(
+							auto,
+							580px
+						);
+				}
+
+				#{$contact}__form {
+					@include bp("normal") {
+						order: 1;
+					}
+				}
+			}
+
+			&#{$contact}__grid--unflip {
+				@include bp("normal") {
+					grid-template-columns: minmax(auto, 580px) minmax(
+							auto,
+							550px
+						);
+				}
+			}
+		}
+	}
+
+	&__form {
+		background-color: $hue-light-1;
+		position: relative;
+		text-align: center;
+		max-width: 620px;
+		padding: 30px 15px;
+		z-index: 1;
+		border-radius: 10px;
+
+		@include bp("narrow") {
+			border-radius: 20px;
+			padding: 60px 50px;
+		}
+	}
+
+	&__cd {
+		&:not(:last-child) {
+			margin-bottom: pxtoem(20);
+		}
+	}
+
+	&__cd-title {
+		margin-bottom: pxtoem(10);
+
+		@include bp("narrow") {
+			margin-bottom: pxtoem(20);
+		}
+
+		&--small {
+			font-size: pxtorem(18);
+		}
+
+		&:not(:first-child) {
+			margin-top: pxtoem(35);
+		}
+	}
+
+	&__cd-item {
+		display: block;
+		line-height: 1.65;
+
+		&:not(:last-child) {
+			margin-bottom: pxtoem(5);
+		}
+
+		&--phone,
+		&--email,
+		&--address {
+			position: relative;
+			padding-left: 35px;
+
+			&::before {
+				font-family: $fa;
+				position: absolute;
+				top: 3px;
+				left: 0;
+				font-weight: 400;
+				font-size: pxtorem(14);
+			}
+		}
+
+		&--address {
+			&:not(:first-child) {
+				margin-top: pxtoem(20);
+			}
+
+			&::before {
+				content: $fa-address;
+			}
+		}
+
+		&--phone::before {
+			content: $fa-phone;
+		}
+
+		&--email::before {
+			content: $fa-email;
+		}
+	}
+
+	.socials {
+		margin-top: pxtoem(25);
+
+		@include bp("narrow") {
+			margin-top: pxtoem(40);
+		}
+	}
+
+	&__content {
+		max-width: 500px;
+
+		.content-layout {
+			.titles {
+				@include bp("mobile") {
+					margin-bottom: 0.6em;
+				}
+			}
+		}
+	}
+}

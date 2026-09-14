@@ -1,0 +1,70 @@
+@use "abstracts" as *;
+
+h1,
+h2,
+h3,
+h4,
+.h1,
+.h2,
+.h3,
+.h4 {
+	text-rendering: optimizelegibility;
+	font-weight: 700;
+	line-height: 1.4;
+	margin: 0;
+
+	a {
+		text-decoration: none;
+	}
+}
+
+h1,
+.h1,
+h2,
+.h2 {
+	font-size: pxtorem(24);
+
+	@include bp("narrow") {
+		font-size: pxtorem(32);
+	}
+}
+
+h3,
+.h3 {
+	font-size: pxtorem(18);
+
+	@include bp("narrow") {
+		font-size: pxtorem(26);
+	}
+}
+
+h4,
+.h4 {
+	font-size: pxtorem(16);
+
+	@include bp("narrow") {
+		font-size: pxtorem(20);
+	}
+}
+
+.titles {
+	&:not(:last-child) {
+		margin-bottom: pxtoem(30);
+	}
+
+	.suptitle {
+		font-size: pxtorem(14);
+
+		@include bp("narrow") {
+			font-size: pxtorem(26);
+		}
+	}
+
+	.subtitle {
+		font-size: pxtorem(14);
+
+		@include bp("narrow") {
+			font-size: pxtorem(26);
+		}
+	}
+}

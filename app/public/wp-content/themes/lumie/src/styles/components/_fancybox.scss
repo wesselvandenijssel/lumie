@@ -1,0 +1,12 @@
+.fancybox {
+	&__container {
+		div {
+			transition: none;
+		}
+	}
+}
+
+[data-fancybox="gallery"] {
+	position: relative;
+	cursor: pointer;
+}

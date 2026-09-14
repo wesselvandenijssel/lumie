@@ -1,0 +1,73 @@
+@use "abstracts" as *;
+
+%btn {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	column-gap: 10px;
+	position: relative;
+	text-decoration: none;
+	color: #fff;
+	line-height: 1;
+	font-weight: 700;
+	padding: 15px 20px;
+	border-radius: 5px;
+	border: 1px solid;
+	cursor: pointer;
+	transition:
+		color 0.4s ease-in-out,
+		background-color 0.4s ease-in-out,
+		border-color 0.4s ease-in-out;
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+		outline: none;
+	}
+}
+
+%btn--primary {
+	background-color: $btn-primary;
+	border-color: $btn-primary;
+	color: #fff;
+
+	@extend %btn;
+
+	&:hover,
+	&:focus {
+		background-color: #fff;
+		color: $btn-primary;
+	}
+}
+
+%btn--secondary {
+	background-color: #fff;
+	color: $btn-primary;
+
+	@extend %btn;
+
+	&:hover,
+	&:focus {
+		background-color: $btn-primary;
+		border-color: $btn-primary;
+		color: #fff;
+	}
+}
+
+%header-footer-wrapper {
+	@include bp("narrow") {
+		width: 700px;
+	}
+
+	@include bp("normal") {
+		width: 960px;
+	}
+
+	@include bp("large") {
+		width: 1180px;
+	}
+
+	@include bp("xl") {
+		width: 1280px;
+	}
+}

@@ -1,0 +1,56 @@
+@use "abstracts" as *;
+
+.socials {
+	display: flex;
+	align-items: center;
+	column-gap: 16px;
+	font-size: pxtorem(22);
+
+	&__item {
+		&:hover,
+		&:focus {
+			text-decoration: none;
+
+			&::before {
+				background-color: $hue-dark-1;
+				color: #fff;
+			}
+		}
+
+		&::before {
+			transition:
+				color 0.4s ease,
+				background-color 0.4s ease;
+			font-family: $fab;
+			font-weight: 400;
+			aspect-ratio: 1/1;
+			width: 40px;
+			background-color: $hue-accent-1;
+			display: flex;
+			color: #fff;
+			border-radius: 100vw;
+			justify-content: center;
+			align-items: center;
+		}
+
+		&--facebook::before {
+			content: $fa-facebook-f;
+		}
+
+		&--instagram::before {
+			content: $fa-instagram;
+		}
+
+		&--linkedin::before {
+			content: $fa-linkedin-in;
+		}
+
+		&--twitter::before {
+			content: $fa-twitter;
+		}
+
+		&--tiktok::before {
+			content: $fa-tiktok;
+		}
+	}
+}

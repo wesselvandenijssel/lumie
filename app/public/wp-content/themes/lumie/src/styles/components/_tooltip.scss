@@ -1,0 +1,41 @@
+@use "abstracts" as *;
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+
+	.tooltiptext {
+		visibility: hidden;
+		width: 200px;
+		background-color: black;
+		color: #fff;
+		font-weight: 400;
+		line-height: 1.4;
+		font-size: pxtorem(14);
+		text-align: center;
+		border-radius: 6px;
+		padding: 5px 0;
+		position: absolute;
+		z-index: 1;
+		top: 150%;
+		left: 50%;
+		transform: translateX(-50%);
+
+		&::after {
+			content: "";
+			position: absolute;
+			bottom: 100%;
+			left: 50%;
+			margin-left: -5px;
+			border-width: 5px;
+			border-style: solid;
+			border-color: transparent transparent black;
+		}
+	}
+
+	&:hover {
+		.tooltiptext {
+			visibility: visible;
+		}
+	}
+}

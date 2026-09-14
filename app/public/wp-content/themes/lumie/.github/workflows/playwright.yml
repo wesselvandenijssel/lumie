@@ -1,0 +1,180 @@
+name: Block Screenshot PR Comments
+on:
+    pull_request:
+        branches: [development]
+        paths:
+            - "blocks/**/view.php"
+            - "blocks/**/*.scss"
+            - "components/**/*.{php,scss}"
+            - "header.php"
+            - "src/styles/components/head/**/*.scss"
+            - "src/styles/components/_buttons.scss"
+            - "src/styles/components/_content-layout.scss"
+            - "src/classes/flex-content.php"
+            - "src/functions/custom-color-palette.php"
+            - "src/styles/components/_color-palette.scss"
+jobs:
+    comment:
+        timeout-minutes: 10
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  ref: ${{ github.event.pull_request.head.ref }}
+                  fetch-depth: 0
+
+            - name: Fetch base branch
+              run: |
+                  git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Comment PR with screenshots (from committed files)
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const fs = require('fs');
+                      const path = require('path');
+
+                      const breakpoints = ['large', 'normal', 'narrow', 'mobile'];
+
+                      // Get all unique block names from screenshot files
+                      const screenshotsDir = path.join('playwright', 'screenshots');
+                      let allFiles = [];
+                      try {
+                        allFiles = fs.readdirSync(screenshotsDir);
+                      } catch {
+                        console.log('No screenshots directory found');
+                        return;
+                      }
+
+                      // Extract unique block names from filenames
+                      const blockSet = new Set();
+                      allFiles.forEach(file => {
+                        // Special handling for header screenshots
+                        if (file.startsWith('block-header-')) {
+                          blockSet.add('header');
+                          return;
+                        }
+                        
+                        // For other blocks: extract everything between "block-" and first occurrence of breakpoint or "-instance-"
+                        let blockName = file.replace(/^block-/, '');
+                        // Remove breakpoint and everything after
+                        blockName = blockName.replace(/-(large|normal|narrow|mobile).*$/, '');
+                        // Remove instance and everything after  
+                        blockName = blockName.replace(/-instance-.*$/, '');
+                        
+                        if (blockName) blockSet.add(blockName);
+                      });
+
+                      const mainBlockNames = Array.from(blockSet).sort();
+
+                      if (mainBlockNames.length === 0) {
+                        console.log('No block screenshots found');
+                        return;
+                      }
+
+                      let comment = '## Block Screenshots\n\n';
+                      comment += `Blocks: **${mainBlockNames.join(' ')}**\n\n`;
+
+                      const owner = context.repo.owner;
+                      const repo = context.repo.repo;
+                      const sha = context.payload.pull_request.head.sha;
+
+                      for (const block of mainBlockNames) {
+                        comment += `### ${block}\n\n`;
+
+                        for (const bp of breakpoints) {
+                          // Get All screenshots for this block and breakpoint
+                          let screenshots = [];
+                          try {
+                            const files = fs.readdirSync(path.join('playwright', 'screenshots'));
+                            // Match files that start with block-{block}- and contain -{bp} somewhere
+                            screenshots = files.filter(f => {
+                              return f.startsWith(`block-${block}-`) && 
+                                     (f.includes(`-${bp}.png`) || f.includes(`-${bp}-`));
+                            });
+                          } catch {}
+
+                          if (screenshots.length === 0) continue;
+
+                          // Sort and remove duplicates
+                          screenshots = Array.from(new Set(screenshots)).sort();
+
+                          comment += `**${bp.charAt(0).toUpperCase() + bp.slice(1)}**\n\n`;
+
+                          for (const file of screenshots) {
+                            // Extract label from filename
+                            let label = '';
+
+                            // Header-specific labels
+                            if (block === 'header') {
+                              if (file.includes('-menu-')) {
+                                label = ' Menu';
+                              } else if (file.match(/-submenu-(\d+)-/)) {
+                                const submenuNum = file.match(/-submenu-(\d+)-/)[1];
+                                label = ` Submenu ${submenuNum}`;
+                              } else if (file.includes('-submenu-')) {
+                                label = ' Submenu';
+                              }
+                            } else {
+                              // Standard block labels - match different filename patterns
+                              // Remove the block name prefix first
+                              const withoutBlock = file.replace(`block-${block}-`, '');
+                              
+                              // Pattern 1: page-slug-breakpoint-instance-N.png (with page slug)
+                              const pageInstMatch = withoutBlock.match(/^(.+?)-(large|normal|narrow|mobile)-instance-(\d+)\.png$/);
+                              // Pattern 2: breakpoint-instance-N.png (no page slug)
+                              const noPageInstMatch = withoutBlock.match(/^(large|normal|narrow|mobile)-instance-(\d+)\.png$/);
+                              // Pattern 3: page-slug-breakpoint.png (page slug, no instance)
+                              const pageOnlyMatch = withoutBlock.match(/^(.+?)-(large|normal|narrow|mobile)\.png$/);
+                              
+                              if (pageInstMatch && !noPageInstMatch) {
+                                // Has page slug and instance number
+                                label = ` ${pageInstMatch[1]} - Instantie ${pageInstMatch[3]}`;
+                              } else if (noPageInstMatch) {
+                                // No page slug, just instance number
+                                label = ` Instantie ${noPageInstMatch[2]}`;
+                              } else if (pageOnlyMatch && !withoutBlock.includes('-instance-')) {
+                                // Has page slug but no instance
+                                label = ` ${pageOnlyMatch[1]}`;
+                              }
+                            }
+
+                            const url = `https://github.com/${owner}/${repo}/blob/${sha}/playwright/screenshots/${file}`;
+                            comment += `![${block}-${bp}${label}](${url}?raw=true)\n\n`;
+                          }
+                        }
+                      }
+
+                      // Find existing bot comment to update instead of creating duplicates
+                      const existing = await github.rest.issues.listComments({
+                        issue_number: context.issue.number,
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                      });
+
+                      const botComment = existing.data.find(c => c.user.type === 'Bot' && c.body.includes('Block Screenshots'));
+
+                      if (botComment) {
+                        // Update existing comment
+                        await github.rest.issues.updateComment({
+                          comment_id: botComment.id,
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          body: comment,
+                        });
+                      } else {
+                        // Create new comment
+                        await github.rest.issues.createComment({
+                          issue_number: context.issue.number,
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          body: comment,
+                        });
+                      }

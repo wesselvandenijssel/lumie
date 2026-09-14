@@ -1,0 +1,10 @@
+@use "abstracts" as *;
+
+.centered-content {
+	&__wrapper {
+		> .titles,
+		.content-layout > * {
+			@include centered-content;
+		}
+	}
+}

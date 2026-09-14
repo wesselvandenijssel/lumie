@@ -1,0 +1,201 @@
+.mbw {
+	position: fixed;
+	z-index: 150;
+	right: 10px;
+	bottom: 10px;
+	pointer-events: none;
+	display: grid;
+	gap: 15px;
+}
+
+.mbw__toggle {
+	pointer-events: initial;
+	color: var(--color);
+	background-color: var(--bg-color);
+	border: 2px solid var(--border-color);
+	border-radius: 100%;
+	padding: 16px;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 20%);
+	margin-left: auto;
+	width: 64px;
+	height: 64px;
+	transition:
+		color 0.4s ease-in-out,
+		background-color 0.4s ease-in-out,
+		border-color 0.4s ease-in-out;
+	animation-delay: 1s;
+	animation-name: mbw-wiggle;
+	animation-duration: 0.75s;
+}
+
+.mbw__toggle svg {
+	position: relative !important;
+}
+
+.mbw__toggle:hover {
+	color: var(--color-hover);
+	background-color: var(--bg-color-hover);
+	border-color: var(--border-color-hover);
+}
+
+.mbw__container {
+	display: none;
+	position: relative;
+	pointer-events: initial;
+	font-size: 0.9rem;
+	line-height: 1.6;
+	width: 340px;
+	max-width: calc(100vw - 70px);
+}
+
+.mbw__container--active {
+	display: block;
+}
+
+.mbw__overflow-container {
+	display: grid;
+	gap: 15px;
+	overflow: scroll;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	max-height: calc(100vh - 140px);
+	padding: 0 4px 7px;
+}
+
+.mbw__overflow-container::-webkit-scrollbar {
+	display: none;
+}
+
+.mbw__close {
+	position: absolute;
+	right: 0;
+	bottom: calc(100% + 10px);
+	aspect-ratio: 1/1;
+	border-radius: 100%;
+	background-color: rgba(0, 0, 0, 60%);
+	cursor: pointer;
+	width: 30px;
+	transition: background-color 0.4s ease-in-out;
+}
+
+.mbw__close:hover {
+	background-color: rgba(0, 0, 0, 80%);
+}
+
+.mbw__close::before,
+.mbw__close::after {
+	content: "";
+	background-color: #fff;
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 60%;
+	height: 1px;
+	transform-origin: left;
+}
+
+.mbw__close::before {
+	transform: rotate(45deg) translate(-50%, -50%);
+}
+
+.mbw__close::after {
+	transform: rotate(-45deg) translate(-50%, -50%);
+}
+
+.mbw__welcome {
+	background-color: #fff;
+	border-radius: 5px;
+	padding: 16px;
+	border: 1px solid rgba(0, 0, 0, 10%);
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 20%);
+}
+
+.mbw__image {
+	display: block;
+	aspect-ratio: 1/1;
+	border-radius: 100%;
+	width: 40px;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 20%);
+	position: absolute;
+	top: 0;
+	right: calc(100% - 4px);
+	transform: translate(50%, -50%);
+}
+
+.mbw__buttons {
+	display: flex;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.mbw-button {
+	border: 1px solid var(--border-color);
+	padding: 5px 12px;
+	border-radius: 100vw;
+	line-height: 1.4;
+	font-size: 0.9rem;
+	background-color: var(--bg-color);
+	color: var(--color);
+	transition:
+		color 0.4s ease-in-out,
+		background-color 0.4s ease-in-out,
+		border-color 0.4s ease-in-out;
+}
+
+.mbw-button:hover {
+	text-decoration: none;
+	color: var(--color-hover);
+	background-color: var(--bg-color-hover);
+	border-color: var(--border-color-hover);
+}
+
+.mbw-button--hidden {
+	display: none;
+}
+
+.mbw__content-frame {
+	background-color: #fff;
+	display: none;
+	border-radius: 5px;
+	padding: 16px;
+	border: 1px solid rgba(0, 0, 0, 10%);
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 20%);
+}
+
+.mbw__content-frame--active {
+	display: block;
+}
+
+.mbw__buttons-frame {
+	display: none;
+}
+
+.mbw__buttons-frame--active {
+	display: grid;
+	gap: 15px;
+}
+
+.mbw__buttons-frame-content {
+	background-color: #fff;
+	border-radius: 5px;
+	padding: 16px;
+	border: 1px solid rgba(0, 0, 0, 10%);
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 20%);
+}
+
+@keyframes mbw-wiggle {
+	0% {
+		transform: rotate(0deg);
+	}
+	35% {
+		transform: rotate(15deg);
+	}
+	65% {
+		transform: rotate(-15deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}

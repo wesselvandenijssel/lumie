@@ -1,0 +1,19 @@
+@use "abstracts" as *;
+
+.woocommerce-order-received {
+	.woocommerce-order {
+		max-width: 600px;
+		width: calc(100vw - 20px);
+		margin: 0 auto;
+
+		@include bp("mobile") {
+			padding-top: $pad-mobile;
+			padding-bottom: $pad-mobile;
+		}
+
+		@include bp("narrow") {
+			padding-top: $pad-normal;
+			padding-bottom: $pad-normal;
+		}
+	}
+}

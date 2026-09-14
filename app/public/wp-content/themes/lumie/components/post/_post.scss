@@ -1,0 +1,116 @@
+@use "abstracts" as *;
+
+.post {
+	display: flex;
+	flex-direction: column;
+
+	@include bp("narrow") {
+		max-width: 400px;
+	}
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+
+		.post {
+			&__button {
+				text-decoration: none;
+			}
+		}
+	}
+
+	&--swiper {
+		height: auto;
+	}
+
+	&__image {
+		width: 100%;
+		flex-grow: 1;
+		object-fit: cover;
+		aspect-ratio: 400/270;
+	}
+
+	&__image-wrapper {
+		position: relative;
+		display: flex;
+	}
+
+	&__label {
+		position: absolute;
+		bottom: 15px;
+		left: 15px;
+		padding: 4px 10px;
+		border-radius: 50px;
+		margin-bottom: 0 !important; // Overwrite .entry-content p
+		background-color: #fff;
+		font-size: pxtorem(14);
+		max-width: calc(100% - 30px);
+
+		@include bp-only("narrow", "normal") {
+			padding: 4px 15px;
+		}
+
+		@include bp("normal") {
+			bottom: 20px;
+			left: 20px;
+			max-width: calc(100% - 40px);
+		}
+	}
+
+	&__content {
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+		background-color: $hue-light-1;
+		border-radius: 0 0 15px 15px;
+		padding: 15px;
+		height: auto;
+
+		@include bp("narrow") {
+			padding: 15px 20px;
+		}
+
+		@include bp("large") {
+			padding: 25px 30px 35px;
+		}
+	}
+
+	&__title {
+		flex-grow: 1;
+
+		@include bp("large") {
+			height: 100%;
+		}
+	}
+
+	&__meta {
+		font-size: pxtorem(14);
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: pxtoem(10);
+		line-height: 2.2;
+		color: rgba($hue-dark-1, 0.8);
+	}
+
+	&__separator {
+		margin: 0 pxtoem(15);
+	}
+
+	&__button {
+		border: none;
+		width: fit-content;
+		padding: 0;
+		text-decoration: underline;
+		font-weight: 700;
+		margin-top: pxtoem(16);
+
+		@include bp("narrow") {
+			margin-top: pxtoem(20);
+		}
+
+		&::before,
+		&::after {
+			display: none;
+		}
+	}
+}

@@ -1,0 +1,169 @@
+@use "abstracts" as *;
+
+html,
+body {
+	background: #f6f6f6;
+}
+
+body {
+	font-family: $open-sans;
+	font-size: pxtorem($base-font-size);
+	line-height: 1.5;
+	color: $text-color;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-weight: 400;
+
+	@include bp("mobile") {
+		font-size: $mobile-font-size;
+	}
+
+	&.no-scroll {
+		overflow: hidden;
+		height: 100%;
+	}
+}
+
+* {
+	box-sizing: border-box;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+
+	&:hover,
+	&:focus {
+		text-decoration: underline;
+	}
+
+	&:link {
+		-webkit-tap-highlight-color: rgb(0 0 0 / 30%);
+	}
+}
+
+p {
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	hyphens: none;
+	margin-bottom: 1.5em;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	a {
+		text-decoration: underline;
+	}
+}
+
+img {
+	height: auto;
+	max-width: 100%;
+}
+
+.site {
+	background: #fff;
+
+	@include bp("narrow") {
+		max-width: $site-width;
+		margin: 0 auto;
+	}
+}
+
+.entry-content {
+	p {
+		margin: 0 0 1.5em;
+	}
+
+	table {
+		width: 100%;
+		border: 1px solid $gray;
+		margin-bottom: 1.5em;
+
+		th {
+			background-color: $light-gray;
+			border-bottom: 1px solid $gray;
+			border-right: 1px solid $gray;
+
+			&:last-child {
+				border-right: 0;
+			}
+		}
+
+		tr {
+			border-bottom: 1px solid $gray;
+
+			&:nth-child(even) {
+				background-color: $light-gray;
+			}
+		}
+
+		td {
+			padding: 7px;
+			border-right: 1px solid $gray;
+
+			&:last-child {
+				border-right: 0;
+			}
+		}
+	}
+
+	blockquote {
+		margin: 0 0 1.5em 0.75em;
+		padding: 0 0 0 0.75em;
+		border-left: 3px solid #000;
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	ol {
+		margin-left: 1.5em;
+		list-style-type: decimal;
+	}
+
+	ul {
+		margin-top: 0;
+		margin-bottom: 1.5em;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	position: absolute;
+}
+
+.video-in-fancybox {
+	cursor: pointer;
+	position: relative;
+
+	&::before {
+		content: $fa-play;
+		font-family: $fa;
+		font-weight: 700;
+		font-size: pxtorem(30);
+		color: #fff;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		aspect-ratio: 1/1;
+		width: 80px;
+		border-radius: 100vw;
+		border: 1px solid #fff;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		@include bp("narrow") {
+			width: 105px;
+		}
+	}
+}

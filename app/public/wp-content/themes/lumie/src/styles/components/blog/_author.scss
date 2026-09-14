@@ -1,0 +1,92 @@
+@use "abstracts" as *;
+
+.author {
+	&__connect {
+		display: flex;
+		gap: pxtoem(20);
+		justify-content: space-between;
+		margin-top: pxtoem(30);
+	}
+
+	&__socials {
+		display: flex;
+		gap: pxtoem(15);
+	}
+
+	&__social-link {
+		color: $hue-dark-1;
+		font-size: pxtorem(20);
+		transition: 0.4s ease color;
+		display: flex;
+		align-items: center;
+
+		&:hover {
+			color: $hue-accent-1;
+			text-decoration: none;
+		}
+
+		&::after {
+			font-family: $fa;
+			font-weight: 700;
+			font-size: pxtorem(16);
+			line-height: 1;
+		}
+
+		&--linkedin,
+		&--facebook,
+		&--twitter,
+		&--instagram {
+			&::after {
+				font-family: $fab;
+			}
+		}
+
+		&--linkedin {
+			&::after {
+				content: $fa-linkedin-in;
+			}
+		}
+
+		&--facebook {
+			&::after {
+				content: $fa-facebook-f;
+			}
+		}
+
+		&--twitter {
+			&::after {
+				content: $fa-twitter;
+			}
+		}
+
+		&--instagram {
+			&::after {
+				content: $fa-instagram;
+			}
+		}
+
+		&--mail {
+			&::after {
+				content: $fa-email;
+			}
+		}
+
+		&--phone {
+			&::after {
+				content: $fa-phone;
+			}
+		}
+	}
+
+	&__bio {
+		margin-top: pxtoem(40);
+	}
+
+	&__one-liner {
+		font-weight: 600;
+
+		@include bp("narrow") {
+			font-size: pxtorem(22);
+		}
+	}
+}

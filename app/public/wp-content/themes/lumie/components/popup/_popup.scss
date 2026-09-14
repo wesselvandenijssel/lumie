@@ -1,0 +1,137 @@
+@use "abstracts" as *;
+
+/* stylelint-disable selector-class-pattern */
+
+.popup {
+	display: none;
+	position: fixed;
+	top: 100%;
+	left: 40px;
+	right: 40px;
+	max-width: 600px;
+	max-height: calc(100% - 20px);
+	transform: translateY(-50%);
+	margin: auto;
+	background-color: #fff;
+	z-index: 1001;
+	opacity: 0;
+	overflow: scroll;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+
+	@include bp("mobile") {
+		left: 10px;
+		right: 10px;
+	}
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	&--active {
+		display: block;
+	}
+
+	&--show {
+		opacity: 1;
+		top: 50%;
+	}
+
+	&__close {
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		width: 40px;
+		aspect-ratio: 1/1;
+		cursor: pointer;
+
+		@include bp("mobile") {
+			top: 10px;
+			right: 10px;
+			width: 35px;
+		}
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 120%;
+			transform: translate(-50%, -50%);
+			background-color: #000;
+			height: 2px;
+		}
+
+		&::before {
+			transform: translate(-50%, -50%) rotate(45deg);
+		}
+
+		&::after {
+			transform: translate(-50%, -50%) rotate(-45deg);
+		}
+	}
+
+	&__content {
+		padding: 30px;
+
+		@include bp("mobile") {
+			padding: 20px;
+		}
+
+		.gform_wrapper {
+			padding-top: 25px;
+
+			@include bp("mobile") {
+				padding-top: 0;
+			}
+
+			ul.gform_fields {
+				.gfield_label {
+					font-weight: 400;
+					margin-top: 20px;
+
+					@include bp("mobile") {
+						margin-top: 10px;
+					}
+				}
+
+				input[type="text"],
+				input[type="email"],
+				input[type="tel"],
+				textarea {
+					background-color: #f7f8fa;
+				}
+			}
+
+			button {
+				margin-top: 20px;
+
+				@include bp("mobile") {
+					margin-top: 10px;
+				}
+			}
+		}
+	}
+}
+
+.popup-background {
+	display: none;
+	position: fixed;
+	inset: 0;
+	background: rgb(0 0 0 / 70%);
+	opacity: 0;
+	z-index: 1000;
+
+	&--active {
+		display: block;
+	}
+
+	&--show {
+		opacity: 1;
+	}
+}
+
+.show-popup {
+	cursor: pointer;
+}

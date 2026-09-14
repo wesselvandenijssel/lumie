@@ -1,0 +1,23 @@
+@use "abstracts" as *;
+
+#menu-sitemap {
+	margin: 0;
+
+	ul {
+		margin: 0;
+	}
+
+	li {
+		padding-left: 20px;
+		position: relative;
+
+		&::before {
+			content: $fa-angle-right;
+			font-family: $fa;
+			font-weight: 700;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	}
+}

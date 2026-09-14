@@ -1,0 +1,24 @@
+@use "abstracts" as *;
+
+.review-stars {
+	display: inline-flex;
+	gap: pxtoem(2);
+	line-height: 1;
+
+	&__star {
+		&::before {
+			font-family: $fa;
+			font-weight: 900;
+			line-height: 1;
+			content: $fa-star;
+		}
+
+		&--half::before {
+			content: $fa-star-half-stroke;
+		}
+
+		&--empty::before {
+			font-weight: 400;
+		}
+	}
+}

@@ -1,0 +1,84 @@
+@use "abstracts" as *;
+
+.notification {
+	display: none;
+	background-color: $hue-accent-1;
+	color: #fff;
+	font-weight: 500;
+	line-height: 1.2;
+	font-size: pxtorem(14);
+	padding: 5px 0;
+
+	@include bp("narrow") {
+		line-height: 1.5;
+		font-size: pxtorem(16);
+		padding: 12px 0;
+	}
+
+	&--active {
+		display: block;
+	}
+
+	&__grid {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		column-gap: 15px;
+	}
+
+	&__text {
+		position: relative;
+		padding-left: 20px;
+
+		@include bp("narrow") {
+			padding-left: 28px;
+		}
+
+		&::before {
+			content: $fa-triangle-exclamation;
+			font-family: $fa;
+			font-weight: 700;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		a {
+			text-decoration: underline;
+		}
+	}
+
+	&__close {
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		column-gap: 10px;
+	}
+
+	&__close-icon {
+		position: relative;
+		display: block;
+		aspect-ratio: 1/1;
+		width: 16px;
+
+		&::before,
+		&::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 120%;
+			transform: translate(-50%, -50%);
+			background-color: #fff;
+			height: 2px;
+		}
+
+		&::before {
+			transform: translate(-50%, -50%) rotate(45deg);
+		}
+
+		&::after {
+			transform: translate(-50%, -50%) rotate(-45deg);
+		}
+	}
+}

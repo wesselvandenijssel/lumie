@@ -1,0 +1,40 @@
+name: Cleanup Screenshots After Merge
+on:
+    pull_request:
+        types: [closed]
+        branches: [development]
+
+jobs:
+    cleanup:
+        # Only run if PR was merged (not just closed)
+        if: github.event.pull_request.merged == true
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  ref: development
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Remove screenshots directory
+              run: |
+                  if [ -d "playwright/screenshots" ]; then
+                    echo "Removing screenshots..."
+                    rm -rf playwright/screenshots/*
+                    echo "Screenshots removed"
+                  else
+                    echo "No screenshots directory found"
+                  fi
+
+            - name: Commit and push cleanup
+              run: |
+                  git config --local user.email "github-actions[bot]@users.noreply.github.com"
+                  git config --local user.name "github-actions[bot]"
+
+                  if [ -n "$(git status --porcelain)" ]; then
+                    git add playwright/screenshots
+                    git commit -m "chore: cleanup screenshots after PR #${{ github.event.pull_request.number }} merge"
+                    git push
+                    echo "Screenshots cleanup committed and pushed"
+                  else
+                    echo "No changes to commit"
+                  fi

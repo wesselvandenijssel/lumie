@@ -1,0 +1,13 @@
+{
+	"name": "acf/hero",
+	"title": "Hero",
+	"acf": {
+		"mode": "edit"
+	},
+	"supports": {
+		"anchor": true,
+		"align": false,
+		"mode": false,
+		"multiple": false
+	}
+}

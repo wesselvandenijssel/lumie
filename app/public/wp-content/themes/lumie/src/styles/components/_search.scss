@@ -1,0 +1,35 @@
+@use "abstracts" as *;
+
+.search-result {
+	display: block;
+	padding-block: 10px;
+	border-bottom: 1px solid rgba($hue-dark-1, 0.2);
+
+	@include bp("narrow") {
+		padding-block: 20px;
+	}
+
+	&:first-child {
+		padding-top: 0;
+	}
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+
+		.search-result {
+			&__title,
+			&__buttons > .btn {
+				color: $hue-accent-1;
+			}
+		}
+	}
+
+	&__content {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: pxtoem(10);
+	}
+}

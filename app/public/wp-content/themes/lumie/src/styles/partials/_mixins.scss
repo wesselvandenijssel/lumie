@@ -1,0 +1,120 @@
+@use "sass:map";
+@use "sass:string";
+@use "sass:meta";
+@use "config" as *;
+@use "variables" as *;
+
+/*********************
+BREAKPOINTS
+https://css-tricks.com/snippets/sass/mixin-manage-breakpoints/
+*********************/
+
+$breakpoints: (
+	"mobile": (
+		max-width: 739px,
+	),
+	"narrow": (
+		min-width: 740px,
+	),
+	"normal": (
+		min-width: 980px,
+	),
+	"large": (
+		min-width: 1220px,
+	),
+	"xl": (
+		min-width: 1320px,
+	),
+	"xxl": (
+		min-width: 1600px,
+	),
+);
+
+@mixin bp($breakpoint) {
+	@if map.has-key($breakpoints, $breakpoint) {
+		@media #{meta.inspect(map.get($breakpoints, $breakpoint))} {
+			@content;
+		}
+	} @else {
+		@warn "Incorrect breakpoint. Possible breakpoints are #{map.keys($breakpoints)}";
+	}
+}
+
+@mixin font-face(
+	$family,
+	$file,
+	$weight: "400",
+	$style: "normal",
+	$woff2: true,
+	$base-path: "../src/fonts/"
+) {
+	@font-face {
+		font-display: swap;
+		font-family: $family;
+		font-style: string.unquote($style);
+		font-weight: string.unquote($weight);
+
+		@if $woff2 {
+			src: url($base-path + $file + ".woff2") format("woff2"),
+				url($base-path + $file + ".woff") format("woff");
+		} @else {
+			src: url($base-path + $file + ".woff") format("woff");
+		}
+	}
+}
+
+/********************
+Breakpoint more advanced
+https://glennmccomb.com/articles/useful-sass-scss-media-query-mixins-for-bootstrap/
+*********************/
+$breakpoints-advanced: (
+	zero: 0px,
+	mobile: 739px,
+	narrow: 740px,
+	normal: 980px,
+	large: 1220px,
+	xl: 1320px,
+	xxl: 1600px,
+);
+
+@mixin bp-only($lower, $upper) {
+	@if map.has-key($breakpoints-advanced, $lower) and
+		map.has-key($breakpoints-advanced, $upper)
+	{
+		$lower-breakpoint: map.get($breakpoints-advanced, $lower);
+		$upper-breakpoint: map.get($breakpoints-advanced, $upper);
+
+		@media (min-width: $lower-breakpoint) and (max-width: ($upper-breakpoint - 1)) {
+			@content;
+		}
+	} @else {
+		@if map.has-key($breakpoints-advanced, $lower) == false {
+			@warn 'Your lower breakpoint was invalid: #{$lower}.';
+		}
+
+		@if map.has-key($breakpoints-advanced, $upper) == false {
+			@warn 'Your upper breakpoint was invalid: #{$upper}.';
+		}
+	}
+}
+
+@mixin select-styling {
+	position: relative;
+
+	&::after {
+		content: $fa-angle-down;
+		font-family: $fa;
+		font-weight: 400;
+		position: absolute;
+		top: 50%;
+		right: 20px;
+		transform: translateY(-50%);
+		pointer-events: none;
+	}
+}
+
+@mixin centered-content {
+	max-width: 620px;
+	margin-left: auto;
+	margin-right: auto;
+}
