@@ -263,6 +263,31 @@ jobs:
                           "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wp-content/plugins/$plugin/"
                   done
 
+            # Excluded files are protected from rsync --delete, so anything uploaded to the
+            # server by other means (a manual FTP push, an older deploy) stays there forever
+            # and is publicly fetchable. Remove the known development and secret files.
+            - name: Remove development files from the server
+              if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
+              env:
+                  SSH_HOST: ${{ secrets.SSH_HOST }}
+                  SSH_USER: ${{ secrets.SSH_USER }}
+                  SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+              run: |
+                  ssh -4 -i ~/.ssh/deploy_key -p "$SSH_PORT" -o ConnectTimeout=20 -o BatchMode=yes -o IdentitiesOnly=yes \
+                      "$SSH_USER@$SSH_HOST" "REMOTE_PATH='$REMOTE_PATH' bash -s" <<'REMOTE'
+                  set -e
+                  THEME="$REMOTE_PATH/wp-content/themes/lumie"
+                  for f in .npmrc .env .screenshots-token CLAUDE.md package.json package-lock.json \
+                           webpack.config.ts tsconfig.json eslint.config.mjs .stylelintrc.js \
+                           .editorconfig .nvmrc .DS_Store .git .github .claude playwright .playwright-mcp; do
+                      if [ -e "$THEME/$f" ]; then
+                          rm -rf "$THEME/$f"
+                          echo "removed: $f"
+                      fi
+                  done
+                  echo "--- Server cleanup done ---"
+                  REMOTE
+
             # filemtime() cache-busting changes on deploy, but WP Rocket serves cached HTML
             # that still references the old asset URLs until its cache is cleared.
             - name: Flush caches

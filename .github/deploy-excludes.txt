@@ -5,6 +5,7 @@
 .git*
 .github/
 .claude/
+CLAUDE.md
 
 # Local-only secrets and tokens
 .env
