@@ -80,8 +80,18 @@ jobs:
                       echo "::error::SSH_KNOWN_HOSTS is empty. Set it to the output of: ssh-keyscan -p <port> <host>"
                       exit 1
                   fi
-                  if ! nc -z -4 -w 20 "$SSH_HOST" "$SSH_PORT"; then
-                      echo "::error::Cannot reach $SSH_HOST on port $SSH_PORT over IPv4 from this runner."
+                  # Occasionally a runner IP cannot reach the host on the first try, so retry
+                  # before failing the whole deploy.
+                  for attempt in 1 2 3; do
+                      if nc -z -4 -w 15 "$SSH_HOST" "$SSH_PORT"; then
+                          reachable=1
+                          break
+                      fi
+                      echo "Attempt $attempt failed to reach $SSH_HOST:$SSH_PORT, retrying..."
+                      sleep 10
+                  done
+                  if [ -z "${reachable:-}" ]; then
+                      echo "::error::Cannot reach $SSH_HOST on port $SSH_PORT over IPv4 after three attempts."
                       exit 1
                   fi
 
