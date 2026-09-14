@@ -1,23 +1,52 @@
 @use "functions" as *;
 
 /*********************
+BRAND COLORS — brandbook 12.1
+*********************/
+// The three pastels are surfaces, never type. Navy carries all text, lines and
+// icons, which is what keeps every combination above the 4.5:1 contrast floor.
+$navy: #202a44;
+$zest: #ece68a;
+$peach: #f2a171;
+$blush: #efa8be;
+
+// Neutrals
+$paper: #f7f4ef;
+$white: #fff;
+$slate: #5a6580;
+$mist: #e4e0d8;
+
+// Gradient — brandbook 12.2: top to bottom only, never rotated, never behind text.
+$gradient-brand: linear-gradient(180deg, $zest 0%, $peach 52%, $blush 100%);
+
+/*********************
 COLORS
 *********************/
-$text-color: #414141;
-$link-color: $text-color;
+// The theme's generic names map onto the brand palette so existing rules pick
+// the new colours up. $hue-accent-1 is navy, not a pastel: it is used as a text
+// colour in 19 places, and a pastel there would drop to about 2:1 contrast.
+$text-color: $navy;
 
-$hue-accent-1: #375a77;
+$hue-accent-1: $navy;
 
-$hue-dark-1: #2e333e;
+$hue-dark-1: $navy;
+$hue-dark-2: $slate;
 
-$hue-light-1: #ebebeb;
+$hue-light-1: $slate;
+$hue-light-2: $mist;
+$hue-light-3: $paper;
+$hue-light-4: $mist;
+$hue-light-5: $mist;
 
-$btn-primary: $hue-accent-1;
+$btn-primary: $navy;
 
-$light-gray: #f8f9fa;
-$gray: #eaedf2;
+$link-color: $navy;
+$light-gray: $paper;
+$gray: $mist;
 
-$form-error: #f00;
+// The brandbook's rood-fruit stop (#d64a6e) only reaches 3.8:1 on paper, so it is
+// darkened here to clear 4.5:1 for error text on both paper and white.
+$form-error: #b43e5c;
 
 /*********************
 OTHERS
@@ -27,16 +56,16 @@ $site-width: 100%;
 $mobile-font-size: pxtorem(16);
 
 $pad-mobile-small: 20px;
-$pad-small: 40px;
+$pad-small: 80px;
 
 $pad-mobile: 40px;
-$pad-normal: 80px;
+$pad-normal: 120px;
 
 $pad-mobile-large: 60px;
-$pad-large: 100px;
+$pad-large: 140px;
 
 $pad-mobile-extra-large: 80px;
-$pad-extra-large: 120px;
+$pad-extra-large: 160px;
 
 $pad-normal-half: 60px;
 
@@ -48,6 +77,7 @@ $fa-phone: "\f095";
 $fa-address: "\f3c5";
 
 $fa-check: "\f00c";
+$fa-circle-check: "\f058";
 $fa-star: "\f005";
 $fa-star-half: "\f089";
 $fa-star-half-stroke: "\f5c0";
@@ -58,6 +88,8 @@ $fa-search-plus: "\f00e";
 $fa-triangle-exclamation: "\f071";
 $fa-x: "\58";
 $fa-play: "\f04b";
+$fa-plus: "\2b";
+$fa-minus: "\f068";
 
 $fa-facebook: "\f082";
 $fa-facebook-f: "\f39e";
@@ -109,3 +141,8 @@ $fa-chevron-circle-up: "\f139";
 $fa-chevron-circle-right: "\f138";
 $fa-chevron-circle-left: "\f137";
 $fa-chevron-circle-down: "\f13a";
+
+/*********************
+Transitions
+*********************/
+$hover-transition: 0.3s cubic-bezier(0.55, 0.175, 0.275, 1);

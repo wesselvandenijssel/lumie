@@ -1,0 +1,10 @@
+@use "mixins" as *;
+
+/*********************
+FONT FACES
+*********************/
+// Poppins, latin subset, self-hosted. Only the three weights the brandbook
+// allows — anything heavier or an italic would be faked by the browser.
+@include font-face("Poppins", "Poppins-Light", "300", "normal");
+@include font-face("Poppins", "Poppins-Regular", "400", "normal");
+@include font-face("Poppins", "Poppins-Medium", "500", "normal");

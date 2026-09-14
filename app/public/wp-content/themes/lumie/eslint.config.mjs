@@ -47,28 +47,7 @@ export default [
 		},
 	},
 	{
-		files: ["webpack.config.ts", "src/scripts/files/screenshots/**/*.ts"],
-		languageOptions: {
-			globals: {
-				process: "readonly",
-				require: "readonly",
-				module: "readonly",
-				__dirname: "readonly",
-				__filename: "readonly",
-				console: "readonly",
-				fetch: "readonly",
-			},
-		},
-		rules: {
-			"@typescript-eslint/no-require-imports": "off",
-		},
-	},
-	{
-		ignores: [
-			"node_modules/**",
-			"dist/**",
-			"vendor/**",
-			"playwright.config.ts",
-		],
+		// Ignore patterns
+		ignores: ["node_modules/**", "dist/**", "vendor/**"],
 	},
 ];

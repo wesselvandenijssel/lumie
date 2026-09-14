@@ -277,8 +277,8 @@ add_filter('searchwp_exclude', 'be_exclude_noindex_searchwp');
 function encrypt_decrypt($action, $string): string|false {
 	$output = false;
 	$encrypt_method = "AES-256-CBC";
-	$secret_key = wp_salt('auth');
-	$secret_iv = wp_salt('secure_auth');
+	$secret_key = 'U8CUZRKkzg5qfitrRUq3kKOfCdcrgpHpjDzjpWt94o3BWzyhf03xeL+x7wUsxlNP'; // 32 byte key, randomly generated with https://generate-random.org/encryption-key-generator
+	$secret_iv = 'hvbIh8YQjKr30aQXQ02rxgmenRAjpaC+pekPeSR8GUw='; // 16 byte iv, randomly generated with https://generate-random.org/encryption-key-generator
 
 	// hash
 	$key = hash('sha256', $secret_key);
@@ -294,6 +294,23 @@ function encrypt_decrypt($action, $string): string|false {
 	return $output;
 }
 
+function custom_mce_color_options($init) {
+	// Define custom colors with their corresponding HEX codes and names.
+	$custom_colors = '
+        "332B28", "' . __('Donkerbruin', 'mbeffect') . '",
+        "332B2899", "' . __('Donkerbruin 60%', 'mbeffect') . '",
+    ';
+
+	// Build the color grid palette using custom colors
+	$init['textcolor_map'] = '[' . $custom_colors . ']';
+
+	// Change the number of rows in the color grid
+	$init['textcolor_rows'] = 1;
+
+	return $init;
+}
+add_filter('tiny_mce_before_init', 'custom_mce_color_options');
+
 /**
  * Configure ACF WYSIWYG toolbar options
  *
@@ -304,7 +321,7 @@ add_filter('acf/fields/wysiwyg/toolbars', function ($toolbars) {
 
 	// Register a basic toolbar with a single row of options
 	// Available options: https://www.tiny.cloud/docs/tinymce/6/available-toolbar-buttons/
-	$toolbars['title'][1] = ['link', 'unlink'];
+	$toolbars['title'][1] = ['link', 'unlink', 'italic', 'forecolor'];
 
 	return $toolbars;
 });
@@ -316,8 +333,8 @@ add_filter('acf/fields/wysiwyg/toolbars', function ($toolbars) {
  * @return string Sanitized title with allowed HTML tags preserved
  */
 function sanitize_title_custom($title) {
-	// Define allowed HTML tags
-	$allowed_tags = ['i', 'em', 'b', 'strong', 'u', 'a', 'br'];
+	// Define allowed HTML tags.
+	$allowed_tags = ['i', 'em', 'b', 'strong', 'u', 'a', 'br', 'span'];
 
 	// Strip tags except the allowed ones
 	$sanitized_title = strip_tags($title, '<' . implode('><', $allowed_tags) . '>');

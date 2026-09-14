@@ -161,16 +161,45 @@ class BlockButtons {
 					$this->content .= $button->get_button();
 					break;
 
+				case 'tertiary':
+					$icon_before = '';
+					$icon_after = '';
+
+					if (!empty($value['singular_button']['icon_before']) && $value['singular_button']['icon_before'] != 'none') {
+						$icon_before = $value['singular_button']['icon_before'];
+					}
+					if (!empty($value['singular_button']['icon_after']) && $value['singular_button']['icon_after'] != 'none') {
+						$icon_after = $value['singular_button']['icon_after'];
+					}
+
+					$button = new BlockButton($icon_before . $value['singular_button']['button_text'] . $icon_after);
+					$button->set_type('btn btn--tertiary');
+					$button->set_display($value['singular_button']['display']);
+
+					switch ($value['singular_button']['button_type']) {
+						case 'link':
+							$button->set_link(
+								$value['singular_button']['button_link']['url'] ?? '',
+								$value['singular_button']['button_link']['title'] ?? '',
+								$value['singular_button']['button_link']['target'] ?? '_self',
+							);
+							break;
+
+						case 'popup':
+							$button->set_popup($value['singular_button']['button_popup']);
+							break;
+					}
+
+					$this->content .= $button->get_button();
+					break;
+
 
 				case 'phone':
 					$contact_details = get_field('contact_details', 'options');
-
-					if (empty($contact_details['phone']) || empty($contact_details['phone_link']['url'])) break;
-
 					$phone_link = sprintf(
 						'<a href="%s" title="%s">%s</a>',
 						esc_url($contact_details['phone_link']['url']),
-						esc_attr($value['title_attr'] ?? ''),
+						esc_attr($value['title_attr']),
 						esc_html($contact_details['phone'])
 					);
 

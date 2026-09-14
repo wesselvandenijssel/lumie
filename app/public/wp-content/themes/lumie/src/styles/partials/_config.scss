@@ -2,16 +2,10 @@
 FONTS
 *********************/
 $sans-serif: "Helvetica Neue", helvetica, arial, sans-serif;
-$serif:
-	"Georgia",
-	cambria,
-	times new roman,
-	times,
-	serif;
 
-$open-sans: "Open Sans", $sans-serif;
-
-// @include font-face('Overpass', 'Overpass-Light', '300', 'normal');
+// Brandbook 12.3: one family in three weights — light 300, regular 400,
+// medium 500. No other family, no italics.
+$poppins: "Poppins", $sans-serif;
 
 $fa: "Font Awesome 6 Pro";
 $fab: "Font Awesome 6 Brands";
@@ -19,4 +13,6 @@ $fab: "Font Awesome 6 Brands";
 /*********************
 BASE
 *********************/
-$base-font-size: 18;
+// Brandbook 12.3: body text is 17px. pxtoem() resolves against this, so every
+// em-based spacing in the theme scales with it.
+$base-font-size: 17;

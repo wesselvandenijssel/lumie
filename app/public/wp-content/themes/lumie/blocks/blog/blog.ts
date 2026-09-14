@@ -1,6 +1,7 @@
 import Swiper from "swiper";
 import { Navigation } from "swiper/modules";
-import "swiper/css/navigation";
+import "swiper/css";
+import "swiper/css/autoplay";
 
 document.addEventListener("DOMContentLoaded", () => {
 	const selects = document.querySelectorAll(
@@ -24,7 +25,6 @@ new Swiper(".blog__grid.swiper", {
 	navigation: {
 		nextEl: ".blog__swiper-button--next",
 		prevEl: ".blog__swiper-button--prev",
-		addIcons: false,
 	},
 
 	breakpoints: {

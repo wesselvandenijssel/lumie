@@ -115,12 +115,11 @@ add_filter('woocommerce_coupons_enabled', 'hide_coupon_field_on_cart');
 add_action('wp_enqueue_scripts', 'child_manage_woocommerce_styles', 99);
 
 function child_manage_woocommerce_styles() {
+	//remove generator meta tag
+	remove_action('wp_head', [$GLOBALS['woocommerce'], 'generator']);
+
 	//first check that woo exists to prevent fatal errors
 	if (function_exists('is_woocommerce')) {
-		if (!empty($GLOBALS['woocommerce'])) {
-			remove_action('wp_head', [$GLOBALS['woocommerce'], 'generator']);
-		}
-
 		//dequeue scripts and styles
 		if (!is_woocommerce() && !is_cart() && !is_checkout()) {
 			wp_dequeue_style('woocommerce_frontend_styles');

@@ -9,51 +9,26 @@
 		gap: 1.5em 20px;
 
 		@include bp("narrow") {
-			gap: 2.5em 20px;
+			gap: pxtoem(80) 20px;
 		}
 
-		&--contact_details {
-			@include bp("normal") {
-				justify-content: space-between;
-			}
-
-			&#{$contact}__grid--flip {
-				@include bp("normal") {
-					grid-template-columns: minmax(auto, 550px) minmax(
-							auto,
-							580px
-						);
-				}
-
-				#{$contact}__form {
-					@include bp("normal") {
-						order: 1;
-					}
-				}
-			}
-
-			&#{$contact}__grid--unflip {
-				@include bp("normal") {
-					grid-template-columns: minmax(auto, 580px) minmax(
-							auto,
-							550px
-						);
-				}
-			}
-		}
-
+		&--contact_details,
 		&--content {
 			@include bp("normal") {
 				justify-content: space-between;
 			}
 
-			@include bp("large") {
-				align-items: center;
+			.titles {
+				max-width: 475px;
+
+				@include bp("narrow") {
+					margin-bottom: pxtoem(40);
+				}
 			}
 
-			.titles {
-				@include bp("narrow") {
-					margin-bottom: pxtoem(20);
+			.content-layout {
+				p {
+					max-width: 475px;
 				}
 			}
 
@@ -69,10 +44,14 @@
 
 			&#{$contact}__grid--flip {
 				@include bp("normal") {
-					grid-template-columns: minmax(auto, 550px) minmax(
+					grid-template-columns: minmax(auto, 620px) minmax(
 							auto,
-							580px
+							520px
 						);
+				}
+
+				@include bp("xl") {
+					padding-right: 85px;
 				}
 
 				#{$contact}__form {
@@ -84,92 +63,132 @@
 
 			&#{$contact}__grid--unflip {
 				@include bp("normal") {
-					grid-template-columns: minmax(auto, 580px) minmax(
+					grid-template-columns: minmax(auto, 520px) minmax(
 							auto,
-							550px
+							620px
 						);
+				}
+
+				@include bp("xl") {
+					padding-left: 85px;
 				}
 			}
 		}
 	}
 
 	&__form {
-		background-color: $hue-light-1;
+		background-color: $hue-light-4;
 		position: relative;
 		text-align: center;
 		max-width: 620px;
-		padding: 30px 15px;
+		padding: 30px 10px;
 		z-index: 1;
-		border-radius: 10px;
 
 		@include bp("narrow") {
-			border-radius: 20px;
-			padding: 60px 50px;
+			padding: 40px;
+		}
+
+		@include bp-only("normal", "large") {
+			padding: 40px 20px;
+		}
+	}
+
+	&__tab-buttons {
+		background-color: $hue-light-5;
+		padding: 4px;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: pxtoem(32);
+	}
+
+	&__tab-button {
+		background-color: transparent;
+		border: none;
+		margin: 0;
+		border-radius: 1px;
+		padding: 12px 5px;
+		flex-grow: 1;
+
+		@include bp("mobile") {
+			font-size: pxtorem(12);
+		}
+
+		@include bp-only("normal", "large") {
+			font-size: pxtorem(14);
+		}
+
+		&--active {
+			background-color: #fff;
+		}
+	}
+
+	&__form-tab {
+		display: none;
+
+		&--active {
+			display: block;
+		}
+
+		#{$contact}__form-title {
+			text-align: left;
+
+			@include bp("narrow") {
+				font-size: pxtorem(54);
+				margin-bottom: pxtoem(32, 54);
+			}
+		}
+	}
+
+	&__form-title {
+		margin-bottom: pxtoem(10);
+
+		@include bp("narrow") {
+			margin-bottom: pxtoem(32, 32);
+			font-size: pxtorem(32);
 		}
 	}
 
 	&__cd {
-		&:not(:last-child) {
-			margin-bottom: pxtoem(20);
+		margin-top: pxtoem(30);
+
+		@include bp("narrow") {
+			margin-top: pxtoem(60);
 		}
 	}
 
 	&__cd-title {
-		margin-bottom: pxtoem(10);
+		text-transform: uppercase;
+		font-family: $poppins;
+		font-weight: 700;
+		line-height: 3;
+		letter-spacing: 0.2px;
+		color: $hue-accent-1;
+		font-size: pxtorem(10);
+		margin-bottom: pxtoem(10, 10);
 
 		@include bp("narrow") {
-			margin-bottom: pxtoem(20);
+			margin-bottom: pxtoem(15, 10);
 		}
+	}
 
-		&--small {
-			font-size: pxtorem(18);
-		}
+	&__cd-grid {
+		display: grid;
+		column-gap: 10px;
 
-		&:not(:first-child) {
-			margin-top: pxtoem(35);
+		@include bp("narrow") {
+			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
 	&__cd-item {
-		display: block;
-		line-height: 1.65;
-
-		&:not(:last-child) {
-			margin-bottom: pxtoem(5);
-		}
-
-		&--phone,
-		&--email,
 		&--address {
-			position: relative;
-			padding-left: 35px;
-
-			&::before {
-				font-family: $fa;
-				position: absolute;
-				top: 3px;
-				left: 0;
-				font-weight: 400;
-				font-size: pxtorem(14);
-			}
+			grid-row: span 2;
 		}
+	}
 
-		&--address {
-			&:not(:first-child) {
-				margin-top: pxtoem(20);
-			}
-
-			&::before {
-				content: $fa-address;
-			}
-		}
-
-		&--phone::before {
-			content: $fa-phone;
-		}
-
-		&--email::before {
-			content: $fa-email;
+	&__content {
+		@include bp("normal") {
+			padding-top: pxtoem(20);
 		}
 	}
 
@@ -181,14 +200,12 @@
 		}
 	}
 
-	&__content {
-		max-width: 500px;
+	.content-layout {
+		.contact-person {
+			margin-top: pxtoem(30);
 
-		.content-layout {
-			.titles {
-				@include bp("mobile") {
-					margin-bottom: 0.6em;
-				}
+			@include bp("normal") {
+				margin-top: pxtoem(70);
 			}
 		}
 	}

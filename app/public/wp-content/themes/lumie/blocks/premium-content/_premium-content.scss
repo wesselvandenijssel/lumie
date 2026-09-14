@@ -1,0 +1,71 @@
+@use "abstracts" as *;
+
+.premium-content {
+	&__intro {
+		margin: 0 auto;
+		max-width: calc(100vw - 20px);
+
+		@include bp("narrow") {
+			max-width: calc(100vw - 50px);
+		}
+
+		.titles {
+			position: sticky;
+			top: $pad-normal;
+			text-align: center;
+			margin: 0;
+
+			.main-title {
+				color: $hue-light-4;
+				line-height: 0.8;
+				margin-bottom: pxtoem(-50, 120);
+				padding-bottom: pxtoem(
+					20,
+					120
+				); // Small bottom padding to prevent the text from revealing the descender (happens with j, g, p, q or y)
+				font-size: pxtorem(40);
+
+				@include bp("narrow") {
+					font-size: pxtorem(120);
+				}
+
+				&::after {
+					display: none;
+				}
+			}
+		}
+	}
+
+	&__image-wrapper {
+		position: relative;
+		overflow: hidden;
+		border-radius: 2px;
+		aspect-ratio: 1385/730;
+	}
+
+	&__image {
+		position: absolute;
+		top: -25%;
+		left: 0;
+		width: 100%;
+		height: 150% !important;
+		object-fit: cover;
+		display: block;
+	}
+
+	&__content {
+		display: grid;
+		gap: 1.5em 30px;
+		max-width: 1110px;
+		margin: pxtoem(40) auto 0;
+
+		@include bp("narrow") {
+			margin: pxtoem(80) auto 0;
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.titles {
+			max-width: 320px;
+		}
+	}
+}

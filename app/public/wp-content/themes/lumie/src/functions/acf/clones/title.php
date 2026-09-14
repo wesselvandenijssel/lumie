@@ -16,6 +16,19 @@ if (function_exists('acf_add_local_field_group')) :
 				'layout' => 'block',
 				'sub_fields' => [
 					[
+						'key' => 'clone_titles_block_title_suptitle',
+						'label' => esc_html__('Boventitel', 'mbeffect'),
+						'name' => 'suptitle',
+						'type' => 'wysiwyg',
+						'tabs' => 'visual',
+						'toolbar' => 'title',
+						'delay' => true,
+						'media_upload' => false,
+						'wrapper' => [
+							'width' => '50',
+						],
+					],
+					[
 						'key' => 'clone_titles_block_title_main_title',
 						'label' => esc_html__('Titel', 'mbeffect'),
 						'name' => 'main_title',

@@ -33,6 +33,14 @@ if (empty($content)) return;
 				echo $content->getContent();
 				break;
 
+			case 'quote':
+				$content = new FlexContent();
+
+				$content->setQuote($value['quote'], $value['author'] ?? '');
+
+				echo $content->getContent();
+				break;
+
 			case 'image':
 				$content = new FlexContent();
 
@@ -57,6 +65,14 @@ if (empty($content)) return;
 				echo $content->getContent();
 				break;
 
+			case 'specifications':
+				$content = new FlexContent();
+
+				$content->setSpecifications($value['specifications'], $value['title'] ?? '');
+
+				echo $content->getContent();
+				break;
+
 			case 'form':
 				$content = new FlexContent();
 
@@ -65,12 +81,18 @@ if (empty($content)) return;
 				echo $content->getContent();
 				break;
 
-			case 'buttons_clone':
-				if (empty($value['buttons_group']) || !is_array($value['buttons_group'])) break;
-
+			case 'person':
 				$content = new FlexContent();
 
-				$content->setButtons($value['buttons_group'] ?? []);
+				$content->setPerson($value['person']);
+
+				echo $content->getContent();
+				break;
+
+			case 'buttons_clone':
+				$content = new FlexContent();
+
+				$content->setButtons($value['buttons_group']);
 
 				echo $content->getContent();
 				break;

@@ -4,9 +4,9 @@
 const openPopup = (popupName: string) => {
 	if (!popupName) return;
 
-	const selector = `.popup[data-popup="${CSS.escape(popupName)}"]`;
-
-	const popups = document.querySelectorAll<HTMLElement>(selector);
+	const popups = document.querySelectorAll<HTMLElement>(
+		`.popup[data-popup*='${popupName}']`
+	);
 	popups.forEach((el) => el.classList.add("popup--active"));
 
 	document
@@ -25,11 +25,11 @@ const openPopup = (popupName: string) => {
 
 		// Set focus to first focusable element in popup for accessibility
 		const activePopup = document.querySelector<HTMLElement>(
-			`${selector}.popup--active`,
+			`.popup[data-popup*='${popupName}'].popup--active`
 		);
 		if (activePopup) {
 			const firstFocusable = activePopup.querySelector<HTMLElement>(
-				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
 			);
 			if (firstFocusable) {
 				firstFocusable.focus();
@@ -54,8 +54,8 @@ const closePopup = () => {
 		.forEach((el) =>
 			el.classList.remove(
 				"popup-background--active",
-				"popup-background--show",
-			),
+				"popup-background--show"
+			)
 		);
 
 	document.querySelector("body")?.classList.remove("no-scroll");
@@ -66,7 +66,7 @@ const showPopupButtons = document.querySelectorAll<HTMLElement>(".show-popup");
 showPopupButtons.forEach((showPopupButton) => {
 	// Click event
 	showPopupButton.addEventListener("click", () =>
-		openPopup(showPopupButton.dataset.popup ?? ""),
+		openPopup(showPopupButton.dataset.popup ?? "")
 	);
 
 	// Keyboard event for accessibility
@@ -79,7 +79,7 @@ showPopupButtons.forEach((showPopupButton) => {
 });
 
 const closePopupButtons = document.querySelectorAll<HTMLElement>(
-	".popup__close, .popup-background",
+	".popup__close, .popup-background"
 );
 
 closePopupButtons.forEach((closePopupButton) => {

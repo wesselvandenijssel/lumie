@@ -42,34 +42,23 @@ const closeSubMenu = () => {
 /**
  * Menu toggle - Shows/hides the entire menu
  */
-$all(".menu-toggle").forEach((toggle) => {
-	const toggleMenu = () => {
+$all(".menu-toggle").forEach((toggle) =>
+	toggle.addEventListener("click", () => {
 		toggle.setAttribute(
 			"aria-expanded",
-			String(!toggle.classList.contains("menu-toggle--active")),
+			String(!toggle.classList.contains("menu-toggle--active"))
 		);
 		toggle.classList.toggle("menu-toggle--active");
 		document.body.classList.toggle("no-scroll");
 		$all(".main-navigation__content").forEach((el) => el.slideToggle(400));
-	};
-
-	toggle.addEventListener("click", toggleMenu);
-
-	toggle.addEventListener("keydown", (e) => {
-		if (e.repeat) return;
-
-		if (e.key === "Enter" || e.key === " ") {
-			e.preventDefault();
-			toggleMenu();
-		}
-	});
-});
+	})
+);
 
 /**
  * Menu background - Closes the submenu on click
  */
 $all(".header__background").forEach((bg) =>
-	bg.addEventListener("click", closeSubMenu),
+	bg.addEventListener("click", closeSubMenu)
 );
 
 /**
@@ -96,7 +85,7 @@ $all("ul.menu > .menu-item-has-children > span").forEach((span) =>
 			openSubMenu(submenu);
 			span.classList.add("active");
 		}
-	}),
+	})
 );
 
 /**
@@ -115,12 +104,12 @@ $all(".submenu-toggle").forEach((toggle) =>
 		if (submenu instanceof HTMLElement) {
 			// First close the opened submenu before opening a new one, but only when it doesn't contain a visible .back-to-previous
 			const submenuBackToPrevious = submenu.querySelector(
-				":scope > .back-to-previous",
+				":scope > .back-to-previous"
 			);
 			let submenuBackToPreviousStyle: CSSStyleDeclaration | null = null;
 			if (submenuBackToPrevious instanceof HTMLElement) {
 				submenuBackToPreviousStyle = window.getComputedStyle(
-					submenuBackToPrevious,
+					submenuBackToPrevious
 				);
 				if (submenuBackToPreviousStyle.display === "none") {
 					closeSubMenu();
@@ -130,7 +119,7 @@ $all(".submenu-toggle").forEach((toggle) =>
 			openSubMenu(submenu);
 			toggle.classList.add("submenu-toggle--active");
 		}
-	}),
+	})
 );
 
 /**
@@ -141,9 +130,9 @@ $all(".menu-item-has-children .back-to-previous").forEach((prevButton) =>
 		const prevButtonMenuItem = prevButton.closest(".menu-item");
 		if (!prevButtonMenuItem) return;
 		const prevButtonToggle = prevButtonMenuItem.querySelector(
-			":scope > .submenu-toggle",
+			":scope > .submenu-toggle"
 		);
 		if (!prevButtonToggle) return;
 		prevButtonToggle.classList.remove("submenu-toggle--active");
-	}),
+	})
 );

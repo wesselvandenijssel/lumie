@@ -125,12 +125,14 @@ function get_general_settings(bool $spacings = true, bool $background = true, $s
  * The get_flex_content function is a way to include the flexible content field in a block.
  *
  * @param string $template_type the key of the template field
+ * @param string $name (optional) the field name, override when a block holds more than one content area
+ * @param string $label (optional) the field label, defaults to "Content"
  */
-function get_flex_content(string $template_type): array {
+function get_flex_content(string $template_type, string $name = 'content', string $label = ''): array {
 	return [
 		'key' => $template_type . '_content',
-		'label' => esc_html__('Content', 'mbeffect'),
-		'name' => 'content',
+		'label' => $label ?: esc_html__('Content', 'mbeffect'),
+		'name' => $name,
 		'type' => 'flexible_content',
 		'button_label' => esc_html__('Nieuwe contentregel', 'mbeffect'),
 		'layouts' => [
@@ -176,6 +178,28 @@ function get_flex_content(string $template_type): array {
 						'name' => 'content',
 						'type' => 'wysiwyg',
 						'delay' => true,
+					],
+				],
+			],
+			[
+				'key' => $template_type . '_content_layout_quote',
+				'name' => 'quote',
+				'label' => esc_html__('Citaat', 'mbeffect'),
+				'sub_fields' => [
+					[
+						'key' => $template_type . '_content_layout_quote_quote',
+						'label' => esc_html__('Citaat', 'mbeffect'),
+						'name' => 'quote',
+						'type' => 'wysiwyg',
+						'delay' => true,
+						'media_upload' => false,
+						'toolbar' => 'title',
+					],
+					[
+						'key' => $template_type . '_content_layout_quote_author',
+						'label' => esc_html__('Naam', 'mbeffect'),
+						'name' => 'author',
+						'type' => 'text',
 					],
 				],
 			],
@@ -278,6 +302,47 @@ function get_flex_content(string $template_type): array {
 				],
 			],
 			[
+				'key' => $template_type . '_content_layout_specifications',
+				'name' => 'specifications',
+				'label' => esc_html__('Specificaties', 'mbeffect'),
+				'sub_fields' => [
+					[
+						'key' => $template_type . '_content_layout_specifications_title',
+						'label' => esc_html__('Boventitel', 'mbeffect'),
+						'name' => 'title',
+						'type' => 'text',
+					],
+					[
+						'key' => $template_type . '_content_layout_specifications_specifications',
+						'label' => esc_html__('Specificaties', 'mbeffect'),
+						'name' => 'specifications',
+						'type' => 'repeater',
+						'layout' => 'table',
+						'button_label' => esc_html__('Nieuwe regel', 'mbeffect'),
+						'sub_fields' => [
+							[
+								'key' => $template_type . '_content_layout_specifications_specifications_label',
+								'label' => esc_html__('Label', 'mbeffect'),
+								'name' => 'label',
+								'type' => 'text',
+								'wrapper' => [
+									'width' => '50',
+								],
+							],
+							[
+								'key' => $template_type . '_content_layout_specifications_specifications_value',
+								'label' => esc_html__('Waarde', 'mbeffect'),
+								'name' => 'value',
+								'type' => 'text',
+								'wrapper' => [
+									'width' => '50',
+								],
+							],
+						],
+					],
+				],
+			],
+			[
 				'key' => $template_type . '_content_layout_form',
 				'name' => 'form',
 				'label' => esc_html__('Formulier', 'mbeffect'),
@@ -289,6 +354,23 @@ function get_flex_content(string $template_type): array {
 						'type' => 'select',
 						'allow_null' => 1,
 						'ui' => 1,
+					],
+				],
+			],
+			[
+				'key' => $template_type . '_content_layout_person',
+				'name' => 'person',
+				'label' => esc_html__('Contactpersoon', 'mbeffect'),
+				'sub_fields' => [
+					[
+						'key' => $template_type . '_content_layout_person_person',
+						'label' => esc_html__('Contactpersoon', 'mbeffect'),
+						'name' => 'person',
+						'type' => 'post_object',
+						'post_type' => [
+							'team_member',
+						],
+						'return_format' => 'id',
 					],
 				],
 			],
@@ -363,14 +445,20 @@ function general_section(array $block, array $section): array {
 function get_logo(array $args = []): string {
 	$html = '<span %s>%s</span>';
 	$logo_id = get_field($args['name'] ?? 'logo', 'option');
+	$logo_white_id = get_field($args['name'] ?? 'logo_white', 'option');
 
-	if (!$logo_id) {
+	if (empty($logo_id)) {
 		return '';
 	}
 
 	// We have a logo. Logo is go.
 	$logo_attr = [
-		'class' => 'logo',
+		'class' => 'logo logo--colored',
+		'loading' => false,
+		'alt' => '',
+	];
+	$logo_white_attr = [
+		'class' => 'logo logo--white',
 		'loading' => false,
 		'alt' => '',
 	];
@@ -381,7 +469,7 @@ function get_logo(array $args = []): string {
 		$logo_link_attr['class'][] = $args['class'];
 	}
 
-	$html = '<a %s>%s</a>';
+	$html = '<a %s>%s%s</a>';
 
 	/**
 	 * If the logo alt attribute is empty, get the site title and explicitly pass it to the attributes used by wp_get_attachment_image().
@@ -397,12 +485,18 @@ function get_logo(array $args = []): string {
 	// Generate the img html
 	$image = wp_get_attachment_image($logo_id, 'full', false, $logo_attr);
 
+	if (!empty($logo_white_id)) {
+		$image_white_alt = get_post_meta($logo_white_id, '_wp_attachment_image_alt', true);
+		$logo_white_attr['alt'] = empty($image_white_alt) ? get_bloginfo('name') : $image_white_alt;
+		$image_white = wp_get_attachment_image($logo_white_id, 'full', false, $logo_white_attr);
+	}
+
 	// Generate an attributes string
 	$logo_link_atts = array_map('attribute_map_callback', $logo_link_attr, array_keys($logo_link_attr));
 	$logo_link_attr_str = implode(' ', $logo_link_atts);
 
 	// Add all variables together and return the html string
-	return sprintf($html, $logo_link_attr_str, $image);
+	return sprintf($html, $logo_link_attr_str, $image, $image_white ?? '');
 }
 
 /**

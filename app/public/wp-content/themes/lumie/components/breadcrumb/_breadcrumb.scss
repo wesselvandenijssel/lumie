@@ -11,14 +11,21 @@
 		color: $hue-dark-1;
 		position: absolute;
 		z-index: 5;
-		top: 15px;
+		top: 25px;
 		left: 0;
-		font-size: pxtorem(14);
+		font-size: pxtorem(12);
 		line-height: 1;
+		font-weight: 500;
+		letter-spacing: -0.25px;
 		margin: 0;
 
 		a {
 			text-decoration: none;
+			color: rgba($hue-dark-1, 0.4);
+
+			&:last-child {
+				color: rgba($hue-dark-1, 0.8);
+			}
 		}
 	}
 

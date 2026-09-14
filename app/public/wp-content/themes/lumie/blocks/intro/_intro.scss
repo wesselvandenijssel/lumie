@@ -1,0 +1,55 @@
+@use "abstracts" as *;
+
+.intro {
+	&__grid {
+		display: grid;
+		gap: pxtoem(40) 20px;
+
+		@include bp("normal") {
+			grid-template-columns: minmax(0, 49%) minmax(0, 32%);
+			justify-content: space-between;
+			align-items: start;
+		}
+	}
+
+	&__content {
+		font-family: $poppins;
+		font-size: pxtorem(20);
+		line-height: 1.3;
+
+		@include bp("narrow") {
+			font-size: pxtorem(32);
+		}
+
+		p {
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	&__aside {
+		display: grid;
+		justify-items: start;
+		gap: pxtoem(32);
+	}
+
+	&__specs {
+		width: 100%;
+		margin: 0;
+		border-bottom: 1px solid rgba($navy, 0.1);
+	}
+
+	&__spec {
+		display: grid;
+		grid-template-columns: minmax(0, 46%) minmax(0, 1fr);
+		gap: pxtoem(10);
+		padding-block: 16px;
+		line-height: 1.6;
+		border-top: 1px solid rgba($navy, 0.1);
+	}
+
+	&__spec-value {
+		margin: 0;
+	}
+}

@@ -10,6 +10,10 @@
 		@extend %btn--secondary;
 	}
 
+	&--tertiary {
+		@extend %btn--tertiary;
+	}
+
 	&__filter {
 		background-color: transparent;
 		border-color: $btn-primary;
@@ -62,6 +66,21 @@
 	}
 }
 
+.menu-button {
+	> a,
+	> span {
+		@extend %btn--primary;
+
+		@include bp("narrow") {
+			padding: 12px 6px !important;
+		}
+
+		@include bp("normal") {
+			padding: 12px 16px !important;
+		}
+	}
+}
+
 .btn-display {
 	&--phone {
 		@include bp("narrow") {
@@ -88,7 +107,7 @@
 
 	.phone {
 		a {
-			font-weight: 700;
+			font-weight: 500;
 		}
 	}
 }

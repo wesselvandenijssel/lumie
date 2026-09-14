@@ -1,0 +1,157 @@
+@use "abstracts" as *;
+
+.image-banner {
+	&__inner {
+		position: relative;
+		max-width: 1385px;
+		width: calc(100% - 20px);
+		margin: 0 auto;
+
+		@include bp("normal") {
+			display: flex;
+			align-items: flex-end;
+			min-height: 600px;
+		}
+
+		@include bp("large") {
+			min-height: 760px;
+		}
+	}
+
+	&__media-wrapper {
+		position: relative;
+		overflow: hidden;
+		border-radius: 2px;
+		aspect-ratio: 3 / 2;
+
+		@include bp("normal") {
+			position: absolute;
+			inset: 0;
+			aspect-ratio: auto;
+		}
+
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			z-index: 1;
+			pointer-events: none;
+			background-color: rgba(#000, 0.1);
+		}
+	}
+
+	&__media {
+		&--image {
+			position: absolute;
+			top: -25%;
+			left: 0;
+			display: block;
+			width: 100%;
+			height: 150% !important; // Overwrite .entry-content img
+			object-fit: cover;
+		}
+
+		&--video {
+			position: absolute;
+			overflow: hidden;
+			inset: 0;
+			pointer-events: none;
+
+			> div {
+				top: 50%;
+				transform: translateY(-50%);
+				min-height: 100%;
+			}
+
+			.w-chrome {
+				height: 100% !important;
+			}
+
+			.w-video-wrapper > video {
+				object-fit: cover !important;
+			}
+
+			.w-ui-container {
+				display: none !important;
+			}
+
+			wistia-player {
+				height: 100%;
+			}
+		}
+	}
+
+	&__text {
+		position: absolute;
+		right: 20px;
+		bottom: -9px;
+		z-index: 2;
+		max-width: 805px;
+		color: #fff;
+		text-align: right;
+		line-height: 0.8;
+		font-family: $poppins;
+		font-size: pxtorem(48);
+
+		@include bp("narrow") {
+			right: 40px;
+			font-size: pxtorem(72);
+		}
+
+		@include bp("normal") {
+			max-width: calc(100% - 462px);
+			font-size: pxtorem(90);
+		}
+
+		@include bp("large") {
+			right: 60px;
+			max-width: calc(100% - 522px);
+			font-size: pxtorem(120);
+		}
+
+		@include bp("xl") {
+			right: 80px;
+			max-width: min(805px, calc(100% - 542px));
+			font-size: pxtorem(150);
+		}
+	}
+
+	&__card {
+		position: relative;
+		z-index: 2;
+		margin-top: pxtoem(30);
+		border-radius: 2px;
+		background-color: #fff;
+
+		@include bp("normal") {
+			width: 382px;
+			margin: 0 0 60px 40px;
+			padding: 40px;
+		}
+
+		@include bp("large") {
+			margin: 0 0 88px 80px;
+		}
+
+		.titles {
+			&:not(:last-child) {
+				margin-bottom: pxtoem(24);
+			}
+
+			.main-title {
+				line-height: 1;
+				font-size: pxtorem(28);
+
+				@include bp("narrow") {
+					font-size: pxtorem(40);
+				}
+			}
+		}
+
+		.content-layout {
+			ul {
+				margin-bottom: pxtoem(48);
+			}
+		}
+	}
+}

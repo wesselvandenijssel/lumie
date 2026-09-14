@@ -1,0 +1,251 @@
+@use "abstracts" as *;
+
+.quote-slider {
+	&__slider {
+		position: relative;
+		width: 100%;
+
+		@include bp("normal") {
+			aspect-ratio: 1340 / 855;
+		}
+	}
+
+	&__pagination {
+		display: flex;
+		position: static;
+		z-index: 2;
+		justify-content: center;
+		column-gap: 10px;
+		width: 100%;
+		margin-top: pxtoem(30);
+
+		&.swiper-pagination-lock {
+			display: none;
+		}
+
+		@include bp("normal") {
+			position: absolute;
+			top: 50%;
+			right: 0;
+			bottom: auto;
+			left: auto;
+			flex-direction: column;
+			row-gap: 10px;
+			width: auto;
+			margin-top: 0;
+			transform: translateY(-50%);
+		}
+
+		.swiper-pagination-bullet {
+			width: 15px;
+			height: 15px;
+			margin: 0;
+			border-radius: 50%;
+			background-color: $hue-light-2;
+			opacity: 1;
+			transition: background-color $hover-transition;
+
+			&:hover {
+				background-color: $hue-light-4;
+			}
+
+			&.swiper-pagination-bullet-active {
+				background-color: $hue-accent-1;
+			}
+		}
+	}
+
+	&__slide {
+		display: grid !important;
+		grid-template-columns: 1fr 1fr;
+		gap: pxtoem(10);
+		height: auto;
+
+		@include bp("normal") {
+			grid-template-columns: minmax(0, 655fr) minmax(0, 645fr);
+			column-gap: pxtoem(40);
+		}
+	}
+
+	&__portrait {
+		position: relative;
+		margin: 0;
+		overflow: hidden;
+		aspect-ratio: 655 / 855;
+
+		// The slide grid has a definite height from the vertical slider, so the portrait
+		// fills its row instead of setting the height through its own ratio.
+		@include bp("normal") {
+			display: block;
+			height: 100%;
+			aspect-ratio: auto;
+		}
+	}
+
+	&__portrait-image {
+		width: 100%;
+		height: 100% !important;
+		object-fit: cover;
+		display: block;
+	}
+
+	&__content {
+		display: flex;
+		gap: pxtoem(30) pxtoem(20);
+		justify-content: space-between;
+		flex-direction: column;
+
+		@include bp("normal") {
+			gap: pxtoem(40);
+			justify-content: center;
+			padding-block: 20px;
+		}
+
+		@include bp("large") {
+			padding-block: 60px;
+		}
+	}
+
+	&__details {
+		display: flex;
+		flex-direction: column;
+		row-gap: pxtoem(10);
+		flex-wrap: wrap;
+	}
+
+	&__quote {
+		margin: 0 !important;
+		border: none !important;
+		padding: 0 !important;
+		max-width: 200px;
+		font-family: $poppins;
+		color: $text-color;
+
+		@include bp("narrow") {
+			max-width: 400px;
+		}
+
+		@include bp("normal") {
+			max-width: 510px;
+		}
+
+		p {
+			font-size: pxtorem(20);
+			line-height: 1.2;
+			margin-bottom: 0 !important;
+
+			@include bp("narrow") {
+				font-size: pxtorem(28);
+			}
+
+			@include bp("normal") {
+				font-size: pxtorem(30);
+			}
+
+			@include bp("large") {
+				font-size: pxtorem(34);
+			}
+
+			@include bp("xl") {
+				font-size: pxtorem(36);
+			}
+		}
+	}
+
+	&__author {
+		@include bp("normal") {
+			margin-top: pxtoem(24);
+		}
+
+		@include bp("large") {
+			margin-top: pxtoem(44);
+		}
+	}
+
+	&__author-name {
+		font-style: normal;
+		font-size: pxtorem(18);
+		line-height: 1.8;
+		letter-spacing: -0.18px;
+		color: $hue-dark-1;
+	}
+
+	&__author-role {
+		display: block;
+		font-size: pxtorem(14);
+		line-height: 1.4;
+		color: rgba($hue-dark-1, 0.8);
+	}
+
+	&__favorite {
+		display: flex;
+		flex-direction: column;
+		row-gap: pxtoem(10);
+		width: 200px;
+		max-width: 100%;
+
+		@include bp("normal") {
+			row-gap: pxtoem(18);
+		}
+
+		@include bp("large") {
+			margin-top: auto;
+			margin-left: pxtoem(130);
+		}
+	}
+
+	&__favorite-title {
+		letter-spacing: -0.18px;
+		color: $hue-dark-1;
+
+		@include bp("normal") {
+			display: none;
+		}
+
+		&::after {
+			font-family: $fa;
+			content: $fa-arrow-right;
+			display: inline-block;
+			margin-left: pxtoem(10);
+		}
+	}
+
+	&__favorite-label {
+		font-family: $poppins;
+		font-size: pxtorem(20);
+		line-height: 1.2;
+		color: $text-color;
+	}
+
+	&__favorite-link {
+		display: block;
+		position: relative;
+		overflow: hidden;
+
+		@include bp("normal") {
+			border-radius: 2px;
+			aspect-ratio: 198 / 260;
+		}
+
+		&:hover,
+		&:focus-visible {
+			text-decoration: none;
+
+			.quote-slider__favorite-image {
+				transform: scale(1.05);
+			}
+		}
+	}
+
+	&__favorite-image {
+		width: 100%;
+		height: 100% !important;
+		object-fit: cover;
+		transition: transform $hover-transition;
+		display: none;
+
+		@include bp("normal") {
+			display: block;
+		}
+	}
+}

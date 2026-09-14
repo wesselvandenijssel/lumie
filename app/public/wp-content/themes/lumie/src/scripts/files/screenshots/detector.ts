@@ -5,7 +5,7 @@
  * component dependencies, and style dependencies.
  */
 
-import { execSync, execFileSync } from "child_process";
+import { execSync } from "child_process";
 import { readdirSync, readFileSync, existsSync } from "fs";
 import { join } from "path";
 import type { BlockInfo } from "./config";
@@ -31,12 +31,11 @@ export function getChangedFiles(): string[] {
 
 		let branchDiffOutput = "";
 		try {
-			branchDiffOutput = execFileSync(
-				"git",
-				["diff", "--name-only", `${baseBranch}...HEAD`],
-				{ encoding: "utf8" },
-			).trim();
-		} catch {
+			const diffCommand = `git diff --name-only ${baseBranch}...HEAD`;
+			branchDiffOutput = execSync(diffCommand, {
+				encoding: "utf8",
+			}).trim();
+		} catch (error) {
 			// Branch not available, skip
 		}
 
@@ -57,7 +56,7 @@ export function getChangedFiles(): string[] {
 		);
 
 		return allFiles.filter((file) => file.trim() !== "");
-	} catch {
+	} catch (error) {
 		console.warn("Could not get git changes");
 		return [];
 	}

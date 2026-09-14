@@ -1,0 +1,43 @@
+@use "abstracts" as *;
+
+.contact-person {
+	display: grid;
+	grid-template-columns: 100px 1fr;
+	column-gap: 30px;
+	font-size: pxtorem(14);
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__name {
+		font-family: $poppins;
+		letter-spacing: -0.2px;
+		font-size: pxtorem(18);
+	}
+
+	&__job {
+		opacity: 0.8;
+	}
+
+	&__cd-item {
+		display: block;
+		position: relative;
+		padding-left: 26px;
+		margin-top: auto;
+
+		&::before {
+			font-family: $fa;
+			font-weight: 300;
+			color: $hue-accent-1;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		&--phone::before {
+			content: $fa-phone;
+		}
+	}
+}

@@ -5,6 +5,7 @@
 	.image,
 	.logo-wrapper,
 	.buttons,
+	.content-quote,
 	p,
 	ul,
 	ol {
@@ -12,6 +13,65 @@
 
 		&:last-child {
 			margin-bottom: 0;
+		}
+	}
+
+	.content-quote {
+		display: flex;
+		flex-direction: column;
+		gap: pxtoem(20);
+		border: none;
+		padding: 0;
+
+		@include bp("narrow") {
+			gap: pxtoem(32);
+		}
+
+		&__text {
+			font-family: $poppins;
+			color: $navy;
+
+			p {
+				font-size: pxtorem(24);
+				line-height: 1.19;
+				color: $hue-dark-1;
+
+				@include bp("narrow") {
+					font-size: pxtorem(28);
+				}
+
+				@include bp("normal") {
+					font-size: pxtorem(32);
+				}
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+
+		&__author {
+			font-style: normal;
+		}
+	}
+
+	p {
+		color: rgba($hue-dark-1, 0.8);
+
+		strong {
+			color: $hue-dark-1;
+			font-weight: 500;
+		}
+
+		a {
+			font-weight: 500;
+			color: $link-color;
+			transition: color 0.4s ease-in-out;
+
+			&:hover,
+			&:focus {
+				color: $text-color;
+			}
 		}
 	}
 
@@ -26,63 +86,149 @@
 		}
 	}
 
+	> p:first-child:has(strong) {
+		font-size: pxtorem(16);
+		font-weight: 500;
+		line-height: 1.55;
+		color: $hue-dark-1;
+
+		@include bp("narrow") {
+			font-size: pxtorem(18);
+		}
+	}
+
 	ul {
 		li {
 			position: relative;
-			padding-left: 20px;
+			padding-left: 30px;
 
 			@include bp("narrow") {
-				padding-left: 30px;
+				padding-left: 35px;
 			}
 
-			&:not(:last-child) {
-				margin-bottom: 0.35em;
+			line-height: 1.75;
+			font-size: pxtorem(16);
+			color: rgba($hue-dark-1, 0.8);
 
-				@include bp("narrow") {
-					margin-bottom: 1.1em;
-				}
+			&:not(:last-child) {
+				margin-bottom: pxtoem(12);
 			}
 
 			&::before {
-				content: $fa-arrow-right;
-				font-family: $fa;
-				font-weight: 400;
+				height: 1.75em;
+				content: "";
 				position: absolute;
 				top: 0;
 				left: 0;
-				color: $hue-accent-1;
+				width: 20px;
+				background-color: $navy;
+				mask: assets("sparkle.svg") no-repeat center / 12px 12px;
 			}
 		}
 	}
 
-	.accordion {
-		border-bottom: 1px solid $hue-light-1;
+	.accordions {
+		margin: 0 0 pxtoem(35);
 
-		&:last-of-type {
-			border-bottom: none;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.specifications {
+		margin: pxtoem(25) 0;
+
+		@include bp("narrow") {
+			margin: pxtoem(40) 0;
+		}
+
+		@include bp("large") {
+			margin: pxtoem(60) 0;
+		}
+
+		&:first-child {
+			margin-top: 0;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		&__title {
+			margin: 0 0 pxtoem(15, 10);
+			font-size: pxtorem(10);
+			font-weight: 500;
+			line-height: 3;
+			letter-spacing: 0.2px;
+			text-transform: uppercase;
+			color: $hue-light-1;
+		}
+
+		&__list {
+			margin: 0;
+		}
+
+		&__row {
+			display: grid;
+			grid-template-columns: minmax(0, 120px) minmax(0, 1fr);
+			align-items: center;
+			column-gap: pxtoem(10, 18);
+			padding-bottom: pxtoem(15, 18);
+			border-bottom: 1px solid rgba($hue-dark-1, 0.1);
+			font-size: pxtorem(16);
+			line-height: 1.56;
+			color: rgba($hue-dark-1, 0.8);
+
+			@include bp("narrow") {
+				font-size: pxtorem(18);
+			}
+
+			&:not(:last-child) {
+				margin-bottom: pxtoem(15, 18);
+			}
+		}
+
+		&__label,
+		&__value {
+			margin: 0;
+		}
+	}
+
+	.accordion {
+		text-align: left;
+		border-bottom: 1px solid rgba($hue-dark-1, 0.1);
+
+		&:first-of-type {
+			border-top: 1px solid rgba($hue-dark-1, 0.1);
 		}
 
 		&__question {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 20px;
 			cursor: pointer;
-			position: relative;
-			padding: 12px 20px 12px 0;
+			padding: 16px 0;
+			font-size: pxtorem(16);
+			font-weight: 500;
+			line-height: 1.5;
+			color: $hue-dark-1;
 
 			@include bp("narrow") {
-				padding: 22px 20px 22px 0;
+				padding: 24px 0;
+				font-size: pxtorem(20);
 			}
 
 			&::after {
-				content: $fa-angle-down;
+				content: $fa-plus;
+				flex-shrink: 0;
+				width: 32px;
+				height: 32px;
 				font-family: $fa;
-				font-weight: 700;
-				position: absolute;
-				right: 0;
-				top: 0;
-				bottom: 0;
-				margin: auto;
-				height: 1em;
-				line-height: 1;
-				transition: transform 0.4s ease-in-out;
+				font-size: pxtorem(20);
+				font-weight: 300;
+				line-height: 32px;
+				text-align: center;
 				color: $hue-accent-1;
 			}
 		}
@@ -90,13 +236,12 @@
 		&__answer {
 			display: none;
 			transition: none;
-			line-height: 1.5;
-			font-style: italic;
-			padding: 0 20px 12px 0;
+			line-height: 1.625;
+			padding: 0 52px 16px 0;
 			font-size: pxtorem(14);
 
 			@include bp("narrow") {
-				padding: 0 20px 22px 0;
+				padding: 0 52px 24px 0;
 				font-size: pxtorem(16);
 			}
 		}
@@ -105,7 +250,8 @@
 			.accordion {
 				&__question {
 					&::after {
-						transform: rotate(180deg);
+						font-weight: 400;
+						content: $fa-minus;
 					}
 				}
 			}

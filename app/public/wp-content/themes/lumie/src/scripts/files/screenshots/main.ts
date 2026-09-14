@@ -8,6 +8,7 @@
  * 4. Captures screenshots with Playwright
  */
 
+import { rmSync } from "fs";
 import { detectChangedBlocks } from "./detector";
 import {
 	captureScreenshot,
@@ -15,10 +16,11 @@ import {
 	findBlocksWithSelector,
 	findBlocksOnPage,
 } from "./capture";
-import { getPagesWithBlock } from "./api";
+import { getPagesForBlocks } from "./api";
 import {
 	BREAKPOINTS,
 	MAX_SCREENSHOTS_PER_BLOCK,
+	SCREENSHOTS_DIR,
 	getCachedWordPressUrl,
 } from "./config";
 
@@ -90,6 +92,9 @@ async function main() {
 		changedBlocks.forEach((b) => console.log(` - ${b.name} (${b.reason})`));
 		console.log();
 
+		// Remove existing screenshots so stale files from previous runs don't linger
+		rmSync(SCREENSHOTS_DIR, { recursive: true, force: true });
+
 		// Step 2: Resolve browser-based detections
 		const blocksToProcess = [];
 
@@ -157,12 +162,22 @@ async function main() {
 
 		console.log(`Processing ${uniqueBlocks.length} unique block(s)\n`);
 
+		// Special blocks (header, footer, 404) don't use the WordPress API
+		const specialBlocks = ["header", "footer", "404"];
+
+		// Look up pages for all non-special blocks in a single request, instead
+		// of one full-site post scan per block.
+		const blocksNeedingLookup = specificPage
+			? []
+			: uniqueBlocks
+					.filter((b) => !specialBlocks.includes(b.name))
+					.map((b) => b.name);
+		const pagesByBlock = await getPagesForBlocks(blocksNeedingLookup);
+
 		// Step 3: Generate screenshots
 		for (const blockInfo of uniqueBlocks) {
 			console.log(`\nProcessing block: ${blockInfo.name}`);
 
-			// Special blocks (header, footer, 404) don't use WordPress API
-			const specialBlocks = ["header", "footer", "404"];
 			let urls: string[] = [];
 
 			if (specificPage) {
@@ -187,7 +202,7 @@ async function main() {
 				console.log(` Using homepage for ${blockInfo.name}`);
 			} else {
 				// Get URLs where this block exists
-				urls = await getPagesWithBlock(blockInfo.name);
+				urls = pagesByBlock.get(blockInfo.name) ?? [];
 
 				if (urls.length === 0) {
 					console.warn(
@@ -215,19 +230,26 @@ async function main() {
 						"home";
 					// Slugs with dashes are fine, just ensure it's filesystem-safe
 					pageSlug = rawSlug
-						.replace(/[^a-z0-9/-]/gi, "-")
+						.replace(/[^a-z0-9-\/]/gi, "-")
 						.toLowerCase();
 				}
 
-				for (const breakpoint of BREAKPOINTS) {
-					const success = await captureScreenshot(
-						blockInfo.name,
-						url,
+				// Each breakpoint uses its own browser page/context, so these
+				// can run concurrently instead of one at a time.
+				const results = await Promise.all(
+					BREAKPOINTS.map(async (breakpoint) => ({
 						breakpoint,
-						blockInfo.reason,
-						pageSlug,
-					);
+						success: await captureScreenshot(
+							blockInfo.name,
+							url,
+							breakpoint,
+							blockInfo.reason,
+							pageSlug,
+						),
+					})),
+				);
 
+				for (const { breakpoint, success } of results) {
 					if (success) {
 						console.log(` ✓ ${breakpoint.name}`);
 					} else {

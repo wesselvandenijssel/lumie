@@ -7,6 +7,7 @@ register_nav_menus([
 	'primary' => esc_html__('Hoofdmenu', 'mbeffect'),
 	'primary_mobile' => esc_html__('Hoofdmenu mobiel', 'mbeffect'),
 	'sitemap' => esc_html__('Sitemap menu', 'mbeffect'),
+	'subfooter' => esc_html__('Subfooter menu', 'mbeffect'),
 	'top' => esc_html__('Topbar menu', 'mbeffect'),
 ]);
 
@@ -53,7 +54,7 @@ function breadcrumb_add_title_attribute($link_output, $link) {
 	$link_output = $element;
 	if (!empty($link['url'])) {
 		$link_output .= '<a href="' .
-			esc_url($link['url']) . '" title="' . esc_attr($link['text'] ?? '') . '">' .
+			esc_url($link['url']) . '" title="' . $link['text'] . '">' .
 
 			esc_html($link['text']) . '</a>';
 	}

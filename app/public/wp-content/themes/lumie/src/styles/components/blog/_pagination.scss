@@ -6,6 +6,10 @@
 	position: relative;
 	margin: pxtoem(35) 0 0;
 
+	@include bp("narrow") {
+		margin-top: pxtoem(60);
+	}
+
 	ul.page-numbers {
 		padding: 0;
 		display: flex;
@@ -13,11 +17,25 @@
 		gap: 10px;
 
 		li {
+			position: relative;
 			padding-left: 0;
 			margin-bottom: 0;
 
 			&::before {
-				display: none;
+				content: "";
+				background-color: transparent;
+				aspect-ratio: 38/50;
+				width: 38px;
+				border-radius: 50%;
+				display: block;
+				rotate: 30deg;
+				transition: background-color 0.4s ease;
+			}
+
+			&:has(.current) {
+				&::before {
+					background-color: $hue-accent-1;
+				}
 			}
 		}
 	}
@@ -25,59 +43,22 @@
 	a,
 	span {
 		background-color: transparent;
-		color: $hue-accent-1;
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		color: $text-color;
 		line-height: 1;
 		text-decoration: none;
-		border-radius: 100vw;
-		width: 40px;
-		aspect-ratio: 1/1;
-		border: 1px solid $hue-accent-1;
-		font-weight: 400;
-		transition:
-			background-color 0.4s ease,
-			color 0.4s ease;
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
 		&.current {
-			background-color: $hue-accent-1;
 			color: #fff;
-			font-weight: 600;
 		}
 
 		&.prev,
 		&.next {
-			text-transform: lowercase;
-			position: relative;
-		}
-
-		&.prev::before,
-		&.next::after {
-			font-family: $fa;
-			font-weight: 400;
-			line-height: 1;
-			font-size: pxtorem(16);
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-		}
-
-		&.prev::before {
-			content: $fa-arrow-left;
-		}
-
-		&.next::after {
-			content: $fa-arrow-right;
-		}
-	}
-
-	a {
-		&:hover,
-		&:focus {
-			background-color: $hue-accent-1;
-			color: #fff;
+			display: none;
 		}
 	}
 }

@@ -1,5 +1,5 @@
 const footerToggles = document.querySelectorAll<HTMLElement>(
-	".footer__menu-fold-button",
+	".footer__menu-fold-button"
 );
 
 footerToggles.forEach((footerToggle) =>
@@ -10,9 +10,9 @@ footerToggles.forEach((footerToggle) =>
 
 		const footerFolded =
 			currentFooterToggle.previousElementSibling.querySelector<HTMLElement>(
-				".folded",
+				".folded"
 			);
 
 		footerFolded.slideDown(400);
-	}),
+	})
 );

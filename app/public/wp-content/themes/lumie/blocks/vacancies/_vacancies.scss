@@ -1,0 +1,17 @@
+@use "abstracts" as *;
+
+.vacancies {
+	&__grid {
+		display: grid;
+		gap: 10px;
+
+		@include bp("narrow") {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 15px;
+		}
+
+		@include bp("normal") {
+			gap: 30px;
+		}
+	}
+}

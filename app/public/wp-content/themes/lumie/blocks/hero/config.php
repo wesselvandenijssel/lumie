@@ -25,8 +25,11 @@ return [
 			'label' => esc_html__('Grootte', 'mbeffect'),
 			'type' => 'button_group',
 			'choices' => [
-				'900' => esc_html__('900px hoog', 'mbeffect'),
+				'450' => esc_html__('450px hoog', 'mbeffect'),
+				'650' => esc_html__('650px hoog', 'mbeffect'),
+				'850' => esc_html__('850px hoog', 'mbeffect'),
 			],
+			'default_value' => '450',
 			'wrapper' => [
 				'width' => '50',
 			],

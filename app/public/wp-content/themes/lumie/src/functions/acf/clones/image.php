@@ -30,7 +30,7 @@ function hook_image_methods(): void {
 		]
 	];
 
-	if (!empty(get_field('image_settings_group', 'utilities')['thumbnails'])) {
+	if (!empty(get_field('image_settings_group', 'options')['thumbnails'])) {
 		$fields[] = [
 			'label' => esc_html__('Afbeelding formaat', 'mbeffect'),
 			'type' => 'select',

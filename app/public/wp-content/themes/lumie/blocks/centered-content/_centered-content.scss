@@ -6,5 +6,36 @@
 		.content-layout > * {
 			@include centered-content;
 		}
+
+		> .titles {
+			color: $hue-dark-1;
+
+			&:not(:last-child) {
+				@include bp("narrow") {
+					margin-bottom: pxtoem(40);
+				}
+			}
+		}
+
+		.content-layout {
+			> p {
+				line-height: 1.63;
+			}
+
+			> .accordions {
+				max-width: 880px;
+			}
+
+			> .image {
+				max-width: 880px;
+				margin-top: pxtoem(40);
+				margin-bottom: pxtoem(40);
+
+				@include bp("narrow") {
+					margin-top: pxtoem(60);
+					margin-bottom: pxtoem(60);
+				}
+			}
+		}
 	}
 }

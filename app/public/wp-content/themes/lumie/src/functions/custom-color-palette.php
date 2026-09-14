@@ -13,15 +13,15 @@ function add_custom_text_color_pallete() {
 		],
 
 		[
-			'name' => esc_html__('Athens Gray', 'mbeffect'),
-			'slug' => 'athens-gray',
-			'color' => '#f8f9fa',
+			'name' => esc_html__('Spring Wood', 'mbeffect'),
+			'slug' => 'spring-wood',
+			'color' => '#F5F2EB',
 		],
 
 		[
-			'name' => esc_html__('Tundora', 'mbeffect'),
-			'slug' => 'tundora',
-			'color' => '#414141',
+			'name' => esc_html__('Pearl Bush', 'mbeffect'),
+			'slug' => 'pearl-bush',
+			'color' => '#EAE5D8',
 		],
 	];
 

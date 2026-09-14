@@ -1,0 +1,43 @@
+@use "abstracts" as *;
+
+.team {
+	&__content {
+		display: grid;
+		gap: 1em 20px;
+		margin-bottom: pxtoem(30);
+
+		@include bp("narrow") {
+			margin-bottom: pxtoem(60);
+			grid-template-columns: minmax(auto, 425px) minmax(auto, 650px);
+			justify-content: space-between;
+		}
+
+		.titles {
+			margin: 0;
+
+			+ .team__text {
+				margin-top: pxtoem(10);
+			}
+		}
+	}
+
+	&__text {
+		max-width: 540px;
+		font-size: pxtorem(16);
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: pxtoem(40) 10px;
+
+		@include bp("narrow") {
+			gap: pxtoem(50) 20px;
+		}
+
+		@include bp("normal") {
+			grid-template-columns: repeat(4, 1fr);
+			gap: pxtoem(64) 30px;
+		}
+	}
+}

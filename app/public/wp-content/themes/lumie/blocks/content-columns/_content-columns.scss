@@ -1,0 +1,28 @@
+@use "abstracts" as *;
+
+.content-columns {
+	&__grid {
+		display: grid;
+		gap: $pad-mobile;
+
+		@include bp("normal") {
+			grid-template-columns: 580px minmax(200px, 540px);
+			justify-content: space-between;
+			row-gap: 0;
+		}
+	}
+
+	&__column {
+		&--left {
+			p {
+				color: $navy;
+			}
+		}
+	}
+
+	.content-layout {
+		.buttons {
+			margin-top: pxtoem(32);
+		}
+	}
+}

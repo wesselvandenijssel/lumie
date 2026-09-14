@@ -1,0 +1,85 @@
+@use "abstracts" as *;
+
+.card {
+	position: relative;
+	overflow: hidden;
+	color: #fff;
+	border-radius: 2px;
+
+	&__image {
+		display: block;
+		aspect-ratio: 425/560;
+		width: 100%;
+		object-fit: cover;
+		transition: scale $hover-transition;
+	}
+
+	&__content {
+		position: absolute;
+		padding-bottom: 10px;
+		padding-right: 40px;
+		inset: auto 10px 10px;
+
+		@include bp("normal") {
+			inset: auto 24px 24px;
+		}
+	}
+
+	&__title {
+		font-size: pxtorem(24);
+	}
+}
+
+a.card {
+	.card {
+		&__content {
+			&::before,
+			&::after {
+				position: absolute;
+				opacity: 0;
+				scale: 0.75;
+				aspect-ratio: 38/50;
+				width: 38px;
+				transition:
+					opacity $hover-transition,
+					scale $hover-transition;
+				inset: auto 0 0 auto;
+			}
+
+			&::before {
+				content: "";
+				background-color: #fff;
+				border-radius: 50%;
+				display: block;
+				rotate: 30deg;
+			}
+
+			&::after {
+				content: $fa-arrow-right;
+				font-family: $fa;
+				font-weight: 400;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: $btn-primary;
+			}
+		}
+	}
+
+	&:hover,
+	&:focus {
+		.card {
+			&__image {
+				scale: 1.04;
+			}
+
+			&__content {
+				&::before,
+				&::after {
+					opacity: 1;
+					scale: 1;
+				}
+			}
+		}
+	}
+}

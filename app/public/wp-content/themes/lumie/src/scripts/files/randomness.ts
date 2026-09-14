@@ -8,20 +8,12 @@
 	l.addEventListener("touchend", () => {});
 })(document);
 
-document
-	.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')
-	.forEach((anchor) => {
-		anchor.addEventListener("click", function handleClick(e) {
-			const href = this.getAttribute("href");
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+	anchor.addEventListener("click", function handleClick(e) {
+		e.preventDefault();
 
-			if (!href || href === "#") return;
-
-			const target = document.getElementById(href.slice(1));
-			if (!target) return;
-
-			e.preventDefault();
-			target.scrollIntoView({
-				behavior: "smooth",
-			});
+		document.querySelector(this.getAttribute("href")).scrollIntoView({
+			behavior: "smooth",
 		});
 	});
+});

@@ -36,6 +36,17 @@ add_action('acf/init', function () {
 				],
 			],
 			[
+				'key' => 'theme_settings_logo_white',
+				'name' => 'logo_white',
+				'label' => esc_html__('Logo wit', 'mbeffect'),
+				'type' => 'image',
+				'mime_types' => 'svg, png, jpg, jpeg, webp',
+				'return_format' => 'id',
+				'wrapper' => [
+					'width' => '50',
+				],
+			],
+			[
 				'key' => 'theme_settings_contact_details',
 				'name' => 'contact_details',
 				'label' => esc_html__('Contactgegevens', 'mbeffect'),
@@ -548,7 +559,7 @@ add_action('acf/init', function () {
 		'page_title' => esc_html__('Reviews', 'mbeffect'),
 		'menu_title' => esc_html__('Reviews', 'mbeffect'),
 		'menu_slug' => 'review-settings',
-		'capability' => 'manage_options',
+		'capability' => 'edit_posts',
 		'parent_slug' => 'mb-settings',
 	]);
 

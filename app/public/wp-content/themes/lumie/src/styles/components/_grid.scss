@@ -115,6 +115,10 @@
 	@include bp("xl") {
 		width: 1280px;
 	}
+
+	@include bp("xxl") {
+		width: 1340px;
+	}
 }
 
 .header-footer-wrapper {

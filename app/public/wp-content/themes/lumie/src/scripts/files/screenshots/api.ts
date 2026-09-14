@@ -4,7 +4,7 @@
  * Simplified API client for finding which pages contain specific blocks.
  */
 
-import { getCachedWordPressUrl, getScreenshotsApiKey } from "./config";
+import { getCachedScreenshotsApiKey, getCachedWordPressUrl } from "./config";
 
 interface PageData {
 	id: number;
@@ -14,20 +14,26 @@ interface PageData {
 	post_type: string;
 }
 
-interface BlockPagesResponse {
-	block: string;
-	total: number;
-	pages: PageData[];
+interface BlocksBatchResponse {
+	blocks: Record<string, PageData[]>;
 }
 
 /**
- * Get pages that contain a specific block
+ * Get pages that contain each of the given blocks, in a single request.
+ *
+ * Batching avoids one full-site post scan per block on the WordPress side.
  */
-export async function getPagesWithBlock(blockName: string): Promise<string[]> {
+export async function getPagesForBlocks(
+	blockNames: string[],
+): Promise<Map<string, string[]>> {
+	const result = new Map<string, string[]>();
+	if (blockNames.length === 0) return result;
+
 	try {
-		const url = `${getCachedWordPressUrl()}/wp-json/screenshots/v1/blocks/${blockName}`;
+		const namesParam = blockNames.join(",");
+		const url = `${getCachedWordPressUrl()}/wp-json/screenshots/v1/blocks-batch?names=${encodeURIComponent(namesParam)}`;
 		const response = await fetch(url, {
-			headers: { "X-Screenshots-Key": getScreenshotsApiKey() },
+			headers: { "X-Screenshots-Key": getCachedScreenshotsApiKey() },
 		});
 
 		// Get response as text first
@@ -50,17 +56,20 @@ export async function getPagesWithBlock(blockName: string): Promise<string[]> {
 		}
 
 		// Parse JSON
-		const data: BlockPagesResponse = JSON.parse(jsonText);
-		return data.pages.map((page) => page.url);
-	} catch (error) {
-		if (error instanceof SyntaxError) {
-			console.error(`Invalid JSON response for block ${blockName}`);
-		} else {
-			console.error(
-				`Error fetching pages for block ${blockName}:`,
-				error,
+		const data: BlocksBatchResponse = JSON.parse(jsonText);
+		for (const [blockName, pages] of Object.entries(data.blocks)) {
+			result.set(
+				blockName,
+				pages.map((page) => page.url),
 			);
 		}
-		return [];
+	} catch (error) {
+		if (error instanceof SyntaxError) {
+			console.error("Invalid JSON response for blocks batch request");
+		} else {
+			console.error("Error fetching pages for blocks:", error);
+		}
 	}
+
+	return result;
 }

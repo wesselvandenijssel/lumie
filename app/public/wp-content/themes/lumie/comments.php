@@ -28,7 +28,7 @@ if (post_password_required()) {
 
 		<ol class="comment-list">
 			<?php
-			wp_list_comments();
+			wp_list_comments(['callback' => 'mbeffect_comment']);
 			?>
 		</ol>
 

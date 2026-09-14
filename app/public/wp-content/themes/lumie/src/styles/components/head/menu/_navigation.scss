@@ -10,8 +10,19 @@
 		width: 100%;
 	}
 
-	@include bp-only("narrow", "normal") {
-		font-size: pxtorem(14);
+	@include bp("narrow") {
+		max-width: 800px;
+		width: 100%;
+		font-size: pxtorem(12);
+	}
+
+	@include bp("normal") {
+		font-size: pxtorem(16);
+	}
+
+	@include bp("large") {
+		max-width: 980px;
+		font-size: pxtorem(18);
 	}
 
 	&__content {
@@ -26,7 +37,6 @@
 			transition: none;
 			background-color: #fff;
 			padding: 0 0 75px;
-			border-top: 1px solid $hue-light-1;
 			-ms-overflow-style: none;
 			scrollbar-width: none;
 
@@ -63,6 +73,8 @@
 	}
 
 	&__menu {
+		flex-grow: 1;
+
 		&--mobile {
 			@include bp("narrow") {
 				display: none;
@@ -86,16 +98,8 @@
 			position: relative;
 			display: flex;
 			align-items: baseline;
-			justify-content: flex-end;
+			justify-content: space-between;
 			column-gap: 10px;
-		}
-
-		@include bp("normal") {
-			column-gap: 25px;
-		}
-
-		@include bp("xl") {
-			column-gap: 50px;
 		}
 
 		.menu-item {
@@ -107,32 +111,83 @@
 				}
 
 				&.menu-item-has-children {
+					> a,
+					> span {
+						&::after {
+							@include bp("narrow") {
+								content: $fa-angle-down;
+								font-family: $fa;
+								font-weight: 400;
+								padding-left: 2px;
+							}
+						}
+					}
+
 					> span {
 						cursor: pointer;
+					}
+
+					&:hover,
+					&:focus-within {
+						> .sub-menu {
+							@include bp("narrow") {
+								opacity: 1;
+								visibility: visible;
+								transition-delay: 0s;
+							}
+						}
 					}
 				}
 
 				> a,
 				> span {
 					@include bp("narrow") {
-						font-weight: 500;
+						display: inline-block;
+						padding-block: 38px;
 					}
 				}
 
 				> .sub-menu {
-					display: none;
-
 					@include bp("narrow") {
-						overflow: hidden;
-						background-color: #fff;
+						display: grid;
+						grid-template-columns: repeat(3, auto);
+						opacity: 0;
+						visibility: hidden;
 						color: $text-color;
-						border: 1px solid $hue-light-1;
 						position: absolute;
+						inset: 100% 0 auto;
 						z-index: 1;
+						padding-block: 50px 100px;
+						transition:
+							opacity $hover-transition 0.15s,
+							visibility 0s linear 0.45s;
 					}
 
-					&--active {
-						display: grid;
+					&::before {
+						@include bp("narrow") {
+							content: "";
+							background-color: #fff;
+							position: absolute;
+							z-index: -1;
+							inset: 0 calc((100cqw - 700px) / 2 * -1) 0 auto;
+							width: 100cqw;
+						}
+
+						@include bp("normal") {
+							right: calc((100cqw - 960px) / 2 * -1);
+						}
+
+						@include bp("large") {
+							right: calc((100cqw - 1180px) / 2 * -1);
+						}
+
+						@include bp("xl") {
+							right: calc((100cqw - 1280px) / 2 * -1);
+						}
+
+						@include bp("xxl") {
+							right: calc((100cqw - 1340px) / 2 * -1);
+						}
 					}
 
 					.submenu-toggle {
@@ -148,9 +203,40 @@
 				}
 			}
 
+			&--2 {
+				> a,
+				> span {
+					@include bp("narrow") {
+						font-size: pxtorem(18);
+					}
+				}
+
+				.sub-menu {
+					@include bp("narrow") {
+						margin-top: pxtoem(18, 18);
+					}
+				}
+			}
+
+			&--3 {
+				&:not(:last-child) {
+					@include bp("narrow") {
+						margin-bottom: pxtoem(4);
+					}
+				}
+
+				> a,
+				> span {
+					@include bp("narrow") {
+						font-size: pxtorem(16);
+						color: rgba($hue-dark-1, 0.8);
+					}
+				}
+			}
+
 			.back-to-previous {
 				display: none;
-				color: rgba(#000, 50%);
+				color: rgba($navy, 50%);
 				padding: 15px 10px;
 
 				> span::before {
@@ -163,7 +249,7 @@
 		}
 
 		// Show `.back-to-previous` only on mobile and when there are a minimum of 10 sibling menu items
-		&:has(.menu-item:nth-child(11)) {
+		&:has(.menu-item:nth-child(2)) {
 			.back-to-previous {
 				@include bp("mobile") {
 					display: block;
@@ -187,7 +273,7 @@
 				.menu-item {
 					@include bp("mobile") {
 						margin-left: 10px;
-						border-left: 2px solid rgba(#000, 20%);
+						border-left: 2px solid rgba($navy, 20%);
 					}
 				}
 
@@ -247,6 +333,13 @@
 			@include bp("narrow") {
 				padding: 0;
 				line-height: 1;
+			}
+		}
+
+		> a {
+			&:hover,
+			&:focus {
+				text-decoration: underline;
 			}
 		}
 	}

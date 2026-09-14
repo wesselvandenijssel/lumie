@@ -102,33 +102,19 @@ switch ($column_value['acf_fc_layout']):
 
 	case 'menu':
 		if (!empty($column_value['menu']) && $column_value['menu'] != 'Geen') :
-
-			$visible_amount = (int) ($column_value['visible_amount'] ?? 4);
-			$foldable = !empty($column_value['foldable']);
-
-			if ($foldable) {
-				$menu_items = wp_get_nav_menu_items($column_value['menu']) ?: [];
-
-				$top_level_amount = count(array_filter($menu_items, function ($menu_item) {
-					return empty($menu_item->menu_item_parent);
-				}));
-
-				$foldable = $top_level_amount > $visible_amount;
-			}
-
 			wp_nav_menu(
 				[
 					'menu' => $column_value['menu'],
 					'container_class' => 'footer__menu',
 					'fallback_cb' => false,
-					'walker' => ($foldable ? new Walker_Fold_Menu : ''),
-					'visible_amount' => $visible_amount,
+					'walker' => (!empty($column_value['foldable']) ? new Walker_Fold_Menu : ''),
+					'visible_amount' => $column_value['visible_amount'] ?? 4,
 				]
 			);
-
-			if ($foldable) : ?>
+			if (!empty($column_value['foldable'])) : ?>
 				<div class="footer__menu-fold-button" role="button" tabindex="0" aria-expanded="false"><?= esc_html($column_value['foldable_text'] ?? ''); ?></div>
-<?php endif;
+<?php
+			endif;
 		endif;
 		break;
 endswitch; ?>

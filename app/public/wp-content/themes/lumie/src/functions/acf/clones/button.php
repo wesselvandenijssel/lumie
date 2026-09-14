@@ -50,6 +50,24 @@ if (function_exists('acf_add_local_field_group')) :
 						],
 					],
 					[
+						'key' => 'clone_buttons_buttons_group_tertiary',
+						'name' => 'tertiary',
+						'label' => esc_html__('Button - Tertiair', 'mbeffect'),
+						'sub_fields' => [
+							[
+								'key' => 'clone_buttons_buttons_group_tertiary_button_tertiary',
+								'label' => esc_html__('Button', 'mbeffect'),
+								'name' => 'button_tertiary',
+								'type' => 'clone',
+								'clone' => [
+									'clone_buttons_singular_button',
+								],
+								'display' => 'seamless',
+								'layout' => 'block',
+							],
+						],
+					],
+					[
 						'key' => 'clone_buttons_buttons_group_phone',
 						'name' => 'phone',
 						'label' => esc_html__('Telefoonnummer', 'mbeffect'),

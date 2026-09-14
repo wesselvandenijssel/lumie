@@ -18,11 +18,26 @@ return [
 			'display' => 'seamless',
 		],
 
-		'form' => [
-			'label' => esc_html__('Formulier', 'mbeffect'),
-			'instructions' => wp_kses_post(__('Selecteer hier het contact formulier', 'mbeffect')),
-			'type' => 'select',
-			'choices' => get_all_forms(),
+		'forms' => [
+			'label' => esc_html__('Formulieren', 'mbeffect'),
+			'type' => 'repeater',
+			'button_label' => esc_html__('Nieuw formulier', 'mbeffect'),
+			'sub_fields' => [
+				[
+					'key' => 'field_contact_forms_name',
+					'name' => 'name',
+					'label' => esc_html__('Naam', 'mbeffect'),
+					'type' => 'text',
+				],
+				[
+					'key' => 'field_contact_forms_form',
+					'name' => 'form',
+					'label' => esc_html__('Formulier', 'mbeffect'),
+					'instructions' => wp_kses_post(__('Selecteer hier het formulier', 'mbeffect')),
+					'type' => 'select',
+					'choices' => get_all_forms(),
+				],
+			],
 		],
 
 		'selection' => [
@@ -59,6 +74,13 @@ return [
 				get_flex_content('field_contact_content_content'),
 			],
 			'conditional_logic' => [
+				[
+					[
+						'field' => 'field_contact_selection',
+						'operator' => '==',
+						'value' => 'contact_details',
+					],
+				],
 				[
 					[
 						'field' => 'field_contact_selection',
