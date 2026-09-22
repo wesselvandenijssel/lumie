@@ -86,7 +86,8 @@ h4,
 	.main-title {
 		&::after {
 			content: "";
-			display: block;
+			display: inline-block;
+			vertical-align: middle;
 			width: 18px;
 			height: 18px;
 			background-color: $navy;
@@ -94,13 +95,12 @@ h4,
 			mask-repeat: no-repeat;
 			mask-position: center;
 			mask-size: contain;
-			margin-top: pxtoem(15);
+			margin-left: pxtoem(6);
 			font-size: pxtorem(18);
 
 			@include bp("narrow") {
 				width: 22px;
 				height: 22px;
-				margin-top: pxtoem(24);
 			}
 		}
 	}
