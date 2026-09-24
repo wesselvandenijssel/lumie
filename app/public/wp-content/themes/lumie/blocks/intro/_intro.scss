@@ -13,14 +13,6 @@
 	}
 
 	&__content {
-		font-family: $poppins;
-		font-size: pxtorem(20);
-		line-height: 1.3;
-
-		@include bp("narrow") {
-			font-size: pxtorem(32);
-		}
-
 		p {
 			&:last-child {
 				margin-bottom: 0;
