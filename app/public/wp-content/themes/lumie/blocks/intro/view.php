@@ -26,15 +26,22 @@ echo !is_admin() ? '[raw]' : '';
 			<?php if (!empty($specifications) || !empty($buttons_group)) : ?>
 				<div class="intro__aside">
 
+
 					<?php if (!empty($specifications)) : ?>
-						<dl class="intro__specs">
-							<?php foreach ($specifications as $specification) : ?>
-								<div class="intro__spec">
-									<dt class="intro__spec-label"><?= esc_html($specification['label'] ?? ''); ?></dt>
-									<dd class="intro__spec-value"><?= esc_html($specification['value'] ?? ''); ?></dd>
-								</div>
-							<?php endforeach; ?>
-						</dl>
+						<div class="intro__specs-wrapper">
+							<?php if (!empty($specifications_title)) : ?>
+								<h3 class="intro__specs-title"><?= esc_html($specifications_title); ?></h3>
+							<?php endif; ?>
+
+							<dl class="intro__specs">
+								<?php foreach ($specifications as $specification) : ?>
+									<div class="intro__spec">
+										<dt class="intro__spec-label"><?= esc_html($specification['label'] ?? ''); ?></dt>
+										<dd class="intro__spec-value"><?= esc_html($specification['value'] ?? ''); ?></dd>
+									</div>
+								<?php endforeach; ?>
+							</dl>
+						</div>
 					<?php endif; ?>
 
 					<?php if (!empty($buttons_group)) {

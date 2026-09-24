@@ -2,14 +2,15 @@
 
 .cards {
 	&__content {
-		display: grid;
-		gap: 1em 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		margin-bottom: pxtoem(30);
+		gap: pxtoem(12);
 
 		@include bp("narrow") {
 			margin-bottom: pxtoem(60);
-			grid-template-columns: minmax(auto, 425px) minmax(auto, 650px);
-			justify-content: space-between;
+			gap: pxtoem(24);
 		}
 
 		.titles {
