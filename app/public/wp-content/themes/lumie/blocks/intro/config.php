@@ -16,6 +16,11 @@ return [
 			'delay' => true,
 		],
 
+		'specifications_title' => [
+			'label' => esc_html__('Titel specificaties', 'lumie'),
+			'type' => 'text',
+		],
+
 		'specifications' => [
 			'label' => esc_html__('Specificaties', 'lumie'),
 			'type' => 'repeater',

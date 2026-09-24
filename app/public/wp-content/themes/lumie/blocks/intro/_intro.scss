@@ -26,6 +26,14 @@
 		gap: pxtoem(32);
 	}
 
+	&__specs-wrapper {
+		width: 100%;
+	}
+
+	&__specs-title {
+		margin-bottom: pxtoem(16);
+	}
+
 	&__specs {
 		width: 100%;
 		margin: 0;
