@@ -207,7 +207,11 @@
 				> a,
 				> span {
 					@include bp("narrow") {
-						font-size: pxtorem(18);
+						font-size: pxtorem(10);
+						font-weight: 700;
+						letter-spacing: 0.2px;
+						text-transform: uppercase;
+						color: $hue-accent-1;
 					}
 				}
 
@@ -248,7 +252,6 @@
 			}
 		}
 
-		// Show `.back-to-previous` only on mobile and when there are a minimum of 10 sibling menu items
 		&:has(.menu-item:nth-child(2)) {
 			.back-to-previous {
 				@include bp("mobile") {
