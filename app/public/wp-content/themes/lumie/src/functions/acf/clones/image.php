@@ -30,7 +30,7 @@ function hook_image_methods(): void {
 		]
 	];
 
-	if (!empty(get_field('image_settings_group', 'options')['thumbnails'])) {
+	if (!empty(get_field('image_settings_group', 'utilities')['thumbnails'])) {
 		$fields[] = [
 			'label' => esc_html__('Afbeelding formaat', 'lumie'),
 			'type' => 'select',
