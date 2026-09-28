@@ -36,7 +36,7 @@ if (empty($content)) return;
 			case 'quote':
 				$content = new FlexContent();
 
-				$content->setQuote($value['quote'], $value['author'] ?? '');
+				$content->setQuote($value['quote'], $value['author'] ?? '', $value['image'] ?? 0);
 
 				echo $content->getContent();
 				break;
