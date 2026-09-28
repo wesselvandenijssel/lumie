@@ -188,6 +188,18 @@
 				border-color: #fff;
 			}
 
+			.gfield_error {
+				input,
+				textarea {
+					border-color: $blush;
+					box-shadow: inset 0 0 0 1px $blush;
+				}
+
+				.gfield_validation_message {
+					color: $blush;
+				}
+			}
+
 			.gform_footer {
 				margin-top: 12px;
 			}
