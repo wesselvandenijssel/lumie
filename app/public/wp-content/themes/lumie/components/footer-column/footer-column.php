@@ -100,6 +100,15 @@ switch ($column_value['acf_fc_layout']):
 		break;
 
 
+	case 'form':
+		if (empty($column_value['form_id']) || !function_exists('gravity_form')) break; ?>
+		<div class="footer__form">
+			<?php gravity_form($column_value['form_id'], false, false, false, null, true); ?>
+		</div>
+		<?php
+		break;
+
+
 	case 'menu':
 		if (!empty($column_value['menu']) && $column_value['menu'] != 'Geen') :
 			wp_nav_menu(

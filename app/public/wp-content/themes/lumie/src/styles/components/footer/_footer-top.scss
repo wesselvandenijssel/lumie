@@ -53,6 +53,13 @@
 			}
 		}
 
+		// stylelint-disable-next-line selector-class-pattern
+		&:has(.footer__form) {
+			@include bp("narrow") {
+				max-width: 320px;
+			}
+		}
+
 		.titles {
 			margin-bottom: pxtoem(15);
 
@@ -162,6 +169,35 @@
 		&--address br {
 			display: block;
 		}
+	}
+
+	&__form {
+		width: 100%;
+
+		&:not(:last-child) {
+			margin-bottom: 40px;
+		}
+
+		/* stylelint-disable selector-class-pattern */
+		.gform_wrapper {
+			.gform_footer {
+				margin-top: 12px;
+			}
+
+			.gform_button {
+				background-color: $zest;
+				border-color: $zest;
+				color: $navy;
+
+				&:hover,
+				&:focus {
+					background-color: #fff;
+					border-color: #fff;
+					color: $navy;
+				}
+			}
+		}
+		/* stylelint-enable selector-class-pattern */
 	}
 
 	.socials {
