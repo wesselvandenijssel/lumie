@@ -114,7 +114,7 @@ echo !is_admin() ? '[raw]' : '';
 						} ?>
 
 						<div class="contact__cd">
-							<h3 class="contact__cd-title"><?= esc_html__('Bezoekadres', 'lumie'); ?></h3>
+							<h3 class="contact__cd-title"><?= esc_html__('Contactgegevens', 'lumie'); ?></h3>
 
 							<div class="contact__cd-grid">
 								<?php if (!empty($contact_details_cf['address_data']['link']['url'])) : ?>
