@@ -177,25 +177,6 @@
 				.btn {
 					&--tertiary {
 						color: inherit;
-
-						&::before {
-							background-color: #fff;
-						}
-
-						&::after {
-							color: $hue-accent-1;
-						}
-
-						&:hover,
-						&:focus {
-							&::before {
-								background-color: $hue-accent-1;
-							}
-
-							&::after {
-								color: #fff;
-							}
-						}
 					}
 				}
 			}

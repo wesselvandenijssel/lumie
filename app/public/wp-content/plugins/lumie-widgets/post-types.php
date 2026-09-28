@@ -240,7 +240,7 @@ function mbw_add_widget_custom_fields() {
 						'name' => 'background_color',
 						'label' => __('Achtergrond kleur', 'mb-widget'),
 						'type' => 'color_picker',
-						'default_value' => 'rgba(0,0,0,1)',
+						'default_value' => 'rgba(32,42,68,1)',
 						'enable_opacity' => true,
 						'return_format' => 'string',
 						'wrapper' => [
@@ -252,7 +252,7 @@ function mbw_add_widget_custom_fields() {
 						'name' => 'border_color',
 						'label' => __('Border kleur', 'mb-widget'),
 						'type' => 'color_picker',
-						'default_value' => 'rgba(0,0,0,1)',
+						'default_value' => 'rgba(32,42,68,1)',
 						'enable_opacity' => true,
 						'return_format' => 'string',
 						'wrapper' => [
@@ -264,7 +264,7 @@ function mbw_add_widget_custom_fields() {
 						'name' => 'color_hover',
 						'label' => __('Tekst hover kleur', 'mb-widget'),
 						'type' => 'color_picker',
-						'default_value' => 'rgba(0,0,0,1)',
+						'default_value' => 'rgba(255,255,255,1)',
 						'enable_opacity' => true,
 						'return_format' => 'string',
 						'wrapper' => [
@@ -276,7 +276,7 @@ function mbw_add_widget_custom_fields() {
 						'name' => 'background_color_hover',
 						'label' => __('Achtergrond hover kleur', 'mb-widget'),
 						'type' => 'color_picker',
-						'default_value' => 'rgba(255,255,255,1)',
+						'default_value' => 'rgba(90,101,128,1)',
 						'enable_opacity' => true,
 						'return_format' => 'string',
 						'wrapper' => [
@@ -288,7 +288,7 @@ function mbw_add_widget_custom_fields() {
 						'name' => 'border_color_hover',
 						'label' => __('Border hover kleur', 'mb-widget'),
 						'type' => 'color_picker',
-						'default_value' => 'rgba(0,0,0,1)',
+						'default_value' => 'rgba(90,101,128,1)',
 						'enable_opacity' => true,
 						'return_format' => 'string',
 						'wrapper' => [
@@ -308,7 +308,7 @@ function mbw_add_widget_custom_fields() {
 						'name' => 'color',
 						'label' => __('Tekst kleur', 'mb-widget'),
 						'type' => 'color_picker',
-						'default_value' => 'rgba(0,0,0,1)',
+						'default_value' => 'rgba(32,42,68,1)',
 						'enable_opacity' => true,
 						'return_format' => 'string',
 						'wrapper' => [
@@ -332,7 +332,7 @@ function mbw_add_widget_custom_fields() {
 						'name' => 'border_color',
 						'label' => __('Border kleur', 'mb-widget'),
 						'type' => 'color_picker',
-						'default_value' => 'rgba(0,0,0,1)',
+						'default_value' => 'rgba(32,42,68,0.15)',
 						'enable_opacity' => true,
 						'return_format' => 'string',
 						'wrapper' => [
@@ -344,7 +344,7 @@ function mbw_add_widget_custom_fields() {
 						'name' => 'color_hover',
 						'label' => __('Tekst hover kleur', 'mb-widget'),
 						'type' => 'color_picker',
-						'default_value' => 'rgba(255,255,255,1)',
+						'default_value' => 'rgba(32,42,68,1)',
 						'enable_opacity' => true,
 						'return_format' => 'string',
 						'wrapper' => [
@@ -356,7 +356,7 @@ function mbw_add_widget_custom_fields() {
 						'name' => 'background_color_hover',
 						'label' => __('Achtergrond hover kleur', 'mb-widget'),
 						'type' => 'color_picker',
-						'default_value' => 'rgba(0,0,0,1)',
+						'default_value' => 'rgba(247,244,239,1)',
 						'enable_opacity' => true,
 						'return_format' => 'string',
 						'wrapper' => [
@@ -368,7 +368,87 @@ function mbw_add_widget_custom_fields() {
 						'name' => 'border_color_hover',
 						'label' => __('Border hover kleur', 'mb-widget'),
 						'type' => 'color_picker',
-						'default_value' => 'rgba(0,0,0,1)',
+						'default_value' => 'rgba(32,42,68,0.15)',
+						'enable_opacity' => true,
+						'return_format' => 'string',
+						'wrapper' => [
+							'width' => '16.5',
+						],
+					],
+				],
+			],
+			[
+				'key' => 'mbw_general_settings_button_tertiary',
+				'name' => 'button_tertiary',
+				'label' => __('Tertiaire button', 'mb-widget'),
+				'type' => 'group',
+				'sub_fields' => [
+					[
+						'key' => 'mbw_general_settings_button_tertiary_color',
+						'name' => 'color',
+						'label' => __('Tekst kleur', 'mb-widget'),
+						'type' => 'color_picker',
+						'default_value' => 'rgba(32,42,68,1)',
+						'enable_opacity' => true,
+						'return_format' => 'string',
+						'wrapper' => [
+							'width' => '16.5',
+						],
+					],
+					[
+						'key' => 'mbw_general_settings_button_tertiary_background_color',
+						'name' => 'background_color',
+						'label' => __('Achtergrond kleur', 'mb-widget'),
+						'type' => 'color_picker',
+						'default_value' => 'rgba(236,230,138,1)',
+						'enable_opacity' => true,
+						'return_format' => 'string',
+						'wrapper' => [
+							'width' => '16.5',
+						],
+					],
+					[
+						'key' => 'mbw_general_settings_button_tertiary_border_color',
+						'name' => 'border_color',
+						'label' => __('Border kleur', 'mb-widget'),
+						'type' => 'color_picker',
+						'default_value' => 'rgba(236,230,138,1)',
+						'enable_opacity' => true,
+						'return_format' => 'string',
+						'wrapper' => [
+							'width' => '16.5',
+						],
+					],
+					[
+						'key' => 'mbw_general_settings_button_tertiary_color_hover',
+						'name' => 'color_hover',
+						'label' => __('Tekst hover kleur', 'mb-widget'),
+						'type' => 'color_picker',
+						'default_value' => 'rgba(32,42,68,1)',
+						'enable_opacity' => true,
+						'return_format' => 'string',
+						'wrapper' => [
+							'width' => '16.5',
+						],
+					],
+					[
+						'key' => 'mbw_general_settings_button_tertiary_background_color_hover',
+						'name' => 'background_color_hover',
+						'label' => __('Achtergrond hover kleur', 'mb-widget'),
+						'type' => 'color_picker',
+						'default_value' => 'rgba(242,161,113,1)',
+						'enable_opacity' => true,
+						'return_format' => 'string',
+						'wrapper' => [
+							'width' => '16.5',
+						],
+					],
+					[
+						'key' => 'mbw_general_settings_button_tertiary_border_color_hover',
+						'name' => 'border_color_hover',
+						'label' => __('Border hover kleur', 'mb-widget'),
+						'type' => 'color_picker',
+						'default_value' => 'rgba(242,161,113,1)',
 						'enable_opacity' => true,
 						'return_format' => 'string',
 						'wrapper' => [
@@ -506,6 +586,7 @@ function mbw_button_cfs(string $key_prefix, int $depth = 1): array {
 				'choices' => [
 					'primary' => __('Primair', 'mb-widget'),
 					'secondary' => __('Secundair', 'mb-widget'),
+					'tertiary' => __('Tertiair', 'mb-widget'),
 				],
 				'default' => 'primary',
 				'wrapper' => [

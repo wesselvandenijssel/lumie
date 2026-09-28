@@ -41,7 +41,8 @@
 }
 
 %btn--secondary {
-	background-color: #fff;
+	background-color: transparent;
+	border-color: $navy;
 	color: $navy;
 
 	@extend %btn;
@@ -54,59 +55,36 @@
 	}
 }
 
+// Text-only button: lowest emphasis, underline + arrow nudge on hover
 %btn--tertiary {
-	align-items: center;
 	background-color: transparent;
 	border-color: transparent;
 	color: $navy;
-	font-size: pxtorem(17);
-	line-height: pxtoem(30, 17);
-	min-height: 52px;
-	padding: 0 0 0 64px;
+	padding: 12px 0;
+	text-decoration: underline;
+	text-decoration-color: transparent;
+	text-underline-offset: 4px;
+	transition:
+		color 0.4s ease-in-out,
+		text-decoration-color 0.4s ease-in-out;
 
 	@extend %btn;
 
-	&::before {
-		content: "";
-		position: absolute;
-		top: 50%;
-		left: 10px;
-		width: 38px;
-		height: 50px;
-		border-radius: 50%;
-		background-color: $hue-accent-1;
-		transform: translateY(-50%) rotate(30deg);
-		transition: background-color 0.4s ease-in-out;
-	}
-
+	// Default arrow, unless the editor picked their own icon
 	&:not(:has(i))::after {
 		content: $fa-arrow-right;
-		position: absolute;
-		top: 50%;
-		left: 29px;
-		color: #fff;
 		font-family: $fa;
-		font-size: pxtorem(16);
 		font-weight: 300;
-		line-height: 1;
-		transform: translate(-50%, -50%);
-		transition: color 0.4s ease-in-out;
-	}
-
-	i {
-		position: absolute;
-		top: 50%;
-		left: 29px;
-		color: #fff;
-		transform: translate(-50%, -50%);
+		transition: transform 0.4s ease-in-out;
 	}
 
 	&:hover,
 	&:focus {
-		color: $text-color;
+		text-decoration: underline;
+		text-decoration-color: currentcolor;
 
-		&::before {
-			background-color: $hue-dark-1;
+		&::after {
+			transform: translateX(4px);
 		}
 	}
 }
