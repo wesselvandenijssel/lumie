@@ -53,6 +53,13 @@
 			}
 		}
 
+		// stylelint-disable-next-line selector-class-pattern
+		&:has(.footer__form) {
+			@include bp("narrow") {
+				max-width: 320px;
+			}
+		}
+
 		.titles {
 			margin-bottom: pxtoem(15);
 
@@ -164,9 +171,62 @@
 		}
 	}
 
+	&__form {
+		width: 100%;
+
+		&:not(:last-child) {
+			margin-bottom: 40px;
+		}
+
+		/* stylelint-disable selector-class-pattern */
+		.gform_wrapper {
+			input[type="text"],
+			input[type="email"],
+			input[type="tel"],
+			textarea {
+				background-color: #fff;
+				border-color: #fff;
+			}
+
+			.gfield_error {
+				input,
+				textarea {
+					border-color: $blush;
+					box-shadow: inset 0 0 0 1px $blush;
+				}
+
+				.gfield_validation_message {
+					color: $blush;
+				}
+			}
+
+			.gform_footer {
+				margin-top: 12px;
+			}
+
+			.gform_button {
+				background-color: $zest;
+				border-color: $zest;
+				color: $navy;
+
+				&:hover,
+				&:focus {
+					background-color: #fff;
+					border-color: #fff;
+					color: $navy;
+				}
+			}
+		}
+		/* stylelint-enable selector-class-pattern */
+	}
+
 	.socials {
 		column-gap: 12px;
 		font-size: pxtorem(16);
+
+		&:not(:last-child) {
+			margin-bottom: 40px;
+		}
 
 		&__item {
 			&::before {

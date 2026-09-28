@@ -210,6 +210,11 @@ fieldset {
 				input[type="email"],
 				input[type="tel"] {
 					padding: 18px 16px 8px;
+
+					&::placeholder {
+						color: transparent;
+						transition: color $hover-transition;
+					}
 				}
 
 				.gform-field-label,
@@ -232,6 +237,10 @@ fieldset {
 						transform: translateY(-50%);
 						font-size: pxtorem(10);
 						font-weight: 500;
+					}
+
+					input::placeholder {
+						color: rgba($hue-dark-1, 0.5);
 					}
 				}
 			}
@@ -447,6 +456,22 @@ fieldset {
 		textarea {
 			border-color: $form-error;
 		}
+
+		.gfield_validation_message {
+			display: flex;
+			align-items: baseline;
+			gap: 6px;
+			margin-top: 6px;
+			font-size: pxtorem(14);
+			line-height: 1.4;
+			color: $form-error;
+
+			&::before {
+				content: $fa-circle-exclamation;
+				font-family: $fa;
+				font-weight: 900;
+			}
+		}
 	}
 
 	.gform_footer,
@@ -461,7 +486,7 @@ fieldset {
 	.gform_button,
 	.gform_next_button {
 		@extend %btn--primary;
-		
+
 		width: 100%;
 	}
 

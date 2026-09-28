@@ -97,6 +97,22 @@ if (function_exists('acf_add_local_field_group')) :
 						'display' => 'block',
 					],
 					[
+						'key' => 'clone_footer_column_content_layout_form',
+						'name' => 'form',
+						'label' => esc_html__('Formulier', 'lumie'),
+						'display' => 'block',
+						'sub_fields' => [
+							[
+								'key' => 'clone_footer_column_content_layout_form_form_id',
+								'label' => esc_html__('Formulier', 'lumie'),
+								'name' => 'form_id',
+								'type' => 'select',
+								'allow_null' => true,
+								'ui' => true,
+							],
+						],
+					],
+					[
 						'key' => 'clone_footer_column_content_layout_menu',
 						'name' => 'menu',
 						'label' => esc_html__('Menu', 'lumie'),
