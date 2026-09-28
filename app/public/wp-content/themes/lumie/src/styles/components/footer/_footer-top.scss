@@ -180,6 +180,14 @@
 
 		/* stylelint-disable selector-class-pattern */
 		.gform_wrapper {
+			input[type="text"],
+			input[type="email"],
+			input[type="tel"],
+			textarea {
+				background-color: #fff;
+				border-color: #fff;
+			}
+
 			.gform_footer {
 				margin-top: 12px;
 			}
@@ -203,6 +211,10 @@
 	.socials {
 		column-gap: 12px;
 		font-size: pxtorem(16);
+
+		&:not(:last-child) {
+			margin-bottom: 40px;
+		}
 
 		&__item {
 			&::before {

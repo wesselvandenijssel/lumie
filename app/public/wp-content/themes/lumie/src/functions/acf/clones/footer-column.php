@@ -99,7 +99,7 @@ if (function_exists('acf_add_local_field_group')) :
 					[
 						'key' => 'clone_footer_column_content_layout_form',
 						'name' => 'form',
-						'label' => esc_html__('Formulier (bijv. nieuwsbrief)', 'lumie'),
+						'label' => esc_html__('Formulier', 'lumie'),
 						'display' => 'block',
 						'sub_fields' => [
 							[
