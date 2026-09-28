@@ -130,14 +130,19 @@
 	gap: 10px;
 }
 
+/* Chat-style pills: the shadow lifts them off the page, like the welcome card */
 .mbw-button {
 	border: 1px solid var(--border-color);
-	padding: 5px 12px;
+	padding: 8px 18px;
 	border-radius: 100vw;
 	line-height: 1.4;
 	font-size: 0.9rem;
+	font-weight: 400;
+	text-decoration: none;
 	background-color: var(--bg-color);
 	color: var(--color);
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 20%);
+	cursor: pointer;
 	transition:
 		color 0.4s ease-in-out,
 		background-color 0.4s ease-in-out,

@@ -1,5 +1,24 @@
 # Changelog
 
+## Version 1.4.0 - Release Date: [28-09-2026]
+
+### New features:
+
+- Added a tertiary button type, with its own color settings in the widget settings
+
+### Tweaks:
+
+- The button color defaults use the Lumie brand colors
+- The buttons are restyled as chat-style pills with a shadow
+
+### Bugfix:
+
+- The secondary button fell back to the primary colors when the settings were not saved yet
+
+### Refactor:
+
+- The `mbw_button_styling` helper function is created.
+
 ## Version 1.3.2 - Release Date: [24-04-2026]
 
 ### Tweaks:

@@ -4,7 +4,7 @@
  * Plugin Name: Lumie widgets
  * Plugin URI: https://www.lumiedrinkz.nl/
  * Description: The widget plugin developed by Lumie.
- * Version: 1.3.2
+ * Version: 1.4.0
  * Author: Lumie
  * Author URI: https://www.lumiedrinkz.nl/
  * Requires Plugins: advanced-custom-fields-pro
@@ -128,6 +128,40 @@ function mbw_render_button(array $btn, string $styling, array &$content_frames, 
 	}
 }
 
+/**
+ * Builds the CSS custom properties for a button type from the widget settings.
+ * The fallbacks mirror the ACF defaults (Lumie brand colors), because get_field()
+ * returns null until the settings page has been saved once.
+ *
+ * @param string $type primary, secondary or tertiary
+ */
+function mbw_button_styling(string $type): string {
+	$navy = 'rgba(32,42,68,1)';
+	$navy_soft = 'rgba(32,42,68,0.15)';
+	$slate = 'rgba(90,101,128,1)';
+	$paper = 'rgba(247,244,239,1)';
+	$white = 'rgba(255,255,255,1)';
+	$zest = 'rgba(236,230,138,1)';
+	$peach = 'rgba(242,161,113,1)';
+
+	// Order: color, background, border, color hover, background hover, border hover
+	$fallbacks = match ($type) {
+		'secondary' => [$navy, $white, $navy_soft, $navy, $paper, $navy_soft],
+		'tertiary' => [$navy, $zest, $zest, $navy, $peach, $peach],
+		default => [$white, $navy, $navy, $white, $slate, $slate],
+	};
+
+	$settings = get_field('button_' . $type, 'mbwidget') ?: [];
+	$names = ['color', 'background_color', 'border_color', 'color_hover', 'background_color_hover', 'border_color_hover'];
+	$values = [];
+
+	foreach ($names as $index => $name) {
+		$values[] = !empty($settings[$name]) ? $settings[$name] : $fallbacks[$index];
+	}
+
+	return vsprintf('--color: %s; --bg-color: %s; --border-color: %s; --color-hover: %s; --bg-color-hover: %s; --border-color-hover: %s;', $values);
+}
+
 function mbw_show_widget() {
 	$current_id = get_the_ID();
 	$current_type = get_post_type();
@@ -169,10 +203,9 @@ function mbw_show_widget() {
 
 	if (!empty($matched_widget)) :
 		// Button variables
-		$button_primary = get_field('button_primary', 'mbwidget');
-		$button_secondary = get_field('button_secondary', 'mbwidget');
-		$button_primary_styling = sprintf('--color: %s; --bg-color: %s; --border-color: %s; --color-hover: %s; --bg-color-hover: %s; --border-color-hover: %s;', $button_primary['color'] ?? '#fff', $button_primary['background_color'] ?? '#000', $button_primary['border_color'] ?? '#000', $button_primary['color_hover'] ?? '#fff', $button_primary['background_color_hover'] ?? '#000', $button_primary['border_color_hover'] ?? '#000');
-		$button_secondary_styling = sprintf('--color: %s; --bg-color: %s; --border-color: %s; --color-hover: %s; --bg-color-hover: %s; --border-color-hover: %s;', $button_secondary['color'] ?? '#fff', $button_secondary['background_color'] ?? '#000', $button_secondary['border_color'] ?? '#000', $button_secondary['color_hover'] ?? '#fff', $button_secondary['background_color_hover'] ?? '#000', $button_secondary['border_color_hover'] ?? '#000');
+		$button_primary_styling = mbw_button_styling('primary');
+		$button_secondary_styling = mbw_button_styling('secondary');
+		$button_tertiary_styling = mbw_button_styling('tertiary');
 
 		// Content variables
 		$welcome_text = get_field('welcome_text', $matched_widget->ID);
@@ -214,6 +247,7 @@ function mbw_show_widget() {
 								<?php $button_styling = match ($button['type']) {
 									'primary' => $button_primary_styling,
 									'secondary' => $button_secondary_styling,
+									'tertiary' => $button_tertiary_styling,
 									default => '',
 								}; ?>
 
@@ -237,6 +271,7 @@ function mbw_show_widget() {
 									<?php $btn_styling = match ($btn['type']) {
 										'primary' => $button_primary_styling,
 										'secondary' => $button_secondary_styling,
+										'tertiary' => $button_tertiary_styling,
 										default => '',
 									}; ?>
 
