@@ -12,7 +12,7 @@ sliders.forEach((slider) => {
 		slidesPerView: 1.15,
 		spaceBetween: 12,
 		pagination: {
-			el: slider.querySelector<HTMLElement>(".electrolytes__pagination"),
+			el: slider.parentElement?.querySelector<HTMLElement>(".electrolytes__pagination"),
 			clickable: true,
 		},
 		breakpoints: {

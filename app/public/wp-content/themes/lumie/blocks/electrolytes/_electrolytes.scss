@@ -19,7 +19,6 @@
 
 	&__content {
 		.titles {
-			.suptitle,
 			.main-title,
 			.subtitle {
 				color: #fff;
@@ -71,6 +70,7 @@
 		}
 	}
 
+	&__slider-wrapper,
 	&__slider {
 		width: 100%;
 		min-width: 0;
