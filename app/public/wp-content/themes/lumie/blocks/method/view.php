@@ -34,6 +34,15 @@ echo !is_admin() ? '[raw]' : '';
 				} ?>
 			</div>
 
+			<?php if (!empty($content)) : ?>
+				<div class="method__mobile-content">
+					<?php layout("content", [
+						'content' => $content,
+						'block' => $block,
+					]); ?>
+				</div>
+			<?php endif; ?>
+
 			<div class="method__steps">
 				<?php foreach ($steps as $step) {
 					component('step', [
@@ -49,15 +58,6 @@ echo !is_admin() ? '[raw]' : '';
 					echo $buttons->get_buttons();
 				} ?>
 			</div>
-
-			<?php if (!empty($content)) : ?>
-				<div class="method__mobile-content">
-					<?php layout("content", [
-						'content' => $content,
-						'block' => $block,
-					]); ?>
-				</div>
-			<?php endif; ?>
 		</div>
 
 	</div>

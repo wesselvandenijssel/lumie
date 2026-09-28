@@ -3,7 +3,7 @@
 .method {
 	&__grid {
 		display: grid;
-		gap: pxtoem(40) 20px;
+		gap: pxtoem(20) 20px;
 
 		@include bp("normal") {
 			grid-template-columns: 320px minmax(auto, 800px);
