@@ -11,7 +11,7 @@ add_action('acf/init', 'hook_thumbnail_methods', 20);
  * Hook methods for managing thumbnails.
  */
 function hook_thumbnail_methods(): void {
-	$image_settings = get_field('image_settings_group', 'options');
+	$image_settings = get_field('image_settings_group', 'utilities');
 
 	if (!empty($image_settings) && !empty($image_settings['thumbnails'])) {
 		add_image_size('Author thumb', 60, 60, true);

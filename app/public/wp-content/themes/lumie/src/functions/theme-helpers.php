@@ -200,6 +200,22 @@ function get_flex_content(string $template_type, string $name = 'content', strin
 						'label' => esc_html__('Naam', 'lumie'),
 						'name' => 'author',
 						'type' => 'text',
+						'wrapper' => [
+							'width' => '50',
+						],
+					],
+					[
+						'key' => $template_type . '_content_layout_quote_image',
+						'label' => esc_html__('Foto', 'lumie'),
+						'name' => 'image',
+						'type' => 'image',
+						'instructions' => esc_html__('Alleen een echte foto van deze persoon, met toestemming. Personen moeten aantoonbaar 25 jaar of ouder zijn.', 'lumie'),
+						'mime_types' => 'png, jpg, jpeg, webp',
+						'return_format' => 'id',
+						'preview_size' => 'thumbnail',
+						'wrapper' => [
+							'width' => '50',
+						],
 					],
 				],
 			],

@@ -6,6 +6,8 @@ These instructions define the expected standards for all Claude Code completions
 
 This is a WordPress theme built with a modern development stack. The project follows strict coding standards and architectural patterns for maintainability and scalability.
 
+The theme is for **Lumie**, a 1.2% alcohol drink. All visual and copy decisions must follow the [Brand Guidelines (Lumie)](#brand-guidelines-lumie) section, including the legal rules for alcohol advertising.
+
 ## Local Development Environment
 
 This project runs in **Local (by Flywheel)**. When working with WordPress runtime tasks (WP-CLI, database queries, plugin/theme activation, cache flushing, log inspection), invoke the `/wordpress-local` skill so Claude has the correct project layout in mind.
@@ -591,6 +593,137 @@ if (!empty($news_items)) {
 - **Empty values**: Use `$field = $field ?? '';` for validation
 - **Array errors**: Use `$value = $group['sub_field'] ?? '';` for nested fields
 
+## Brand Guidelines (Lumie)
+
+Source: Lumie brandbook, version 1, September 2026. These rules apply to every block, component, WooCommerce template and piece of copy in this theme.
+
+**Single source of truth:** all brand colors, gradients and font settings live in `src/styles/partials/_variables.scss`. Change them there, never per block or template, so the webshop stays in line with posters and social.
+
+### Colors
+
+```scss
+// Brand
+$hue-navy: #202a44; // All text, logo, lines, buttons, icons
+$hue-zest: #ece68a; // Top of the gradient, "stil" flavors
+$hue-peach: #f2a171; // Middle of the gradient, only pastel allowed as a standalone accent area
+$hue-blush: #efa8be; // Bottom of the gradient, base for red fruit
+
+// Neutral
+$hue-paper: #f7f4ef; // Page background
+$hue-white: #fff; // Cards, forms, product panels
+$hue-slate: #5a6580; // Secondary text, labels, nutrition table
+$hue-mist: #e4e0d8; // Borders and lines only, never text
+```
+
+If the theme uses the generic `$hue-accent-1` / `$hue-dark-1` names, map them to these values instead of adding a second palette.
+
+**Rules:**
+
+- Navy is the only color for body text, headings, icons, lines and buttons.
+- Peach is the only pastel allowed as a standalone accent area.
+- Never place two pastel colors as large adjacent areas without navy, paper or white between them.
+- Mist is for borders and dividers only. Never use it for text.
+- Slate is for secondary text only (labels, captions, nutrition table). Never for body copy or headings.
+
+### Contrast
+
+**Never put white text on a pastel color.** Navy passes on every brand color, so navy is always the answer.
+
+| Combination    | Ratio  | Use                 |
+| -------------- | ------ | ------------------- |
+| Navy on Paper  | 13.0:1 | Default             |
+| Navy on Zest   | 11.0:1 | Allowed             |
+| Navy on Blush  | 7.5:1  | Allowed             |
+| Navy on Peach  | 6.9:1  | Allowed             |
+| White on Navy  | 14.2:1 | Inverted version    |
+| Slate on Paper | 5.3:1  | Secondary text only |
+| White on Peach | 2.1:1  | Never               |
+| White on Blush | 1.9:1  | Never               |
+
+This includes button states, hover states, badges, sale labels and WooCommerce notices.
+
+### Gradient
+
+```scss
+$gradient-brand: linear-gradient(180deg, #ece68a 0%, #f2a171 52%, #efa8be 100%);
+```
+
+- Always top to bottom (`180deg`): yellow on top, pink at the bottom. Never rotate it or use it diagonally.
+- Never place text or the logo on top of the gradient.
+- On the website, use the gradient only for the header and product panels. Never as a full page background.
+
+**Flavor gradients** (two stops from the same family, same direction):
+
+```scss
+$flavors: (
+	"rood-fruit": (
+		#efa8be,
+		#d64a6e,
+	),
+	// Bruisend
+	"meloen": (
+			#f7c98b,
+			#f2a171,
+		),
+	// Bruisend
+	"vlierbloesem-citroen": (
+			#ece68a,
+			#dce7a6,
+		),
+	// Stil
+	"gember-groene-thee": (
+			#e9c27a,
+			#bfd3a2,
+		), // Stil
+);
+```
+
+"Bruisend" (sparkling) flavors are warmer, "stil" (still) flavors are greener. Use the flavor gradient on that product's panel so the customer can see the variant at a glance.
+
+### Typography
+
+One typeface: **Poppins** in three weights only: light `300`, regular `400`, medium `500`. Do not load or use other weights.
+
+| Style      | Weight | Size (use `pxtorem()`) | Line height |
+| ---------- | ------ | ---------------------- | ----------- |
+| Display    | 500    | 38px                   | 1.2         |
+| Heading    | 500    | 26px                   | 1.3         |
+| Subheading | 400    | 19px                   | default     |
+| Body       | 300    | 17px                   | 1.65        |
+| Small      | 400    | 14px                   | default     |
+
+- No uppercase headings. Do not use `text-transform: uppercase` on headings.
+- No italics anywhere. Override `em` / `i` styling from WordPress or WooCommerce defaults if needed.
+
+### Logo
+
+- Navy on light backgrounds, white on navy or on a dark photo.
+- Clear space around the logo: at least the height of the letter "l".
+- Minimum width: 120px on screen.
+- Never place the logo on a pastel color or on the gradient.
+- Never detach, move or replace the sparkle. Never stretch, skew, outline or add a shadow (no `filter`, `box-shadow` or `transform` on the logo).
+
+### Legal Requirements (Alcohol Advertising)
+
+Lumie contains 1.2% alcohol. Every page falls under the Dutch Reclamecode voor Alcoholhoudende Dranken and EU Regulation (EC) No 1924/2006. Treat these as hard requirements, not style preferences.
+
+**Code:**
+
+- The slogan **"Geen 18, geen alcohol"** must be visible on every page of the website (e.g. in the footer). Never remove it or hide it on mobile.
+- The webshop checks age on entry **and** at checkout. Never remove, bypass or cache around either age check. Flag any change that could affect them.
+- The electrolyte tablets are a separate, alcohol-free product. Their product page must not show Lumie drinks (no related products, upsells or cross-sells with alcohol).
+
+**Copy** (applies to product descriptions, ACF default values, placeholder text, alt text, meta descriptions and structured data):
+
+- No references to hangovers, recovery, hydration or feeling fitter. Health claims are forbidden above 1.1.2% alcohol, also as a joke.
+- Hydration may only be mentioned for the electrolyte tablets.
+- Never present sport, study success or social success as a result of drinking.
+- Allowed: "energieverlaagd" (only with at least 30% fewer calories than a comparable product), "laag alcoholgehalte", the calorie count and the alcohol percentage.
+
+**Images:** models and creators shown must be demonstrably 25 or older.
+
+Check the required size and placement of the slogan on reclamecode.nl before finishing any page template or banner.
+
 ## Development Workflow
 
 ### Build Process
@@ -784,7 +917,7 @@ if (!empty($buttons) && is_array($buttons)) {
 - Semantic HTML structure
 - Proper ARIA labels and roles
 - Keyboard navigation support
-- Color contrast compliance
+- Color contrast compliance (see the contrast table in [Brand Guidelines (Lumie)](#brand-guidelines-lumie))
 
 ### SEO & Standards
 
@@ -811,6 +944,10 @@ if (!empty($buttons) && is_array($buttons)) {
 8. **Test on mobile** - Mobile-first development approach
 9. **Avoid inline styles** - Use classes and SCSS for styling
 10. **Use PHP short echo tags** - `<?= $variable ?>` for outputting variables
+11. **Never use white text on a pastel** - Use navy on Zest, Peach and Blush
+12. **Don't hardcode brand hex values** - Use the variables from `_variables.scss`
+13. **Never write health claims in copy** - No hangover, recovery, hydration or fitness references for Lumie drinks
+14. **Never touch the age checks or the slogan** - Without explicit approval
 
 ## File Naming Conventions
 
@@ -856,7 +993,7 @@ if (!empty($buttons) && is_array($buttons)) {
 
 - `/wordpress-local` — load this whenever the task involves WP-CLI, the Local environment layout, PHP error logs, or anything that touches the WordPress runtime. It contains the canonical paths and subshell patterns for this Local site.
 - `/init` — regenerate or refresh project documentation in `CLAUDE.md`.
-- `/review` — review a pull request against these standards.
+- `/review` — review a pull request against these standards, including the Lumie brand and legal rules.
 - `/security-review` — security-focused review of pending changes on the current branch.
 
 ### Tool Use Expectations
@@ -874,7 +1011,7 @@ if (!empty($buttons) && is_array($buttons)) {
 
 ## Summary
 
-This WordPress theme prioritizes maintainability, performance, and developer experience while adhering to modern web development standards and WordPress best practices. Use `/wordpress-local` for any WP-CLI or environment-aware work, and follow the conventions above for all PHP, SCSS, and TypeScript contributions.
+This WordPress theme prioritizes maintainability, performance, and developer experience while adhering to modern web development standards and WordPress best practices. Use `/wordpress-local` for any WP-CLI or environment-aware work, follow the conventions above for all PHP, SCSS, and TypeScript contributions, and check every visual and copy change against the Lumie brand and legal rules.
 
 ---
 

@@ -158,36 +158,12 @@
 						inset: 100% 0 auto;
 						z-index: 1;
 						padding-block: 50px 100px;
+						background-color: #fff;
+						box-shadow: 0 0 0 100vmax #fff;
+						clip-path: inset(0 -100vmax);
 						transition:
 							opacity $hover-transition 0.15s,
 							visibility 0s linear 0.45s;
-					}
-
-					&::before {
-						@include bp("narrow") {
-							content: "";
-							background-color: #fff;
-							position: absolute;
-							z-index: -1;
-							inset: 0 calc((100cqw - 700px) / 2 * -1) 0 auto;
-							width: 100cqw;
-						}
-
-						@include bp("normal") {
-							right: calc((100cqw - 960px) / 2 * -1);
-						}
-
-						@include bp("large") {
-							right: calc((100cqw - 1180px) / 2 * -1);
-						}
-
-						@include bp("xl") {
-							right: calc((100cqw - 1280px) / 2 * -1);
-						}
-
-						@include bp("xxl") {
-							right: calc((100cqw - 1340px) / 2 * -1);
-						}
 					}
 
 					.submenu-toggle {
@@ -207,7 +183,11 @@
 				> a,
 				> span {
 					@include bp("narrow") {
-						font-size: pxtorem(18);
+						font-size: pxtorem(10);
+						font-weight: 700;
+						letter-spacing: 0.2px;
+						text-transform: uppercase;
+						color: $hue-accent-1;
 					}
 				}
 
@@ -248,7 +228,6 @@
 			}
 		}
 
-		// Show `.back-to-previous` only on mobile and when there are a minimum of 10 sibling menu items
 		&:has(.menu-item:nth-child(2)) {
 			.back-to-previous {
 				@include bp("mobile") {

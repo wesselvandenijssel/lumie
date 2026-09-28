@@ -31,15 +31,30 @@ class FlexContent {
 	/**
 	 * @param string $quote The quote HTML
 	 * @param string $author (optional) The name of the person being quoted
+	 * @param int $image (optional) The attachment ID of a photo of that person
 	 */
-	function setQuote($quote, $author = '') {
+	function setQuote($quote, $author = '', $image = 0) {
 		if (empty($quote)) return;
 
 		$this->content .= '<blockquote class="content-quote">';
 		$this->content .= '<div class="content-quote__text">' . wp_kses_post($quote) . '</div>';
 
-		if (!empty($author)) {
-			$this->content .= '<cite class="content-quote__author">&ndash; ' . esc_html($author) . '</cite>';
+		if (!empty($author) || !empty($image)) {
+			$this->content .= '<footer class="content-quote__footer">';
+
+			if (!empty($image)) {
+				$this->content .= wp_get_attachment_image($image, 'Author thumb', false, [
+					'class' => 'content-quote__image',
+					'alt' => '',
+					'loading' => 'lazy',
+				]);
+			}
+
+			if (!empty($author)) {
+				$this->content .= '<cite class="content-quote__author">' . (empty($image) ? '&ndash; ' : '') . esc_html($author) . '</cite>';
+			}
+
+			$this->content .= '</footer>';
 		}
 
 		$this->content .= '</blockquote>';
