@@ -126,6 +126,7 @@
 	&__content {
 		display: flex;
 		flex-direction: column;
+		color: #fff;
 		position: relative;
 		z-index: 1;
 		padding-block: 40px;
@@ -171,6 +172,10 @@
 
 		.content-layout {
 			max-width: 760px;
+
+			p{
+				color: #fff;
+			}
 
 			.buttons {
 				.btn {
