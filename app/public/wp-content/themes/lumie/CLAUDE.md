@@ -6,7 +6,7 @@ These instructions define the expected standards for all Claude Code completions
 
 This is a WordPress theme built with a modern development stack. The project follows strict coding standards and architectural patterns for maintainability and scalability.
 
-The theme is for **Lumie**, a 2% alcohol drink. All visual and copy decisions must follow the [Brand Guidelines (Lumie)](#brand-guidelines-lumie) section, including the legal rules for alcohol advertising.
+The theme is for **Lumie**, a 1.2% alcohol drink. All visual and copy decisions must follow the [Brand Guidelines (Lumie)](#brand-guidelines-lumie) section, including the legal rules for alcohol advertising.
 
 ## Local Development Environment
 
@@ -705,7 +705,7 @@ One typeface: **Poppins** in three weights only: light `300`, regular `400`, med
 
 ### Legal Requirements (Alcohol Advertising)
 
-Lumie contains 2% alcohol. Every page falls under the Dutch Reclamecode voor Alcoholhoudende Dranken and EU Regulation (EC) No 1924/2006. Treat these as hard requirements, not style preferences.
+Lumie contains 1.2% alcohol. Every page falls under the Dutch Reclamecode voor Alcoholhoudende Dranken and EU Regulation (EC) No 1924/2006. Treat these as hard requirements, not style preferences.
 
 **Code:**
 
@@ -715,7 +715,7 @@ Lumie contains 2% alcohol. Every page falls under the Dutch Reclamecode voor Alc
 
 **Copy** (applies to product descriptions, ACF default values, placeholder text, alt text, meta descriptions and structured data):
 
-- No references to hangovers, recovery, hydration or feeling fitter. Health claims are forbidden above 1.2% alcohol, also as a joke.
+- No references to hangovers, recovery, hydration or feeling fitter. Health claims are forbidden above 1.1.2% alcohol, also as a joke.
 - Hydration may only be mentioned for the electrolyte tablets.
 - Never present sport, study success or social success as a result of drinking.
 - Allowed: "energieverlaagd" (only with at least 30% fewer calories than a comparable product), "laag alcoholgehalte", the calorie count and the alcohol percentage.
