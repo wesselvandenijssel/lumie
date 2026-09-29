@@ -6,4 +6,133 @@
 	> * {
 		position: relative;
 	}
+
+	&__sparkles {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		pointer-events: none;
+	}
+
+	&__sparkle {
+		--sparkle-size: 14px;
+		--sparkle-delay: 0s;
+		--sparkle-duration: 8s;
+
+		position: absolute;
+		top: var(--sparkle-y);
+		left: var(--sparkle-x);
+		width: var(--sparkle-size);
+		height: var(--sparkle-size);
+		background-color: currentColor;
+		mask: assets("sparkle.svg") no-repeat center / contain;
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0);
+		animation: background-sparkle var(--sparkle-duration) ease-in-out
+			var(--sparkle-delay) infinite;
+
+		&:nth-child(1) {
+			--sparkle-x: 6%;
+			--sparkle-y: 12%;
+			--sparkle-size: 18px;
+		}
+
+		&:nth-child(2) {
+			--sparkle-x: 92%;
+			--sparkle-y: 20%;
+			--sparkle-delay: 1.4s;
+			--sparkle-duration: 9s;
+		}
+
+		&:nth-child(3) {
+			--sparkle-x: 14%;
+			--sparkle-y: 58%;
+			--sparkle-size: 10px;
+			--sparkle-delay: 2.8s;
+			--sparkle-duration: 7s;
+		}
+
+		&:nth-child(4) {
+			--sparkle-x: 84%;
+			--sparkle-y: 72%;
+			--sparkle-size: 22px;
+			--sparkle-delay: 4.2s;
+			--sparkle-duration: 10s;
+		}
+
+		&:nth-child(5) {
+			--sparkle-x: 48%;
+			--sparkle-y: 6%;
+			--sparkle-size: 12px;
+			--sparkle-delay: 3.4s;
+		}
+
+		&:nth-child(6) {
+			--sparkle-x: 4%;
+			--sparkle-y: 88%;
+			--sparkle-delay: 5.6s;
+			--sparkle-duration: 9s;
+		}
+
+		&:nth-child(7) {
+			--sparkle-x: 70%;
+			--sparkle-y: 40%;
+			--sparkle-size: 10px;
+			--sparkle-delay: 0.8s;
+			--sparkle-duration: 11s;
+		}
+
+		&:nth-child(8) {
+			--sparkle-x: 28%;
+			--sparkle-y: 32%;
+			--sparkle-size: 16px;
+			--sparkle-delay: 6.4s;
+			--sparkle-duration: 10s;
+		}
+
+		&:nth-child(9) {
+			--sparkle-x: 96%;
+			--sparkle-y: 50%;
+			--sparkle-size: 12px;
+			--sparkle-delay: 2.2s;
+		}
+
+		&:nth-child(10) {
+			--sparkle-x: 58%;
+			--sparkle-y: 94%;
+			--sparkle-size: 20px;
+			--sparkle-delay: 7.2s;
+			--sparkle-duration: 9s;
+		}
+
+		&:nth-child(n + 7) {
+			@include bp("mobile") {
+				display: none;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			opacity: 0.35;
+			transform: translate(-50%, -50%) rotate(45deg);
+			animation: none;
+		}
+	}
+}
+
+@keyframes background-sparkle {
+	0% {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0) rotate(0deg);
+	}
+
+	12% {
+		opacity: 0.6;
+		transform: translate(-50%, -50%) scale(1) rotate(45deg);
+	}
+
+	28%,
+	100% {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0) rotate(90deg);
+	}
 }
