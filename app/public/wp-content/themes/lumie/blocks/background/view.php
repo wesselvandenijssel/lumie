@@ -36,11 +36,27 @@ if (!empty($block['textColor'])) {
 if (!empty($block['gradient'])) {
 	$section['class'][] = 'has-gradient has-' . $block['gradient'] . '-gradient ';
 }
+
+$sparkles = !empty($sparkles) && !is_admin();
+
+if ($sparkles) {
+	$section['class'][] = 'background--sparkles';
+}
 ?>
 
 <section <?php attr($section); ?>>
 	<?php if (is_admin()) : ?>
 		<h3> <?= esc_html__("Achtergrond blok", 'lumie'); ?> </h3>
+	<?php endif; ?>
+
+	<?php if ($sparkles) : ?>
+		[raw]
+		<div class="background__sparkles" aria-hidden="true">
+			<?php for ($i = 0; $i < 16; $i++) : ?>
+				<span class="background__sparkle"></span>
+			<?php endfor; ?>
+		</div>
+		[/raw]
 	<?php endif; ?>
 
 	<InnerBlocks />
