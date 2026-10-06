@@ -1,5 +1,13 @@
 @use "abstracts" as *;
 
+$sparkle-flavours: (
+	"navy": $navy,
+	"zest": $zest,
+	"peach": $peach,
+	"blush": $blush,
+	"electric-green": $electric-green,
+);
+
 .background {
 	position: relative;
 
@@ -30,6 +38,12 @@
 		transform: translate(-50%, -50%) scale(0);
 		animation: background-sparkle var(--sparkle-duration) ease-in-out
 			var(--sparkle-delay) infinite;
+
+		@each $name, $color in $sparkle-flavours {
+			&--#{$name} {
+				color: $color;
+			}
+		}
 
 		&:nth-child(1) {
 			--sparkle-x: 6%;

@@ -39,6 +39,8 @@ if (!empty($block['gradient'])) {
 
 $sparkles = !empty($sparkles) && !is_admin();
 
+$flavours = ['zest', 'peach', 'blush', 'electric-green', 'zest', 'peach', 'blush', 'electric-green', 'navy'];
+
 if ($sparkles) {
 	$section['class'][] = 'background--sparkles';
 }
@@ -53,7 +55,7 @@ if ($sparkles) {
 		[raw]
 		<div class="background__sparkles" aria-hidden="true">
 			<?php for ($i = 0; $i < 16; $i++) : ?>
-				<span class="background__sparkle"></span>
+				<span class="background__sparkle background__sparkle--<?= $flavours[$i % count($flavours)]; ?>"></span>
 			<?php endfor; ?>
 		</div>
 		[/raw]
