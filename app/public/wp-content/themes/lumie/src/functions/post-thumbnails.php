@@ -17,6 +17,7 @@ function hook_thumbnail_methods(): void {
 		add_image_size('Author thumb', 60, 60, true);
 		add_image_size('Blog detail', 610, 500, true);
 		add_image_size('Card', 425, 560, true);
+		add_image_size('Carousel', 1340, 754, true);
 		add_image_size('CTA banner', 700, 425, true);
 		add_image_size('Gallery', 600, 365, true);
 		add_image_size('Gallery XL', 600, 870, true);
