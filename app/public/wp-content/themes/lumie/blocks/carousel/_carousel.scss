@@ -1,0 +1,100 @@
+@use "abstracts" as *;
+
+.carousel {
+	.titles {
+		&:not(:last-child) {
+			margin-bottom: pxtoem(30);
+
+			@include bp("narrow") {
+				margin-bottom: pxtoem(40);
+			}
+		}
+	}
+
+	&__slider {
+		position: relative;
+		width: 100%;
+	}
+
+	&__slide {
+		position: relative;
+		overflow: hidden;
+		border-radius: 2px;
+		aspect-ratio: 3 / 2;
+
+		@include bp("narrow") {
+			aspect-ratio: 1340 / 754;
+		}
+	}
+
+	&__media {
+		&--image {
+			position: absolute;
+			inset: 0;
+			display: block;
+			width: 100%;
+			height: 100% !important; // Overwrite .entry-content img
+			object-fit: cover;
+		}
+
+		&--video {
+			position: absolute;
+			overflow: hidden;
+			inset: 0;
+			pointer-events: none;
+
+			> div {
+				top: 50%;
+				transform: translateY(-50%);
+				min-height: 100%;
+			}
+
+			.w-chrome {
+				height: 100% !important;
+			}
+
+			.w-video-wrapper > video {
+				object-fit: cover !important;
+			}
+
+			.w-ui-container {
+				display: none !important;
+			}
+
+			wistia-player {
+				height: 100%;
+				padding-top: 0 !important;
+			}
+		}
+	}
+
+	&__pagination {
+		display: flex;
+		position: static;
+		justify-content: center;
+		column-gap: 10px;
+		margin-top: pxtoem(30);
+
+		&.swiper-pagination-lock {
+			display: none;
+		}
+
+		.swiper-pagination-bullet {
+			width: 15px;
+			height: 15px;
+			margin: 0 !important;
+			border-radius: 50%;
+			background-color: $hue-light-2;
+			opacity: 1;
+			transition: background-color $hover-transition;
+
+			&:hover {
+				background-color: $hue-light-4;
+			}
+
+			&.swiper-pagination-bullet-active {
+				background-color: $hue-accent-1;
+			}
+		}
+	}
+}
