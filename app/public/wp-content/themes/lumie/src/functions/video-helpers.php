@@ -64,3 +64,18 @@ function video_in_fancybox($video, $attrs = []) {
 
 	return $attrs;
 }
+
+/**
+ * Adds do-not-track to every Wistia player in block output, so Wistia does not collect viewing statistics.
+ *
+ * @param string $content The rendered block HTML
+ * @return string
+ */
+add_filter('render_block', 'lumie_wistia_do_not_track');
+function lumie_wistia_do_not_track(string $content): string {
+	if (!str_contains($content, '<wistia-player')) {
+		return $content;
+	}
+
+	return preg_replace('/<wistia-player\b(?![^>]*\bdo-not-track\b)/', '<wistia-player do-not-track', $content);
+}
