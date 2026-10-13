@@ -4,11 +4,13 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 $content = $content ?? [];
 $block = $block ?? [];
 
-if (empty($content)) return;
+if (empty($content) || !is_array($content)) return;
 ?>
 <div class="content-layout">
 	<?php
 	foreach ($content as $key => $value) :
+		if (!is_array($value) || empty($value['acf_fc_layout'])) continue;
+
 		switch ($value['acf_fc_layout']):
 			case 'title':
 				layout("title", [
