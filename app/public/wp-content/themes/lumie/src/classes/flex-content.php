@@ -181,6 +181,8 @@ class FlexContent {
 	 * @param array $button	The button array
 	 */
 	function setButtons($buttons) {
+		if (empty($buttons) || !is_array($buttons)) return;
+
 		$buttons = new BlockButtons($buttons);
 		$this->content = $buttons->get_buttons();
 	}
