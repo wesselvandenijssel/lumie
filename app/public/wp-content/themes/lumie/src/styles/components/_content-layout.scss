@@ -89,6 +89,14 @@
 		}
 	}
 
+	h2:not([class]) {
+		@include sparkle;
+	}
+
+	h3:not([class]) {
+		@include sparkle(14px, 16px);
+	}
+
 	.logo-wrapper {
 		display: flex;
 		flex-wrap: wrap;
