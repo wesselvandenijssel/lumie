@@ -97,7 +97,11 @@
 		ul {
 			display: flex;
 			flex-direction: column;
-			gap: 12px;
+			gap: 0;
+
+			@include bp("narrow") {
+				gap: 6px;
+			}
 		}
 
 		li {
@@ -106,9 +110,15 @@
 		}
 
 		a {
+			display: inline-block;
+			padding-block: 10px;
 			text-decoration: none;
 			color: #fff;
 			transition: color $hover-transition;
+
+			@include bp("narrow") {
+				padding-block: 3px;
+			}
 
 			&:hover,
 			&:focus {
@@ -152,6 +162,10 @@
 		text-decoration: none;
 		color: #fff;
 		transition: color $hover-transition;
+
+		@include bp("mobile") {
+			padding-block: 7px;
+		}
 
 		&:hover,
 		&:focus {
@@ -221,14 +235,27 @@
 	}
 
 	.socials {
-		column-gap: 12px;
+		column-gap: 2px;
 		font-size: pxtorem(16);
+
+		@include bp("mobile") {
+			margin-inline: -5px;
+		}
+
+		@include bp("narrow") {
+			column-gap: 12px;
+		}
 
 		&:not(:last-child) {
 			margin-bottom: 40px;
 		}
 
 		&__item {
+			@include bp("mobile") {
+				display: block;
+				padding: 5px;
+			}
+
 			&::before {
 				width: 34px;
 				background-color: $zest;

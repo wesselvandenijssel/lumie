@@ -6,7 +6,6 @@ add_theme_support('menus');
 register_nav_menus([
 	'primary' => esc_html__('Hoofdmenu', 'lumie'),
 	'primary_mobile' => esc_html__('Hoofdmenu mobiel', 'lumie'),
-	'sitemap' => esc_html__('Sitemap menu', 'lumie'),
 	'subfooter' => esc_html__('Subfooter menu', 'lumie'),
 	'top' => esc_html__('Topbar menu', 'lumie'),
 ]);

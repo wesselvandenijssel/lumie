@@ -19,16 +19,15 @@ get_header(); ?>
 					if (!empty($not_found['content'])) :
 						layout("content", [
 							'content' => $not_found['content'],
-							'block' => [],
+							'block' => 'first',
 						]);
 
 					else :
 
 						$title = new BlockTitle(esc_html__('De opgevraagde pagina kan niet gevonden worden', 'lumie'));
 						$title->setSubtitle(esc_html__('404 error', 'lumie'));
-						$title->setType(
-							'h2'
-						);
+						$title->setType('h1');
+						$title->setLook('h2');
 						echo $title->getTitle();
 					?>
 

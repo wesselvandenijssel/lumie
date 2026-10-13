@@ -16,6 +16,8 @@ echo !is_admin() ? '[raw]' : '';
 
 <section <?php attr($section); ?>>
 	<div class="columns-12 center">
+		<button type="button" class="quote-slider__toggle autoplay-toggle" data-label-pause="<?= esc_attr__('Pauzeren', 'lumie'); ?>" data-label-play="<?= esc_attr__('Afspelen', 'lumie'); ?>" hidden></button>
+
 		<div class="quote-slider__slider swiper">
 			<div class="swiper-wrapper">
 				<?php foreach ($quotes as $item) :

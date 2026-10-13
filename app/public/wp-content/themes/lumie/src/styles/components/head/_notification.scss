@@ -51,8 +51,24 @@
 	&__close {
 		cursor: pointer;
 		display: flex;
+		flex-shrink: 0;
 		align-items: center;
 		column-gap: 10px;
+		min-height: 44px;
+		padding: 0;
+		border: 0;
+		background: none;
+		color: inherit;
+		font: inherit;
+
+		@include bp("narrow") {
+			min-height: 28px;
+		}
+
+		&:focus-visible {
+			outline: 2px solid $white;
+			outline-offset: 2px;
+		}
 	}
 
 	&__close-icon {

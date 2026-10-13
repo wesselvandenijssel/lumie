@@ -12,6 +12,9 @@ if (!function_exists('get_field')) {
 	return;
 }
 
+$archive_title = is_post_type_archive() ? post_type_archive_title('', false) : single_term_title('', false);
+$archive_description = is_category() || is_tax() ? term_description() : '';
+
 get_header(); ?>
 
 <div id="primary" class="content-area">
@@ -21,8 +24,12 @@ get_header(); ?>
 			<div class="titles">
 
 				<h1 class="main-title default">
-					<?= post_type_archive_title('', false); ?>
+					<?= esc_html($archive_title); ?>
 				</h1>
+
+				<?php if (!empty($archive_description)) : ?>
+					<?= wp_kses_post($archive_description); ?>
+				<?php endif; ?>
 
 			</div>
 

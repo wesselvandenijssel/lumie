@@ -9,10 +9,17 @@ sliders.forEach((slider) => {
 
 	new Swiper(slider, {
 		modules: [A11y, Pagination],
+		a11y: {
+			slideRole: null,
+			slideLabelMessage: null,
+			paginationBulletMessage: "Naar dia {{index}}",
+		},
 		slidesPerView: 1.15,
 		spaceBetween: 12,
 		pagination: {
-			el: slider.parentElement?.querySelector<HTMLElement>(".electrolytes__pagination"),
+			el: slider.parentElement?.querySelector<HTMLElement>(
+				".electrolytes__pagination",
+			),
 			clickable: true,
 		},
 		breakpoints: {
