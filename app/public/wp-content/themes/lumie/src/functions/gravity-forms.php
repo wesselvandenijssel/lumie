@@ -449,3 +449,33 @@ function replace_form_fields_merge_tag($text, $form, $entry, $url_encode, $esc_h
 
 	return str_replace($merge_tag, $form_fields, $text);
 }
+
+/**
+ * Loads the reCAPTCHA scripts only when a form that uses reCAPTCHA is rendered on the page.
+ * The add-on enqueues them on every page, which sends every visitor to Google before they make a cookie choice.
+ * The newsletter form in the footer has reCAPTCHA disabled in its settings, so it does not count.
+ *
+ * @param array $form The rendered form
+ */
+add_action('gform_enqueue_scripts', 'lumie_enqueue_recaptcha');
+function lumie_enqueue_recaptcha(array $form): void {
+	if (rgars($form, 'gravityformsrecaptcha/disable-recaptchav3') === '1') return;
+
+	$GLOBALS['lumie_has_recaptcha_form'] = true;
+
+	if (wp_script_is('gforms_recaptcha_recaptcha', 'registered')) {
+		wp_enqueue_script('gforms_recaptcha_recaptcha');
+		wp_enqueue_script('gforms_recaptcha_frontend');
+	}
+}
+
+/**
+ * Removes the reCAPTCHA scripts that the add-on enqueued for every page, unless a form already asked for them.
+ */
+add_action('wp_enqueue_scripts', 'lumie_dequeue_recaptcha', 20);
+function lumie_dequeue_recaptcha(): void {
+	if (!empty($GLOBALS['lumie_has_recaptcha_form'])) return;
+
+	wp_dequeue_script('gforms_recaptcha_recaptcha');
+	wp_dequeue_script('gforms_recaptcha_frontend');
+}
