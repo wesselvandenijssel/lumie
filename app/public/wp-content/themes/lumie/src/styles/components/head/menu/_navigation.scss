@@ -116,6 +116,7 @@
 						&::after {
 							@include bp("narrow") {
 								content: $fa-angle-down;
+								display: inline-block;
 								font-family: $fa;
 								font-weight: 400;
 								padding-left: 2px;

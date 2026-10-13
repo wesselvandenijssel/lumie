@@ -18,15 +18,10 @@ switch ($column_value['acf_fc_layout']):
 			$column_value['title'],
 		);
 
-		$block_title->setType('h4');
-
-		if (!empty($column_value['title_type'])) {
-
-			// Set the look (heading type) based on the provided title type
-			$block_title->setLook(
-				$column_value['title_type'],
-			);
-		}
+		$block_title->setType('h2');
+		$block_title->setLook(
+			!empty($column_value['title_type']) ? $column_value['title_type'] : 'h4',
+		);
 
 		echo $block_title->getTitle();
 		break;
@@ -91,7 +86,7 @@ switch ($column_value['acf_fc_layout']):
 				<?php endforeach; ?>
 			</div>
 		<?php endif; ?>
-		<?php
+	<?php
 		break;
 
 

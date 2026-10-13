@@ -110,6 +110,7 @@
 		flex-grow: 1;
 
 		@include bp("mobile") {
+			padding-block: 13px;
 			font-size: pxtorem(12);
 		}
 
@@ -181,6 +182,10 @@
 	}
 
 	&__cd-item {
+		@include bp("mobile") {
+			padding-block: 9px;
+		}
+
 		&--address {
 			grid-row: span 2;
 		}

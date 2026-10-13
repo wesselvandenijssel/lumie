@@ -1,6 +1,7 @@
 import Swiper from "swiper";
 import { A11y, Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
+import { initAutoplayToggle, isAutoplayPaused } from "../../src/scripts/files/autoplay-toggle";
 
 /**
  * The parts of the <wistia-player> web component API used here
@@ -29,6 +30,8 @@ carousels.forEach((carousel) => {
 
 	const players = slider.querySelectorAll<WistiaPlayer>("wistia-player");
 	const hasMultipleSlides = slider.querySelectorAll(".swiper-slide").length > 1;
+	const toggle = carousel.querySelector<HTMLButtonElement>(".carousel__toggle");
+	let paused = isAutoplayPaused();
 
 	// Loop the videos so a short clip doesn't end on a still frame before the slide changes
 	players.forEach((player) => {
@@ -44,6 +47,9 @@ carousels.forEach((carousel) => {
 		spaceBetween: 20,
 		speed: 600,
 		rewind: true,
+		a11y: {
+			paginationBulletMessage: "Naar dia {{index}}",
+		},
 		autoplay:
 			hasMultipleSlides && !prefersReducedMotion
 				? {
@@ -69,7 +75,7 @@ carousels.forEach((carousel) => {
 		const activeSlide = swiper.slides[swiper.activeIndex];
 
 		players.forEach((player) => {
-			const shouldPlay = !prefersReducedMotion && activeSlide?.contains(player);
+			const shouldPlay = !prefersReducedMotion && !paused && activeSlide?.contains(player);
 
 			// play() rejects when the browser blocks autoplay; the slide then just shows the poster
 			Promise.resolve(shouldPlay ? player.play() : player.pause()).catch(() => {});
@@ -77,6 +83,27 @@ carousels.forEach((carousel) => {
 	};
 
 	swiper.on("slideChange", syncVideos);
+
+	// Without reduced motion the slides and videos move on their own, so visitors need a way to stop them
+	if (toggle && !prefersReducedMotion) {
+		initAutoplayToggle(
+			toggle,
+			() => {
+				paused = true;
+				swiper.autoplay.stop();
+				syncVideos();
+			},
+			() => {
+				paused = false;
+
+				if (hasMultipleSlides) {
+					swiper.autoplay.start();
+				}
+
+				syncVideos();
+			},
+		);
+	}
 
 	if (!players.length) {
 		return;
@@ -98,7 +125,7 @@ carousels.forEach((carousel) => {
 			player.addEventListener("play", () => {
 				const activeSlide = swiper.slides[swiper.activeIndex];
 
-				if (prefersReducedMotion || !activeSlide?.contains(player)) {
+				if (prefersReducedMotion || paused || !activeSlide?.contains(player)) {
 					Promise.resolve(player.pause()).catch(() => {});
 				}
 			});
