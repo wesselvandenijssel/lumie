@@ -26,7 +26,6 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 	<link rel="apple-touch-icon" sizes="180x180" href="<?= assets('apple-touch-icon.png'); ?>" />
 	<meta name="apple-mobile-web-app-title" content="Lumie" />
 	<link rel="manifest" href="<?= assets('site.webmanifest'); ?>" />
-	<?php include('json-ld.php'); ?>
 	<?php wp_head(); ?>
 </head>
 

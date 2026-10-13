@@ -1,0 +1,82 @@
+@use "abstracts" as *;
+
+/* stylelint-disable-next-line selector-class-pattern */
+body:has(.popup--age-gate.popup--active) .cmplz-cookiebanner {
+	display: none;
+}
+
+body .cmplz-cookiebanner {
+	font-family: $poppins;
+
+	.cmplz-title {
+		font-weight: 500;
+	}
+
+	.cmplz-message {
+		font-weight: 300;
+	}
+
+	.cmplz-close:focus-visible {
+		outline: 2px solid $navy;
+		outline-offset: 2px;
+	}
+
+	.cmplz-categories .cmplz-category .cmplz-category-header {
+		background-color: $paper;
+
+		.cmplz-category-title {
+			font-weight: 500;
+		}
+
+		.cmplz-always-active {
+			color: $navy;
+			font-size: pxtorem(14);
+			font-weight: 400;
+		}
+	}
+
+	.cmplz-buttons .cmplz-btn {
+		min-height: 44px;
+		font-family: $poppins;
+		font-size: pxtorem(16);
+		font-weight: 400;
+		transition:
+			color 0.4s ease-in-out,
+			background-color 0.4s ease-in-out,
+			border-color 0.4s ease-in-out;
+
+		&.cmplz-accept,
+		&.cmplz-save-preferences {
+			&:hover,
+			&:focus {
+				background-color: $white;
+				border-color: $navy;
+				color: $navy;
+			}
+		}
+
+		&.cmplz-deny,
+		&.cmplz-view-preferences {
+			&:hover,
+			&:focus {
+				background-color: $navy;
+				border-color: $navy;
+				color: $white;
+			}
+		}
+
+		&:focus-visible {
+			outline: 2px solid $navy;
+			outline-offset: 2px;
+		}
+	}
+
+	.cmplz-links .cmplz-link {
+		text-decoration: underline;
+
+		&:focus-visible {
+			outline: 2px solid $navy;
+			outline-offset: 2px;
+		}
+	}
+}
