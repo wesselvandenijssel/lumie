@@ -84,24 +84,10 @@ h4,
 	}
 
 	.main-title {
-		&::after {
-			content: "";
-			display: inline-block;
-			vertical-align: middle;
-			width: 18px;
-			height: 18px;
-			background-color: $navy;
-			mask-image: assets("sparkle.svg");
-			mask-repeat: no-repeat;
-			mask-position: center;
-			mask-size: contain;
-			margin-left: pxtoem(6);
-			font-size: pxtorem(18);
+		@include sparkle;
 
-			@include bp("narrow") {
-				width: 22px;
-				height: 22px;
-			}
+		&::after {
+			font-size: pxtorem(18);
 		}
 	}
 

@@ -2,6 +2,7 @@
 @use "sass:string";
 @use "sass:meta";
 @use "config" as *;
+@use "functions" as *;
 @use "variables" as *;
 
 /*********************
@@ -55,7 +56,8 @@ $breakpoints: (
 		font-weight: string.unquote($weight);
 
 		@if $woff2 {
-			src: url($base-path + $file + ".woff2") format("woff2"),
+			src:
+				url($base-path + $file + ".woff2") format("woff2"),
 				url($base-path + $file + ".woff") format("woff");
 		} @else {
 			src: url($base-path + $file + ".woff") format("woff");
@@ -110,6 +112,27 @@ $breakpoints-advanced: (
 		right: 20px;
 		transform: translateY(-50%);
 		pointer-events: none;
+	}
+}
+
+@mixin sparkle($size: 18px, $size-narrow: 22px) {
+	&::after {
+		content: "";
+		display: inline-block;
+		vertical-align: middle;
+		width: $size;
+		height: $size;
+		background-color: $navy;
+		mask-image: assets("sparkle.svg");
+		mask-repeat: no-repeat;
+		mask-position: center;
+		mask-size: contain;
+		margin-left: pxtoem(6);
+
+		@include bp("narrow") {
+			width: $size-narrow;
+			height: $size-narrow;
+		}
 	}
 }
 
