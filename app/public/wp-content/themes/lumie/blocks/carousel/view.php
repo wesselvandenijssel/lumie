@@ -28,6 +28,10 @@ echo !is_admin() ? '[raw]' : '';
 			]);
 		} ?>
 
+		<?php if (count($slides) > 1 || in_array('video', array_column($slides, 'type'), true)) : ?>
+			<button type="button" class="carousel__toggle autoplay-toggle" data-label-pause="<?= esc_attr__('Pauzeren', 'lumie'); ?>" data-label-play="<?= esc_attr__('Afspelen', 'lumie'); ?>" hidden></button>
+		<?php endif; ?>
+
 		<div class="carousel__slider swiper">
 			<div class="swiper-wrapper">
 				<?php foreach ($slides as $slide) : ?>

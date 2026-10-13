@@ -45,7 +45,7 @@ textarea,
 	}
 
 	&::placeholder {
-		color: rgba($hue-dark-1, 0.5);
+		color: $hue-dark-2;
 	}
 }
 
@@ -169,7 +169,7 @@ fieldset {
 			}
 
 			.gfield_label {
-				color: rgba($hue-dark-1, 0.5);
+				color: $hue-dark-2;
 
 				.gfield_required {
 					display: none;
@@ -240,7 +240,7 @@ fieldset {
 					}
 
 					input::placeholder {
-						color: rgba($hue-dark-1, 0.5);
+						color: $hue-dark-2;
 					}
 				}
 			}
@@ -289,7 +289,7 @@ fieldset {
 
 				.ginput_complex {
 					.gform-field-label {
-						color: rgba($hue-dark-1, 0.5);
+						color: $hue-dark-2;
 					}
 				}
 

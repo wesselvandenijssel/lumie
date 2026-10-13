@@ -35,7 +35,7 @@ class BlockTitle {
 	 * @param string $subtitle The subtitle text.
 	 */
 	function setSubtitle($subtitle) {
-		$this->subtitle = '<h3 class="subtitle h3">' . $subtitle . '</h3>';
+		$this->subtitle = '<p class="subtitle h3">' . $subtitle . '</p>';
 	}
 
 	/**
@@ -44,7 +44,7 @@ class BlockTitle {
 	 * @param string $suptitle The suptitle text.
 	 */
 	function setSuptitle($suptitle) {
-		$this->suptitle = '<h3 class="suptitle h3">' . $suptitle . '</h3>';
+		$this->suptitle = '<p class="suptitle h3">' . $suptitle . '</p>';
 	}
 
 	function setCentered() {

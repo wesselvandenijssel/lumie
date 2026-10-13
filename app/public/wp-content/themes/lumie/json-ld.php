@@ -303,27 +303,6 @@ if (!is_singular('post') && !is_singular('vacancy') && !is_author()) {
 		'name' => 'Netherlands',
 	];
 
-	$uploads_dir = wp_upload_dir();
-	$xml_file = trailingslashit($uploads_dir['basedir']) . 'review_data.xml';
-
-	if (file_exists($xml_file)) {
-		$xml = simplexml_load_file($xml_file);
-		if ($xml !== false) {
-			$rating_value = isset($xml->averageRating) ? (string) $xml->averageRating : '';
-			$review_count = isset($xml->totalReviewCount) ? (string) $xml->totalReviewCount : '';
-
-			if ($rating_value !== '' && $review_count !== '') {
-				$payload['aggregateRating'] = [
-					'@type' => 'AggregateRating',
-					'ratingValue' => $rating_value,
-					'reviewCount' => $review_count,
-					'bestRating' => '5',
-					'worstRating' => '1',
-				];
-			}
-		}
-	}
-
 	$founding_year = get_field('founding_year', 'options');
 	$founding_year = is_numeric($founding_year) ? (int) $founding_year : 0;
 	if ($founding_year > 0) {

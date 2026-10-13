@@ -1,5 +1,5 @@
 import Swiper from "swiper";
-import { Navigation } from "swiper/modules";
+import { A11y, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 
@@ -19,7 +19,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 new Swiper(".blog__grid.swiper", {
-	modules: [Navigation],
+	modules: [A11y, Navigation],
+	// The slides are the post links themselves, so they keep their link role and title
+	a11y: {
+		slideRole: null,
+		slideLabelMessage: null,
+		prevSlideMessage: "Vorige artikelen",
+		nextSlideMessage: "Volgende artikelen",
+	},
 	slidesPerView: "auto",
 	spaceBetween: 10,
 	navigation: {

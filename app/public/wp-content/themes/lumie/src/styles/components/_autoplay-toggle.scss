@@ -1,0 +1,52 @@
+@use "abstracts" as *;
+
+.autoplay-toggle {
+	position: relative;
+	display: flex;
+	align-items: center;
+	min-height: 44px;
+	margin: -12px 0 8px auto;
+	padding: 0 4px 0 26px;
+	border: 0;
+	background: none;
+	color: $hue-dark-1;
+	font: inherit;
+	font-size: pxtorem(14);
+	font-weight: 500;
+	cursor: pointer;
+
+	@include bp("narrow") {
+		min-height: 28px;
+		margin-top: -4px;
+	}
+
+	&[hidden] {
+		display: none;
+	}
+
+	&::before {
+		content: $fa-pause;
+		position: absolute;
+		top: 50%;
+		left: 4px;
+		font-family: $fa;
+		font-weight: 900;
+		line-height: 1;
+		transform: translateY(-50%);
+	}
+
+	&--paused::before {
+		content: $fa-play;
+	}
+
+	&:hover,
+	&:focus-visible {
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+
+	&:focus-visible {
+		outline: 2px solid $hue-dark-1;
+		outline-offset: 2px;
+	}
+}

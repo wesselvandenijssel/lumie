@@ -80,3 +80,12 @@ function lumie_preconnect_hints(array $urls, string $relation_type): array {
 
 	return $urls;
 }
+
+/**
+ * Sends requests for /favicon.ico to the theme favicon instead of the WordPress site icon.
+ */
+add_action('do_favicon', 'lumie_favicon_redirect', 1);
+function lumie_favicon_redirect(): void {
+	wp_safe_redirect(assets('favicon.ico'), 301);
+	exit;
+}

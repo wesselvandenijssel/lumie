@@ -24,12 +24,9 @@ defined('ABSPATH') || exit('Forbidden'); // Exit if accessed directly.
 	<link rel="icon" type="image/svg+xml" href="<?= assets('favicon.svg'); ?>" />
 	<link rel="shortcut icon" href="<?= assets('favicon.ico'); ?>" />
 	<link rel="apple-touch-icon" sizes="180x180" href="<?= assets('apple-touch-icon.png'); ?>" />
-	<meta name="apple-mobile-web-app-title" content="Vissers Zwembaden" />
+	<meta name="apple-mobile-web-app-title" content="Lumie" />
 	<link rel="manifest" href="<?= assets('site.webmanifest'); ?>" />
 	<?php include('json-ld.php'); ?>
-	<script type="application/ld+json">
-		<?= json_encode($payload); ?>
-	</script>
 	<?php wp_head(); ?>
 </head>
 
@@ -109,7 +106,7 @@ $contact_details = get_field('contact_details', 'options');
 							</div>
 							<span class="menu-toggle__text"><?= esc_html__('Menu', 'lumie'); ?></span>
 						</div>
-						<a class="skip-link screen-reader-text" href="#content"><?= esc_html__('Skip to content', 'lumie'); ?></a>
+						<a class="skip-link screen-reader-text" href="#content"><?= esc_html__('Naar de inhoud', 'lumie'); ?></a>
 
 						<div class="main-navigation__content">
 							<?php wp_nav_menu(
