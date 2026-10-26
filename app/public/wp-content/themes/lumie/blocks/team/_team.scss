@@ -36,7 +36,7 @@
 		}
 
 		@include bp("normal") {
-			grid-template-columns: repeat(4, 1fr);
+			grid-template-columns: repeat(5, 1fr);
 			gap: pxtoem(64) 30px;
 		}
 	}
