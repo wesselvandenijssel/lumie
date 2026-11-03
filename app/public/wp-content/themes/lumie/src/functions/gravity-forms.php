@@ -51,6 +51,10 @@ add_filter('gform_next_button', 'input_to_button', 10, 2);
 add_filter('gform_previous_button', 'input_to_button', 10, 2);
 add_filter('gform_submit_button', 'input_to_button', 10, 2);
 function input_to_button($button, $form) {
+	if (empty($button) || !class_exists('DOMDocument')) {
+		return $button;
+	}
+
 	$dom = new DOMDocument();
 	$dom->loadHTML($button);
 	$input = $dom->getElementsByTagName('input')->item(0);
