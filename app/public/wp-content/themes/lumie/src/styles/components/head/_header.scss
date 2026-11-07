@@ -42,7 +42,7 @@
 			margin-bottom: -95px;
 		}
 
-		&:not(#{$header}--scrolled) {
+		&:not(#{$header}--scrolled, :has(.menu-toggle--active)) {
 			&::after {
 				opacity: 0;
 			}

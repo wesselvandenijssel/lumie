@@ -50,6 +50,15 @@ $all(".menu-toggle").forEach((toggle) =>
 		);
 		toggle.classList.toggle("menu-toggle--active");
 		document.body.classList.toggle("no-scroll");
+
+		// Measure where the header ends so the mobile menu fills exactly the remaining viewport, regardless of scroll position or header height
+		const header = toggle.closest<HTMLElement>(".header");
+		if (header) {
+			document.documentElement.style.setProperty(
+				"--menu-offset",
+				`${header.getBoundingClientRect().bottom}px`,
+			);
+		}
 		$all(".main-navigation__content").forEach((el) => el.slideToggle(400));
 	})
 );

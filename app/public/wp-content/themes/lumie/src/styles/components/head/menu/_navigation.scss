@@ -31,7 +31,8 @@
 			top: 0;
 			right: 0;
 			width: 100vw;
-			height: calc(100vh - 90px);
+			height: calc(100dvh - var(--menu-offset, 90px));
+			overscroll-behavior: contain;
 			overflow: scroll;
 			display: none;
 			transition: none;
@@ -243,7 +244,7 @@
 					display: block !important;
 					z-index: 1;
 					width: 100vw;
-					height: calc(100vh - 90px) !important;
+					height: calc(100dvh - var(--menu-offset, 90px)) !important;
 					top: 0;
 					right: 100vw;
 					padding: 0;
