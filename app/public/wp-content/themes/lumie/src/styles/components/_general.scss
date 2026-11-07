@@ -3,10 +3,10 @@
 html,
 body {
 	background: $paper;
+}
 
-	&.no-scroll {
-		overflow: hidden;
-	}
+html:has(body.no-scroll) {
+	overflow: hidden;
 }
 
 body {
@@ -21,11 +21,6 @@ body {
 
 	@include bp("mobile") {
 		font-size: $mobile-font-size;
-	}
-
-	&.no-scroll {
-		overflow: hidden;
-		height: 100%;
 	}
 }
 

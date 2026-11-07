@@ -1,39 +1,66 @@
 {
-	"database": "mysql-8.0.16",
-	"domain": "base-theme.local",
-	"environment": "lightning",
+	"database": "mysql-8.0.35",
+	"domain": "lumie.local",
+	"environment": "custom",
 	"hostConnections": null,
-	"id": "5n7I8Mkan",
-	"localVersion": "5.2.3+2248",
+	"id": "Mz5Isagef",
+	"localVersion": "9.2.2+6771",
 	"multiSite": null,
-	"mysql": { "database": "local", "password": "root", "user": "root" },
-	"name": "base-theme",
-	"path": "/Users/mb-bma/Local Sites/base-theme",
-	"phpVersion": "7.3.5",
+	"mysql": {
+		"database": "local",
+		"user": "root",
+		"password": "root"
+	},
+	"name": "Lumie",
+	"path": "/Users/mbeffect/Local Sites/lumie",
+	"phpVersion": "8.3.8",
 	"ports": {},
 	"services": {
-		"mailhog": {
-			"ports": { "SMTP": [10053], "WEB": [10052] },
+		"mailpit": {
+			"name": "mailpit",
+			"version": "1.24.1",
 			"type": "lightning",
-			"version": "1.0.0"
+			"ports": {
+				"WEB": [
+					10666
+				],
+				"SMTP": [
+					10667
+				]
+			}
 		},
 		"mysql": {
-			"ports": { "MYSQL": [10055] },
-			"role": "db",
+			"name": "mysql",
+			"version": "8.0.35",
 			"type": "lightning",
-			"version": "8.0.16"
+			"role": "db",
+			"ports": {
+				"MYSQL": [
+					10668
+				]
+			}
 		},
 		"nginx": {
-			"ports": { "HTTP": [10051] },
-			"role": "http",
+			"name": "nginx",
+			"version": "1.26.1",
 			"type": "lightning",
-			"version": "1.16.0"
+			"role": "http",
+			"ports": {
+				"HTTP": [
+					10669
+				]
+			}
 		},
 		"php": {
-			"ports": { "cgi": [10054] },
 			"role": "php",
+			"name": "php",
+			"version": "8.5.12",
 			"type": "lightning",
-			"version": "7.3.5"
+			"ports": {
+				"cgi": [
+					10670
+				]
+			}
 		}
 	},
 	"workspace": null
