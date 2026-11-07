@@ -130,7 +130,7 @@
 		color: #fff;
 		position: relative;
 		z-index: 1;
-		padding-block: 40px;
+		padding-block: 80px 40px;
 
 		@include bp("narrow") {
 			padding-block: 100px;
